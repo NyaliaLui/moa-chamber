@@ -10,6 +10,7 @@ const createJestConfig = nextJest({
 const config: Config = {
   rootDir: 'tests/unit',
   clearMocks: true,
+  testEnvironment: 'jsdom',
   globals: {
     IS_REACT_ACT_ENVIRONMENT: true,
   },
