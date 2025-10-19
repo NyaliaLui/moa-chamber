@@ -14,7 +14,7 @@ test.describe('Home Page', () => {
     });
   });
 
-  test.skip('navigation - "Our Initiatives" navigates to "Projects" page', async ({
+  test('navigation - "Our Initiatives" navigates to "Projects" page', async ({
     page,
   }) => {
     await page.goto(PATH);
