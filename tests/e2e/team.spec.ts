@@ -8,7 +8,7 @@ test.describe('Team Page', () => {
     await page.goto(PATH);
 
     await expect(
-      await page.getByTestId(testIds.TEAM_PAGE.TEAM_MEMBERS)
+      await page.getByTestId(testIds.TEAM_PAGE.TEAM_MEMBERS),
     ).toHaveScreenshot('team-members.png', {
       mask: [page.getByTestId(testIds.LAYOUT.HEADER)],
     });

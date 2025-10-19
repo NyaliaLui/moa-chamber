@@ -8,7 +8,7 @@ test.describe('Home Page', () => {
     await page.goto(PATH);
 
     await expect(
-      await page.getByTestId(testIds.HOME_PAGE.HIGHLIGHTS)
+      await page.getByTestId(testIds.HOME_PAGE.HIGHLIGHTS),
     ).toHaveScreenshot('home-highlights.png', {
       mask: [page.getByTestId(testIds.LAYOUT.HEADER)],
     });
@@ -22,7 +22,7 @@ test.describe('Home Page', () => {
     await page.getByTestId(testIds.HOME_PAGE.OUR_INITIATIVES_CTA).click();
 
     await expect(
-      await page.getByTestId(testIds.PROJECTS_PAGE.HEADER)
+      await page.getByTestId(testIds.PROJECTS_PAGE.HEADER),
     ).toBeVisible();
   });
 });

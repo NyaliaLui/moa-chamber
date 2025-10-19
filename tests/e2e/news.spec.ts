@@ -8,7 +8,7 @@ test.describe('News Page', () => {
     await page.goto(PATH);
 
     await expect(
-      await page.getByTestId(testIds.NEWS_PAGE.NEWS_LIST)
+      await page.getByTestId(testIds.NEWS_PAGE.NEWS_LIST),
     ).toHaveScreenshot('news-list.png', {
       mask: [page.getByTestId(testIds.LAYOUT.HEADER)],
     });
@@ -22,10 +22,10 @@ test.describe('News Page', () => {
     await page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA).first().click();
 
     await expect(
-      await page.getByTestId(testIds.NEWS_DETAILS_PAGE.CONTAINER)
+      await page.getByTestId(testIds.NEWS_DETAILS_PAGE.CONTAINER),
     ).toBeVisible();
     await expect(
-      await page.getByTestId(testIds.NEWS_DETAILS_PAGE.CONTAINER)
+      await page.getByTestId(testIds.NEWS_DETAILS_PAGE.CONTAINER),
     ).toHaveScreenshot('news-details.png', {
       mask: [page.getByTestId(testIds.LAYOUT.HEADER)],
     });

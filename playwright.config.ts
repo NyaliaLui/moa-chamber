@@ -77,7 +77,7 @@ const config = defineConfig({
   webServer: process.env.REMOTE_PROVIDER
     ? undefined
     : {
-        command: 'yarn start',
+        command: 'npm run start',
         url: 'http://127.0.0.1:3000',
       },
 });

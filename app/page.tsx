@@ -1,5 +1,8 @@
+import Link from 'next/link';
+
 import { CarouselClient } from '@app/components/Carousel/Carousel';
 import { WixMediaImage } from '@app/components/Image/WixMediaImage';
+
 import testIds from '@app/utils/test-ids';
 
 export default function Home() {
@@ -23,12 +26,12 @@ export default function Home() {
           <h3 className="flex-1 sm:text-3xl py-4 px-8 text-center sm:text-left">
             Take action to help us grow
           </h3>
-          <a
+          <Link
             href="/contact"
             className="btn-main sm:text-2xl sm:p-8 hover:bg-purple-site w-fit"
           >
             DONATE
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -52,13 +55,13 @@ export default function Home() {
               and evoke a positive change. Explore our initiatives and see what
               you can do to help.
             </p>
-            <a
+            <Link
               href="/projects"
               className="text-purple-site py-6 font-site"
               data-testid={testIds.HOME_PAGE.OUR_INITIATIVES_CTA}
             >
               Read More
-            </a>
+            </Link>
           </div>
         </div>
         <div className="basis-2/3">
@@ -79,9 +82,9 @@ export default function Home() {
               aim to create a world where everyone has the opportunity to learn
               and grow.
             </p>
-            <a href="/about" className="text-purple-site py-6 font-site">
+            <Link href="/about" className="text-purple-site py-6 font-site">
               Read More
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -101,9 +104,9 @@ export default function Home() {
               Get caught up on recent news and our latest achievements in the
               world of education.
             </p>
-            <a href="/news" className="text-purple-site py-6 font-site">
+            <Link href="/news" className="text-purple-site py-6 font-site">
               Read More
-            </a>
+            </Link>
           </div>
         </div>
         <div className="basis-1/3">
@@ -123,9 +126,9 @@ export default function Home() {
               or donate resources towards helping us achieve our goals, there is
               always an opportunity to make a difference.
             </p>
-            <a href="/contact" className="text-purple-site py-6 font-site">
+            <Link href="/contact" className="text-purple-site py-6 font-site">
               Read More
-            </a>
+            </Link>
           </div>
         </div>
       </div>
