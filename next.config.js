@@ -1,16 +1,22 @@
+const withFlowbiteReact = require('flowbite-react/plugin/nextjs');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {},
   reactStrictMode: true,
-  swcMinify: true,
   experimental: {},
   eslint: {
     dirs: ['app'],
   },
   images: {
-    domains: ['static.wixstatic.com'],
-    formats: ['image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'static.wixstatic.com',
+        pathname: '**',
+      },
+    ],
   },
 };
 
-module.exports = nextConfig;
+module.exports = withFlowbiteReact(nextConfig);

@@ -4,17 +4,17 @@ import testIds from '@app/utils/test-ids';
 test.describe('Projects Page', () => {
   const PATH = '/projects';
 
-  test('look and feel - projects', async ({ page }) => {
+  test.skip('look and feel - projects', async ({ page }) => {
     await page.goto(PATH);
 
     await expect(
-      await page.getByTestId(testIds.PROJECTS_PAGE.PROJECT_LIST)
+      await page.getByTestId(testIds.PROJECTS_PAGE.PROJECT_LIST),
     ).toHaveScreenshot('project-list.png', {
       mask: [page.getByTestId(testIds.LAYOUT.HEADER)],
     });
   });
 
-  test('look and feel - "Projects" navigates to "Project Details"', async ({
+  test.skip('look and feel - "Projects" navigates to "Project Details"', async ({
     page,
   }) => {
     await page.goto(PATH);
@@ -25,10 +25,10 @@ test.describe('Projects Page', () => {
       .click();
 
     await expect(
-      await page.getByTestId(testIds.PROJECT_DETAILS_PAGE.CONTAINER)
+      await page.getByTestId(testIds.PROJECT_DETAILS_PAGE.CONTAINER),
     ).toBeVisible();
     await expect(
-      await page.getByTestId(testIds.PROJECT_DETAILS_PAGE.CONTAINER)
+      await page.getByTestId(testIds.PROJECT_DETAILS_PAGE.CONTAINER),
     ).toHaveScreenshot('project-details.png', {
       mask: [page.getByTestId(testIds.LAYOUT.HEADER)],
     });

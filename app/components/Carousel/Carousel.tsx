@@ -9,7 +9,10 @@ export const CarouselClient = () => {
   ];
 
   return (
-    <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 mt-20 sm:mt-40">
+    <div
+      className="h-56 sm:h-64 xl:h-80 2xl:h-96 mt-20 sm:mt-40"
+      data-testid="carousel-client"
+    >
       <Carousel>
         {texts.map((text, i) => (
           <div

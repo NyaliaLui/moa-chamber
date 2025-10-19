@@ -1,8 +1,9 @@
 {
   "plugins": ["prettier"],
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "react-hooks/rules-of-hooks": "warn"
+    "react-hooks/rules-of-hooks": "warn",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }
