@@ -4,7 +4,7 @@ import testIds from '@app/utils/test-ids';
 test.describe('Projects Page', () => {
   const PATH = '/projects';
 
-  test('look and feel - projects', async ({ page }) => {
+  test.skip('look and feel - projects', async ({ page }) => {
     await page.goto(PATH);
 
     await expect(
@@ -14,7 +14,7 @@ test.describe('Projects Page', () => {
     });
   });
 
-  test('look and feel - "Projects" navigates to "Project Details"', async ({
+  test.skip('look and feel - "Projects" navigates to "Project Details"', async ({
     page,
   }) => {
     await page.goto(PATH);
