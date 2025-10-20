@@ -1,11 +1,7 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/utils/test-ids';
-import { isCIEnv } from '@app/utils/ci';
 
 test.describe('News Page', () => {
-  const { isCI, msg } = isCIEnv();
-  test.skip(isCI, msg);
-
   const PATH = '/news';
 
   test('look and feel - news', async ({ page }) => {
