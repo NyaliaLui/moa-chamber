@@ -4,7 +4,6 @@ import testIds from '@app/utils/test-ids';
 test.describe('Team Page', () => {
   const PATH = '/team';
 
-  // TODO(@NyaliaLui): Add Wix collections for skipped Wix Tests
   test.skip('look and feel - team', async ({ page }) => {
     await page.goto(PATH);
 
