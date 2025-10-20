@@ -11,6 +11,9 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
+    env:
+      NEXT_PUBLIC_WIX_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_WIX_CLIENT_ID }}
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -1,10 +1,14 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/utils/test-ids';
+import { isCIEnv } from '@app/utils/ci';
 
 test.describe('News Page', () => {
+  const { isCI, msg } = isCIEnv();
+  test.skip(isCI, msg);
+
   const PATH = '/news';
 
-  test.skip('look and feel - news', async ({ page }) => {
+  test('look and feel - news', async ({ page }) => {
     await page.goto(PATH);
 
     await expect(
@@ -14,7 +18,7 @@ test.describe('News Page', () => {
     });
   });
 
-  test.skip('look and feel - "News" navigates to "News Details"', async ({
+  test('look and feel - "News" navigates to "News Details"', async ({
     page,
   }) => {
     await page.goto(PATH);

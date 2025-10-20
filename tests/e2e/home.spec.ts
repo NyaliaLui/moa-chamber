@@ -1,10 +1,14 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/utils/test-ids';
+import { isCIEnv } from '@app/utils/ci';
 
 test.describe('Home Page', () => {
   const PATH = '/';
 
-  test.skip('look and feel - highlights', async ({ page }) => {
+  test('look and feel - highlights', async ({ page }) => {
+    const { isCI, msg } = isCIEnv();
+    test.skip(isCI, msg);
+
     await page.goto(PATH);
 
     await expect(
@@ -16,7 +20,7 @@ test.describe('Home Page', () => {
     });
   });
 
-  test.skip('navigation - "Our Initiatives" navigates to "Projects" page', async ({
+  test('navigation - "Our Initiatives" navigates to "Projects" page', async ({
     page,
   }) => {
     await page.goto(PATH);

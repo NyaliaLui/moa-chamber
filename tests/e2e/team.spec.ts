@@ -1,11 +1,14 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/utils/test-ids';
+import { isCIEnv } from '@app/utils/ci';
 
 test.describe('Team Page', () => {
+  const { isCI, msg } = isCIEnv();
+  test.skip(isCI, msg);
+
   const PATH = '/team';
 
-  // TODO(@NyaliaLui): Add Wix collections for skipped Wix Tests
-  test.skip('look and feel - team', async ({ page }) => {
+  test('look and feel - team', async ({ page }) => {
     await page.goto(PATH);
 
     await expect(

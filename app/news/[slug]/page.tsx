@@ -4,10 +4,8 @@ import testIds from '@app/utils/test-ids';
 
 export default async function New({ params }: any) {
   const wixClient = await getWixClient();
-  const { items } = await wixClient.items
-    .query('News')
-    .eq('slug', params.slug)
-    .find();
+  const { slug } = await params;
+  const { items } = await wixClient.items.query('News').eq('slug', slug).find();
   const item = items![0];
 
   return (

@@ -3,8 +3,8 @@
 @source '../.flowbite-react/class-list.json';
 
 @theme {
-  --color-blue-site: '#2859B6';
-  --color-purple-site: '#8751BD';
+  --color-blue-site: #2859b6;
+  --color-purple-site: #8751bd;
 }
 
 @font-face {

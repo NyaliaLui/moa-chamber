@@ -4,9 +4,12 @@ import testIds from '@app/utils/test-ids';
 
 export default async function Project({ params }: any) {
   const wixClient = await getWixClient();
+  // Dynamic APIs such as params must be awaited.
+  // https://nextjs.org/docs/messages/sync-dynamic-apis
+  const { slug } = await params;
   const { items } = await wixClient.items
     .query('Our-Projects')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .find();
   const project = items![0];
 
