@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "npx prettier . --write"
+    "format": "npx prettier . --write",
+    "gen:snapshots": "npx playwright test --update-snapshots"
   },
   "dependencies": {
     "@wix/data": "^1.0.308",
