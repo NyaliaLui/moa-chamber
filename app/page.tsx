@@ -1,10 +1,21 @@
-// import Link from 'next/link';
+import Link from 'next/link';
 
-// import { CarouselClient } from '@app/components/Carousel/Carousel';
-// import { WixMediaImage } from '@app/components/Image/WixMediaImage';
+import Hero from '@app/components/Hero';
+import Benefits from '@app/components/Benefits';
+import Testimonials from '@app/components/Testimonials';
+import CTA from '@app/components/CTA';
+import { CarouselClient } from '@app/components/Carousel/Carousel';
+import { WixMediaImage } from '@app/components/Image/WixMediaImage';
 
-// import testIds from '@app/utils/test-ids';
+import testIds from '@app/utils/test-ids';
 
 export default function Home() {
-  return null;
+  return (
+    <div className="mx-auto relative sm:px-20 py-2.5">
+      <Hero />
+      <Benefits />
+      <Testimonials />
+      <CTA />
+    </div>
+  );
 }
