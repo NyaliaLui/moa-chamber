@@ -1,52 +1,79 @@
-import './footer.css';
+import Link from 'next/link';
+import { BiLogoFacebookCircle } from 'react-icons/bi';
+
 import { Logo } from '@app/components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
+import navbarItems from '@app/utils/navbar-items';
+
+const groups = 3;
 
 const Footer = () => (
   <footer
-    className="m-h-56 leading-7 sm:p-14 font-site"
+    className="px-[5%] py-12 md:py-18 lg:py-20"
     data-testid={testIds.LAYOUT.FOOTER}
   >
-    <div className="flex flex-col sm:flex-row">
-      <div className="basis-2/3 bg-blue-site text-white p-14 sm:pl-44">
-        <h2 className="text-2xl sm:text-3xl font-bold">CONTACT US</h2>
-        <div className="flex flex-col sm:flex-row text-sm font-helvetica">
-          <div className="basis-1/3 border-b border-white pb-4">
-            <p className="mt-10">
-              Please reach out to us with any questions or concerns. We’re happy
-              to hear from you.
-            </p>
-            <p className="mt-10">Registered Charity: 12345-67</p>
+    <div className="container">
+      <div className="grid grid-cols-1 gap-x-[4vw] gap-y-12 border border-border-primary p-8 md:gap-y-16 md:p-12 lg:grid-cols-[1fr_0.5fr] lg:gap-y-4">
+        <div>
+          <div className="mb-6 md:mb-8">
+            <Link href="/">
+              <Logo />
+            </Link>
           </div>
-          <div className="basis-1/3"></div>
-          <div className="basis-1/2 border-b border-white pb-4">
-            <p className="mt-10">
-              500 Terry Francois Street
-              <br /> San Francisco, CA 94158
+          <div className="mb-6 md:mb-8">
+            <p className="mb-1 text-xs sm:text-sm font-semibold">Address:</p>
+            <p className="mb-5 text-xs sm:text-sm md:mb-6">
+              3675 74th St, Meriden, KS 66512
             </p>
-            <p className="mt-10">Phone: 1-800-000-0000</p>
+            <p className="mb-1 text-xs sm:text-sm font-semibold">Contact:</p>
+            <Link
+              href="tel:1800 123 4567"
+              className="block text-xs sm:text-sm underline decoration-black underline-offset-1"
+            >
+              (785) 817-8877
+            </Link>
+            <Link
+              href="mailto:meridenozawkieareachamber@gmail.com"
+              className="block text-xs sm:text-sm underline decoration-black underline-offset-1"
+            >
+              meridenozawkieareachamber@gmail.com
+            </Link>
+          </div>
+          <div className="grid grid-flow-col grid-cols-[max-content] items-start justify-start gap-x-3">
+            <Link href="https://www.facebook.com/MeridenOzawkieChamber">
+              <BiLogoFacebookCircle className="size-6" />
+            </Link>
           </div>
         </div>
-        <h3 className="text-4xl mt-10">info@mysite.com</h3>
+        <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 sm:grid-cols-2 md:gap-x-8 md:gap-y-4">
+          <ul>
+            {navbarItems.slice(0, groups).map(({ ref, label }) => (
+              <li key={ref} className="py-2 text-xs sm:text-sm font-semibold">
+                <Link href={ref}>{label}</Link>
+              </li>
+            ))}
+          </ul>
+          <ul>
+            {navbarItems.slice(groups, groups * 2).map(({ ref, label }) => (
+              <li key={ref} className="py-2 text-xs sm:text-sm font-semibold">
+                <Link href={ref}>{label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <div className="basis-1/3 bg-gray-200 p-14 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold">BE THE FIRST TO KNOW</h2>
-        <p className="mt-6">Sign up to our newsletter to stay informed</p>
-        <input
-          type="email"
-          className="my-6 w-3/4 block mx-auto bg-transparent border-0 border-b border-blue-site text-blue-site"
-          placeholder="Email Address"
-        />
-        <a href="" className="text-purple-site py-6 font-site">
-          Subscribe Now
-        </a>
+      <div className="flex flex-col-reverse items-start justify-between pb-4 pt-6 text-xs sm:text-sm md:flex-row md:items-center md:pb-0 md:pt-8">
+        <p className="mt-8 md:mt-0">
+          © 2025 Meriden-Ozawkie Area Chamber of Commerce. All rights reserved.
+        </p>
+        <ul className="grid grid-flow-row grid-cols-[max-content] justify-center gap-y-4 text-xs sm:text-sm md:grid-flow-col md:gap-x-6 md:gap-y-0">
+          <li className="underline">
+            <a href="https://www.nyaliasoftware.solutions/">
+              Built by Nyalia&apos;s Software Solutions
+            </a>
+          </li>
+        </ul>
       </div>
-    </div>
-    <div className="mx-auto text-center sm:text-xs mt-6">
-      <Logo />
-      <p className="font-default mb-10">
-        © 2035 ChoosEquality. Powered and secured by Wix
-      </p>
     </div>
   </footer>
 );
