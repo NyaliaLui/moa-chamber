@@ -1,0 +1,44 @@
+import testIds from '@app/utils/test-ids';
+import MemberCard from '@app/components/Directory/MemberCard';
+import { getWixClient } from '@app/hooks/useWixClientServer';
+
+export default async function Projects() {
+  const wixClient = await getWixClient();
+  const { items } = await wixClient.items.query('Our-Projects').find();
+
+  return (
+    <section className="px-[5%]">
+      <div className="container">
+        <div className="mb-6 md:mb-9 lg:mb-10">
+          <div className="mx-auto max-w-lg text-center">
+            <h1
+              className="mt-3 text-3xl font-bold md:mt-4"
+              data-testid={testIds.PROJECTS_PAGE.HEADER}
+            >
+              Our Members
+            </h1>
+            <p className="mt-5 text-lg md:mt-6">
+              Discover local businesses that drive our community's economic
+              strength and collaboration.
+            </p>
+          </div>
+        </div>
+        <div
+          className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12"
+          data-testid={testIds.PROJECTS_PAGE.PROJECT_LIST}
+        >
+          {items!.map((item) => (
+            <MemberCard
+              key={item._id}
+              media={item.cover}
+              name={item.title}
+              address={item.address}
+              slug={item.slug}
+            />
+          ))}
+        </div>
+        <div className="mt-14 flex justify-center md:mt-20 lg:mt-24" />
+      </div>
+    </section>
+  );
+}
