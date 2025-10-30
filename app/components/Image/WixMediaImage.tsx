@@ -2,7 +2,11 @@ import { media as wixMedia } from '@wix/sdk';
 import Image, { ImageProps } from 'next/image';
 import { PLACEHOLDER_IMAGE } from '@app/constants';
 
-function getImageUrlForMedia(media: string, width: number, height: number) {
+export function getImageUrlForMedia(
+  media: string,
+  width: number,
+  height: number,
+) {
   if (media.startsWith('wix:image')) {
     return wixMedia.getScaledToFillImageUrl(media, width, height, {});
   } else {
