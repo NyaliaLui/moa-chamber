@@ -8,7 +8,7 @@ export function getImageUrlForMedia(
   height: number,
 ) {
   if (media.startsWith('wix:image')) {
-    return wixMedia.getScaledToFillImageUrl(media, width, height, {});
+    return wixMedia.getImageUrl(media).url;
   } else {
     return media;
   }
