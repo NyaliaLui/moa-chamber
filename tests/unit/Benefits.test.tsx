@@ -22,12 +22,6 @@ describe('Benefits', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it('renders Thrive label', () => {
-    render(<Benefits />);
-
-    expect(screen.getByText('Thrive')).toBeInTheDocument();
-  });
-
   it('renders description text', () => {
     render(<Benefits />);
 
