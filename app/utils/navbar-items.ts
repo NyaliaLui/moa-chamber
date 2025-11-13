@@ -4,6 +4,12 @@ const navbarItems = [
   { ref: '/news', label: 'News', color: '', outline: false },
   { ref: '/about', label: 'About Us', color: '', outline: false },
   {
+    ref: '/resources',
+    label: 'Community Resources',
+    color: '',
+    outline: false,
+  },
+  {
     ref: 'https://www.paypal.com/ncp/payment/7TMP7X7UP7TLS',
     label: 'Pay Fees',
     color: 'dark',
