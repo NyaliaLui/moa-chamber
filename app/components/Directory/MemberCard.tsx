@@ -26,7 +26,7 @@ const MemberCard = ({
     >
       <div className="mb-3 aspect-[5/6] md:mb-4">
         <Image
-          src={getImageUrlForMedia(media, 500, 320)}
+          src={getImageUrlForMedia(media)}
           alt={name}
           className="size-full object-cover"
           width={500}

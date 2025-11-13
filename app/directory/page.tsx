@@ -18,7 +18,7 @@ export default async function Projects() {
               Our Members
             </h1>
             <p className="mt-5 text-lg md:mt-6">
-              Discover local businesses that drive our community's economic
+              Discover local businesses that drive our community&apos;s economic
               strength and collaboration.
             </p>
           </div>

@@ -32,7 +32,7 @@ export default async function New({ params }: any) {
   const { items } = await wixClient.items.query('News').eq('slug', slug).find();
   const item = items![0];
 
-  const authorImgSrc = getImageUrlForMedia(item.authorImage, 400, 400);
+  const authorImgSrc = getImageUrlForMedia(item.authorImage);
 
   return (
     <section
@@ -80,9 +80,11 @@ export default async function New({ params }: any) {
             <Fragment>
               <p>{item.longDescription}</p>
               <figure>
-                <img
+                <Image
                   src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
                   alt="Relume placeholder image"
+                  width={1280}
+                  height={720}
                 />
                 <figcaption>{item.caption}</figcaption>
               </figure>
@@ -108,7 +110,7 @@ export default async function New({ params }: any) {
         {item.gallery?.map((image: any, i: number) => (
           <div key={i} className="block w-full">
             <Image
-              src={getImageUrlForMedia(image.src, 400, 400)}
+              src={getImageUrlForMedia(image.src)}
               alt={`gallery img-${i}`}
               className="size-full object-cover"
               width={70}

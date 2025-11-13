@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from 'flowbite-react';
 import { RxChevronRight } from 'react-icons/rx';
 import Link from 'next/link';
 import Image from 'next/image';

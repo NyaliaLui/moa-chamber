@@ -10,7 +10,7 @@ import '@testing-library/jest-dom';
 describe('getImageUrlForMedia', () => {
   it('returns Wix URL for wix:image media', () => {
     const media = 'wix:image://v1/test-image.jpg';
-    const result = getImageUrlForMedia(media, 500, 320);
+    const result = getImageUrlForMedia(media);
 
     expect(result).toContain('static.wixstatic.com/media');
     expect(result).toContain('test-image.jpg');
@@ -18,14 +18,14 @@ describe('getImageUrlForMedia', () => {
 
   it('returns original URL for non-Wix media', () => {
     const media = 'https://example.com/image.jpg';
-    const result = getImageUrlForMedia(media, 500, 320);
+    const result = getImageUrlForMedia(media);
 
     expect(result).toBe('https://example.com/image.jpg');
   });
 
   it('returns original path for relative paths', () => {
     const media = '/images/local-image.jpg';
-    const result = getImageUrlForMedia(media, 500, 320);
+    const result = getImageUrlForMedia(media);
 
     expect(result).toBe('/images/local-image.jpg');
   });
@@ -33,16 +33,16 @@ describe('getImageUrlForMedia', () => {
   it('handles different width and height parameters', () => {
     const media = 'wix:image://v1/test.jpg';
 
-    const result1 = getImageUrlForMedia(media, 100, 200);
+    const result1 = getImageUrlForMedia(media);
     expect(result1).toContain('static.wixstatic.com/media');
 
-    const result2 = getImageUrlForMedia(media, 1000, 800);
+    const result2 = getImageUrlForMedia(media);
     expect(result2).toContain('static.wixstatic.com/media');
   });
 
   it('handles empty string media', () => {
     const media = '';
-    const result = getImageUrlForMedia(media, 500, 320);
+    const result = getImageUrlForMedia(media);
 
     expect(result).toBe('');
   });

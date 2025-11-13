@@ -2,11 +2,7 @@ import { media as wixMedia } from '@wix/sdk';
 import Image, { ImageProps } from 'next/image';
 import { PLACEHOLDER_IMAGE } from '@app/constants';
 
-export function getImageUrlForMedia(
-  media: string,
-  width: number,
-  height: number,
-) {
+export function getImageUrlForMedia(media: string) {
   if (media.startsWith('wix:image')) {
     return wixMedia.getImageUrl(media).url;
   } else {
@@ -33,9 +29,7 @@ export function WixMediaImage({
   disableZoom?: boolean;
   objectFit?: 'cover' | 'contain';
 }) {
-  const imageUrl = media
-    ? getImageUrlForMedia(media || '', width, height)
-    : PLACEHOLDER_IMAGE;
+  const imageUrl = media ? getImageUrlForMedia(media || '') : PLACEHOLDER_IMAGE;
 
   const styleProps: Partial<ImageProps> = {
     ...(objectFit

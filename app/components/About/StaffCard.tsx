@@ -30,7 +30,7 @@ const StaffCard = ({
   };
 
   if (image.startsWith('wix:image://v1')) {
-    imgInfo.src = getImageUrlForMedia(image, 256, 128);
+    imgInfo.src = getImageUrlForMedia(image);
     imgInfo.width = 256;
     imgInfo.height = 128;
   }

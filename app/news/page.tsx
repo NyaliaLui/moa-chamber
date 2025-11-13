@@ -2,7 +2,6 @@ import NewsCard from '@app/components/News/NewsCard';
 
 import { getWixClient } from '@app/hooks/useWixClientServer';
 import { getImageUrlForMedia } from '@app/components/Image/WixMediaImage';
-import testIds from '@app/utils/test-ids';
 
 export default async function News() {
   const wixClient = await getWixClient();
@@ -25,7 +24,7 @@ export default async function News() {
             {items!.map((item) => (
               <NewsCard
                 key={item._id}
-                image={getImageUrlForMedia(item.image, 100, 200)}
+                image={getImageUrlForMedia(item.image)}
                 heading={item.title}
                 description={item.shortDescription}
                 slug={item.slug}

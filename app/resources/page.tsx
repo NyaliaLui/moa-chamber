@@ -1,7 +1,3 @@
-import Form from 'next/form';
-
-import BenefitCard from '@app/components/Join/BenefitCard';
-
 export default function Resources() {
   return (
     <section className="px-[5%] mt-16">
@@ -15,7 +11,7 @@ export default function Resources() {
               <p className="text-center md:text-md">
                 Explore the hidden gems and landmarks that tell the story of
                 Meriden and Ozawkie. Each location offers a unique glimpse into
-                our community's spirit.
+                our community&apos;s spirit.
               </p>
             </div>
           </div>

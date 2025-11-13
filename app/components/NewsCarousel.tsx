@@ -24,7 +24,7 @@ const NewsCarousel = async () => {
           {items!.map((item) => (
             <NewsCarouselCard
               key={item._id}
-              image={getImageUrlForMedia(item.image, 100, 200)}
+              image={getImageUrlForMedia(item.image)}
               heading={item.title}
               description={item.shortDescription}
               href={`/news/${item.slug}`}
