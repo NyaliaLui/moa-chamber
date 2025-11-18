@@ -1,6 +1,7 @@
 import { getWixClient } from '@app/hooks/useWixClientServer';
 import StaffCard from '@app/components/About/StaffCard';
 import BoardMemberCard from '@app/components/About/BoardMemberCard';
+import CTA from '@app/components/CTA';
 import testIds from '@app/utils/test-ids';
 
 export default async function About() {
@@ -65,6 +66,7 @@ export default async function About() {
         </div>
         <div className="mt-14 w-full max-w-md md:mt-20 lg:mt-24" />
       </div>
+      <CTA />
     </section>
   );
 }

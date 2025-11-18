@@ -1,4 +1,5 @@
 import testIds from '@app/utils/test-ids';
+import CTA from '@app/components/CTA';
 import MemberCard from '@app/components/Directory/MemberCard';
 import { getWixClient } from '@app/hooks/useWixClientServer';
 
@@ -39,6 +40,7 @@ export default async function Projects() {
         </div>
         <div className="mt-14 flex justify-center md:mt-20 lg:mt-24" />
       </div>
+      <CTA />
     </section>
   );
 }
