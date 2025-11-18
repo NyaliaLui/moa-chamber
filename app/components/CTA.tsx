@@ -13,7 +13,12 @@ const CTA = () => {
           entrepreneurs.
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-          <Button color="dark" size="lg" data-testid="cta-apply-btn">
+          <Button
+            color="dark"
+            size="lg"
+            data-testid="cta-apply-btn"
+            href="/join"
+          >
             Apply now
           </Button>
         </div>

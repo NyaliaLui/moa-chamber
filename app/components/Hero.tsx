@@ -23,7 +23,7 @@ const Hero = () => {
               <Button size="lg" href="/join">
                 Join Us
               </Button>
-              <Button color="dark" size="lg" outline>
+              <Button color="dark" size="lg" outline href="/about">
                 Who we are
               </Button>
             </div>
