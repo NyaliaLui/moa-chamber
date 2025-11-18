@@ -57,7 +57,7 @@ export default async function New({ params }: any) {
         </div>
         <div className="mx-auto mb-8 w-full overflow-hidden md:mb-12 lg:mb-8">
           <Image
-            src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+            src={getImageUrlForMedia(item.image)}
             className="aspect-[5/2] size-full object-cover"
             alt="Relume placeholder image"
             width={70}
@@ -81,7 +81,7 @@ export default async function New({ params }: any) {
               <p>{item.longDescription}</p>
               <figure>
                 <Image
-                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
+                  src={getImageUrlForMedia(item.image)}
                   alt="Relume placeholder image"
                   width={1280}
                   height={720}
