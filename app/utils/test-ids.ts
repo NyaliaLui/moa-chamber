@@ -29,6 +29,9 @@ const ids = {
   NEWS_DETAILS_PAGE: {
     CONTAINER: 'news-details-page.container',
   },
+  RESOURCES: {
+    CULTURE_BOX: 'culture-box',
+  },
 };
 
 export default ids;

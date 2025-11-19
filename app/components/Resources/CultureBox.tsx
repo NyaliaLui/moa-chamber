@@ -4,6 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from 'flowbite-react';
 
+import testIds from '@app/utils/test-ids';
+
 interface CultureBoxProps {
   heading: string;
   description: string;
@@ -22,7 +24,10 @@ const CultureBox = ({
   imageAlt = 'Culture box image',
 }: CultureBoxProps) => {
   return (
-    <div className="grid auto-cols-fr grid-cols-1 border-b border-l border-r border-gray-300 bg-gray-300 lg:grid-cols-2">
+    <div
+      className="grid auto-cols-fr grid-cols-1 border-b border-l border-r border-gray-300 bg-gray-300 lg:grid-cols-2"
+      data-testid={testIds.RESOURCES.CULTURE_BOX}
+    >
       <div className="flex flex-col justify-center items-start p-8 md:p-12">
         <h2 className="mb-5 text-2xl font-bold md:mb-6">{heading}</h2>
         <p className="text-md mb-6 md:mb-8">{description}</p>
