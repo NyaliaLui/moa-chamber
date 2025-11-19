@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { BiLogoFacebookCircle } from 'react-icons/bi';
 
 import { Logo } from '@app/components/Logo/Logo';
+import { NAVBAR_ITEMS } from '@app/constants';
 import testIds from '@app/utils/test-ids';
-import navbarItems from '@app/utils/navbar-items';
 
 const groups = 3;
 
@@ -47,16 +47,16 @@ const Footer = () => (
         </div>
         <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 sm:grid-cols-2 md:gap-x-8 md:gap-y-4">
           <ul>
-            {navbarItems.slice(0, groups).map(({ ref, label }) => (
-              <li key={ref} className="py-2 text-xs sm:text-sm font-semibold">
-                <Link href={ref}>{label}</Link>
+            {NAVBAR_ITEMS.slice(0, groups).map(({ href, label }) => (
+              <li key={href} className="py-2 text-xs sm:text-sm font-semibold">
+                <Link href={href}>{label}</Link>
               </li>
             ))}
           </ul>
           <ul>
-            {navbarItems.slice(groups, groups * 2).map(({ ref, label }) => (
-              <li key={ref} className="py-2 text-xs sm:text-sm font-semibold">
-                <Link href={ref}>{label}</Link>
+            {NAVBAR_ITEMS.slice(groups, groups * 2).map(({ href, label }) => (
+              <li key={href} className="py-2 text-xs sm:text-sm font-semibold">
+                <Link href={href}>{label}</Link>
               </li>
             ))}
           </ul>

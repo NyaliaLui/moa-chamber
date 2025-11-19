@@ -1,12 +1,14 @@
 import Image from 'next/image';
 
+import { LOGO_IMAGE } from '@app/constants';
+
 export const Logo = () => {
   return (
     <Image
-      src="https://d22po4pjz3o32e.cloudfront.net/logo-image.svg"
+      src={LOGO_IMAGE.light}
       alt="MOA Chamber Logo"
-      width={70}
-      height={36}
+      width={28}
+      height={32}
     />
   );
 };
