@@ -4,13 +4,11 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from 'flowbite-react';
 
-import { PLACEHOLDER_IMAGE } from '@app/constants';
-
-const Hero = () => {
+const Hero = ({ image }: { image: string }) => {
   return (
-    <section className="px-[5%]">
-      <div className="container">
-        <div className="grid auto-cols-fr grid-cols-1 border border-border-primary lg:grid-cols-2">
+    <>
+      <div className="px-[5%] container">
+        <div className="grid auto-cols-fr grid-cols-1 border lg:grid-cols-2 bg-gray-100 border-gray-300">
           <div className="flex text-2xl flex-col justify-center p-8 md:p-12">
             <h1 className="mb-5 font-bold md:mb-6">
               Empowering businesses in Meriden and Ozawkie
@@ -19,18 +17,24 @@ const Hero = () => {
               We connect local entrepreneurs and support economic growth. Join
               our community and unlock opportunities for your business.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-              <Button size="lg" href="/join">
+            <div className="mt-6 flex flex-col gap-4 md:mt-8 md:flex-row md:items-center">
+              <Button size="lg" href="/join" className="w-full md:w-auto">
                 Join Us
               </Button>
-              <Button color="dark" size="lg" outline href="/about">
+              <Button
+                color="dark"
+                size="lg"
+                outline
+                href="/about"
+                className="w-full md:w-auto"
+              >
                 Who we are
               </Button>
             </div>
           </div>
           <div className="flex items-center justify-center">
             <Image
-              src={PLACEHOLDER_IMAGE}
+              src={image}
               className="w-full object-cover"
               alt="Hero image"
               width={1000}
@@ -39,7 +43,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 };
 

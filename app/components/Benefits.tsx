@@ -3,41 +3,40 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from 'flowbite-react';
-import { PLACEHOLDER_IMAGE } from '@app/constants';
 
-const BenfitsCard = ({
-  heading,
-  desc,
-  label,
-}: {
+export interface Benefit {
+  id: string;
   heading: string;
-  desc: string;
+  description: string;
   label: string;
-}) => {
+  image: string;
+}
+
+const BenefitCard = ({ benefit }: { benefit: Benefit }) => {
   return (
-    <div className="flex flex-col border border-border-primary">
+    <div className="flex flex-col border bg-gray-100 border-gray-300">
       <div className="flex w-full flex-col items-center justify-center self-start">
         <Image
-          src={PLACEHOLDER_IMAGE}
-          alt={`Benefits ${label} img`}
+          src={benefit.image}
+          alt={`Benefits ${benefit.label} img`}
           width={1000}
           height={1000}
         />
       </div>
       <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
         <div>
-          <p className="mb-2 font-semibold">{label}</p>
+          <p className="mb-2 font-semibold">{benefit.label}</p>
           <h2 className="mb-3 text-xl font-bold md:mb-4 md:leading-[1.3]">
-            {heading}
+            {benefit.heading}
           </h2>
-          <p>{desc}</p>
+          <p>{benefit.description}</p>
         </div>
       </div>
     </div>
   );
 };
 
-const Benefits = () => {
+const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
   return (
     <section className="px-[5%] mt-16">
       <div className="container">
@@ -50,25 +49,13 @@ const Benefits = () => {
           </p>
         </div>
         <div className="grid auto-cols-fr grid-cols-1 gap-6 md:gap-8 lg:grid-cols-3">
-          <BenfitsCard
-            heading="Amplify your business visibility"
-            desc="Showcase your brand through chamber-sponsored events"
-            label="Promote"
-          />
-          <BenfitsCard
-            heading="Build powerful business relationships"
-            desc="Create meaningful partnerships that drive local economic growth"
-            label="Connect"
-          />
-          <BenfitsCard
-            heading="Contribute to community development"
-            desc="Make a lasting impact through collaborative local initiatives"
-            label="Serve"
-          />
+          {benefitsData.map((benefit) => (
+            <BenefitCard key={benefit.id} benefit={benefit} />
+          ))}
         </div>
       </div>
-      <div className="my-4 justify-center items-center gap-4 md:mt-8">
-        <Button color="dark" size="lg" data-testid="benefits-join-btn">
+      <div className="my-4 flex justify-center items-center gap-4 md:mt-8">
+        <Button color="dark" size="lg" outline data-testid="benefits-join-btn">
           Join the chamber
         </Button>
       </div>

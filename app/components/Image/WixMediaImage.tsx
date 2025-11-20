@@ -1,4 +1,4 @@
-import { media as wixMedia } from '@wix/sdk';
+import { WixClient, media as wixMedia } from '@wix/sdk';
 import Image, { ImageProps } from 'next/image';
 import { PLACEHOLDER_IMAGE } from '@app/constants';
 
@@ -8,6 +8,16 @@ export function getImageUrlForMedia(media: string) {
   } else {
     return media;
   }
+}
+
+export async function getCollectionImage(
+  client: WixClient,
+  collectionId: string,
+  defaultO: { image: string },
+) {
+  const { items } = await client.items.query(collectionId).limit(1).find();
+  const raw = items.length > 0 ? items![0] : defaultO;
+  return raw.image ? getImageUrlForMedia(raw.image) : defaultO.image;
 }
 
 export function WixMediaImage({

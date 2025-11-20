@@ -2,10 +2,17 @@ import testIds from '@app/utils/test-ids';
 import CTA from '@app/components/CTA';
 import MemberCard from '@app/components/Directory/MemberCard';
 import { getWixClient } from '@app/hooks/useWixClientServer';
+import { getCollectionImage } from '@app/components/Image/WixMediaImage';
+import { DEFAULTS } from '@app/constants';
 
 export default async function Projects() {
   const wixClient = await getWixClient();
   const { items } = await wixClient.items.query('Our-Projects').find();
+  const ctaImage = await getCollectionImage(
+    wixClient,
+    'TestCTA',
+    DEFAULTS.home.cta,
+  );
 
   return (
     <section className="px-[5%]">
@@ -40,7 +47,7 @@ export default async function Projects() {
         </div>
         <div className="mt-14 flex justify-center md:mt-20 lg:mt-24" />
       </div>
-      <CTA />
+      <CTA image={ctaImage} />
     </section>
   );
 }

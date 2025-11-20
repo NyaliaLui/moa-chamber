@@ -19,6 +19,27 @@ export const NAVBAR_ITEMS = [
 export const PAYPAL_URL = 'https://www.paypal.com/ncp/payment/7TMP7X7UP7TLS';
 
 export const DEFAULTS = {
+  home: {
+    hero: {
+      image: PLACEHOLDER_IMAGE,
+    },
+    benefit: {
+      heading: 'Sample Heading',
+      description: 'Sample description',
+      label: 'Sample',
+      image: PLACEHOLDER_IMAGE,
+    },
+    testimonial: {
+      quote: 'Sample testimonial quote',
+      name: 'Sample Name',
+      businessName: 'Sample Business',
+      businessRole: 'Sample Role',
+      image: PLACEHOLDER_IMAGE,
+    },
+    cta: {
+      image: PLACEHOLDER_IMAGE,
+    },
+  },
   resources: {
     culture: {
       name: 'Sample Landmark',

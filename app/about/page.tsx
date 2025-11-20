@@ -3,6 +3,8 @@ import StaffCard from '@app/components/About/StaffCard';
 import BoardMemberCard from '@app/components/About/BoardMemberCard';
 import CTA from '@app/components/CTA';
 import testIds from '@app/utils/test-ids';
+import { getCollectionImage } from '@app/components/Image/WixMediaImage';
+import { DEFAULTS } from '@app/constants';
 
 export default async function About() {
   const wixClient = await getWixClient();
@@ -10,6 +12,12 @@ export default async function About() {
   const { items: volunteers } = await wixClient.items
     .query('Volunteers')
     .find();
+  const ctaImage = await getCollectionImage(
+    wixClient,
+    'TestCTA',
+    DEFAULTS.home.cta,
+  );
+
   return (
     <section
       className="px-[5%] mt-16"
@@ -66,7 +74,7 @@ export default async function About() {
         </div>
         <div className="mt-14 w-full max-w-md md:mt-20 lg:mt-24" />
       </div>
-      <CTA />
+      <CTA image={ctaImage} />
     </section>
   );
 }

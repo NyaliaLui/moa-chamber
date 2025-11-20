@@ -1,9 +1,17 @@
 import CTA from '@app/components/CTA';
+import { getCollectionImage } from '@app/components/Image/WixMediaImage';
+import { DEFAULTS } from '@app/constants';
 import { getWixClient } from '@app/hooks/useWixClientServer';
 
 export default async function Calendar() {
   const wixClient = await getWixClient();
   const { items } = await wixClient.items.query('TestCalendar').find();
+  const ctaImage = await getCollectionImage(
+    wixClient,
+    'TestCTA',
+    DEFAULTS.home.cta,
+  );
+
   return (
     <section className="px-[5%] mt-16">
       <div className="container mx-auto max-w-lg text-center">
@@ -24,7 +32,7 @@ export default async function Calendar() {
           ></iframe>
         ))}
       </div>
-      <CTA />
+      <CTA image={ctaImage} />
     </section>
   );
 }

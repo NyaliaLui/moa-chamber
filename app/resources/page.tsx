@@ -7,7 +7,10 @@ import BusinessBox, {
 import CTA from '@app/components/CTA';
 import { DEFAULTS } from '@app/constants';
 import { getWixClient } from '@app/hooks/useWixClientServer';
-import { getImageUrlForMedia } from '@app/components/Image/WixMediaImage';
+import {
+  getCollectionImage,
+  getImageUrlForMedia,
+} from '@app/components/Image/WixMediaImage';
 
 export default async function Resources() {
   const wixClient = await getWixClient();
@@ -17,6 +20,11 @@ export default async function Resources() {
   const { items: businessResourcesRaw } = await wixClient.items
     .query('BusinessResources')
     .find();
+  const ctaImage = await getCollectionImage(
+    wixClient,
+    'TestCTA',
+    DEFAULTS.home.cta,
+  );
 
   // Convert Wix data to TabContent type
   const tabsData: TabContent[] = cultureResourcesRaw.map((item) => ({
@@ -78,7 +86,7 @@ export default async function Resources() {
           <BusinessBox businessesData={businessesData} />
         </div>
       </div>
-      <CTA />
+      <CTA image={ctaImage} />
     </section>
   );
 }

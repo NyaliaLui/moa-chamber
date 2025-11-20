@@ -3,10 +3,13 @@
 import React from 'react';
 import { Button } from 'flowbite-react';
 
-const CTA = () => {
+const CTA = ({ image }: { image: string }) => {
   return (
-    <section className="px-[5%] mt-16">
-      <div className="container text-center">
+    <>
+      <div
+        className="container text-center text-white px-[5%] mt-16 bg-cover bg-center bg-no-repeat py-12 md:py-18"
+        style={{ backgroundImage: `url(${image})` }}
+      >
         <h1 className="mb-2 text-2xl font-bold md:mb-3">Join the Chamber</h1>
         <p className="text-md">
           Unlock opportunities for your business and connect with local
@@ -23,7 +26,7 @@ const CTA = () => {
           </Button>
         </div>
       </div>
-    </section>
+    </>
   );
 };
 
