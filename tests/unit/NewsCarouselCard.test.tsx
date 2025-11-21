@@ -1,4 +1,5 @@
-import NewsCarouselCard from '@app/components/Carousel/NewsCarouselCard';
+import NewsCarouselCard from '@app/components/News/NewsCarouselCard';
+import testIds from '@app/utils/test-ids';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -7,7 +8,11 @@ describe('NewsCarouselCard', () => {
   const mockProps = {
     image: '/test-image.jpg',
     heading: 'Test News Heading',
-    description: 'Test news description content',
+    subHeading: 'Test news description content',
+    authorImage: '/test-author.jpg',
+    authorName: 'John Doe',
+    publishDate: '2024-01-15',
+    readTime: '5',
     href: '/news/test-article',
   };
 
@@ -15,15 +20,24 @@ describe('NewsCarouselCard', () => {
     render(<NewsCarouselCard {...mockProps} />);
 
     expect(screen.getByText(mockProps.heading)).toBeInTheDocument();
-    expect(screen.getByText(mockProps.description)).toBeInTheDocument();
+    expect(screen.getByText(mockProps.subHeading)).toBeInTheDocument();
+    expect(screen.getByText(mockProps.authorName)).toBeInTheDocument();
   });
 
-  it('renders the image with correct src and alt attributes', () => {
+  it('renders the main image with correct alt attributes', () => {
     render(<NewsCarouselCard {...mockProps} />);
 
     const image = screen.getByAltText(mockProps.heading);
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute('alt', mockProps.heading);
+  });
+
+  it('renders the author image with correct alt attributes', () => {
+    render(<NewsCarouselCard {...mockProps} />);
+
+    const authorImage = screen.getByAltText(mockProps.authorName);
+    expect(authorImage).toBeInTheDocument();
+    expect(authorImage).toHaveAttribute('alt', mockProps.authorName);
   });
 
   it('renders a link with correct href', () => {
@@ -42,12 +56,28 @@ describe('NewsCarouselCard', () => {
     expect(heading).toHaveTextContent(mockProps.heading);
   });
 
-  it('renders description text', () => {
+  it('renders subHeading text', () => {
     render(<NewsCarouselCard {...mockProps} />);
 
-    const description = screen.getByText(mockProps.description);
-    expect(description).toBeInTheDocument();
-    expect(description.tagName).toBe('P');
+    const subHeading = screen.getByText(mockProps.subHeading);
+    expect(subHeading).toBeInTheDocument();
+    expect(subHeading.tagName).toBe('P');
+  });
+
+  it('renders author information', () => {
+    render(<NewsCarouselCard {...mockProps} />);
+
+    const authorSection = screen.getByTestId(
+      testIds.HOME_PAGE.NEWS_CAROUSEL_CARD_AUTHOR,
+    );
+    expect(authorSection).toBeInTheDocument();
+    expect(screen.getByText(mockProps.authorName)).toBeInTheDocument();
+  });
+
+  it('renders read time with correct format', () => {
+    render(<NewsCarouselCard {...mockProps} />);
+
+    expect(screen.getByText('5 min read')).toBeInTheDocument();
   });
 
   it('applies correct CSS classes for layout', () => {

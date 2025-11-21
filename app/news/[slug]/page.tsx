@@ -9,22 +9,7 @@ import { RxChevronLeft } from 'react-icons/rx';
 import { HR } from 'flowbite-react';
 
 import testIds from '@app/utils/test-ids';
-
-function DateDisplay({ dateString }: { dateString: string }) {
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-
-    const options: Intl.DateTimeFormatOptions = {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    };
-
-    return date.toLocaleDateString('en-GB', options);
-  };
-
-  return <p className="font-medium">{formatDate(dateString)}</p>;
-}
+import { DateDisplay } from '@app/components/News/DateDisplay';
 
 export default async function New({ params }: any) {
   const wixClient = await getWixClient();
@@ -53,7 +38,7 @@ export default async function New({ params }: any) {
               {item.readTime}min read
             </p>
           </div>
-          <h1 className="text-5xl font-bold">{item.title}</h1>
+          <h1 className="text-5xl font-bold">{item.heading}</h1>
         </div>
         <div className="mx-auto mb-8 w-full overflow-hidden md:mb-12 lg:mb-8">
           <Image

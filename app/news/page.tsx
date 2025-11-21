@@ -25,8 +25,8 @@ export default async function News() {
               <NewsCard
                 key={item._id}
                 image={getImageUrlForMedia(item.image)}
-                heading={item.title}
-                description={item.shortDescription}
+                heading={item.heading}
+                description={item.subHeading}
                 slug={item.slug}
                 readTimeM={item.readTime}
               />

@@ -39,6 +39,15 @@ export const DEFAULTS = {
     cta: {
       image: PLACEHOLDER_IMAGE,
     },
+    news: {
+      heading: 'Sample News Heading',
+      subHeading: 'Sample news description',
+      authorName: 'Sample Author',
+      publishDate: 'Jan 1, 2024',
+      readTime: '5 min read',
+      image: PLACEHOLDER_IMAGE,
+      authorImage: PLACEHOLDER_IMAGE,
+    },
   },
   resources: {
     culture: {

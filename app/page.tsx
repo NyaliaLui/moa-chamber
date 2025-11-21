@@ -5,7 +5,7 @@ import {
 } from '@app/components/Image/WixMediaImage';
 
 import Hero from '@app/components/Hero';
-import NewsCarousel from '@app/components/NewsCarousel';
+import NewsCarousel, { NewsArticle } from '@app/components/NewsCarousel';
 import Benefits, { Benefit } from '@app/components/Benefits';
 import Testimonials, { Testimonial } from '@app/components/Testimonials';
 import { DEFAULTS } from '@app/constants';
@@ -29,6 +29,7 @@ export default async function Home() {
     'TestCTA',
     DEFAULTS.home.cta,
   );
+  const { items: newsRaw } = await wixClient.items.query('News').find();
 
   const benefitsData: Benefit[] = benefitsRaw.map((item) => ({
     id: item._id,
@@ -51,10 +52,26 @@ export default async function Home() {
       : DEFAULTS.home.testimonial.image,
   }));
 
+  const newsData: NewsArticle[] = newsRaw.map((item) => ({
+    id: item._id,
+    heading: item?.heading || DEFAULTS.home.news.heading,
+    subHeading: item?.subHeading || DEFAULTS.home.news.subHeading,
+    authorName: item?.authorName || DEFAULTS.home.news.authorName,
+    publishDate: item?.publishDate || DEFAULTS.home.news.publishDate,
+    readTime: item?.readTime || DEFAULTS.home.news.readTime,
+    image: item.image
+      ? getImageUrlForMedia(item.image)
+      : DEFAULTS.home.news.image,
+    authorImage: item.authorImage
+      ? getImageUrlForMedia(item.authorImage)
+      : DEFAULTS.home.news.authorImage,
+    href: `/news/${item.slug}`,
+  }));
+
   return (
     <div className="mx-auto relative sm:px-20 py-2.5">
       <Hero image={heroImage} />
-      <NewsCarousel />
+      <NewsCarousel newsArticles={newsData} />
       <Benefits benefitsData={benefitsData} />
       <Testimonials testimonialsData={testimonialsData} />
       <CTA image={ctaImage} />
