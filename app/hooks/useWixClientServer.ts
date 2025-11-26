@@ -1,4 +1,10 @@
-import { createClient, OAuthStrategy } from '@wix/sdk';
+import {
+  createClient,
+  IOAuthStrategy,
+  OAuthStrategy,
+  WixClient,
+} from '@wix/sdk';
+
 import { items } from '@wix/data';
 export const getWixClient = async () => {
   const wixClient = createClient({
@@ -9,3 +15,11 @@ export const getWixClient = async () => {
   wixClient.auth.setTokens(tokens);
   return wixClient;
 };
+
+export type WixClientWithItems = WixClient<
+  undefined,
+  IOAuthStrategy,
+  {
+    items: typeof items;
+  }
+>;

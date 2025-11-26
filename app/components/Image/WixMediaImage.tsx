@@ -1,6 +1,7 @@
-import { WixClient, media as wixMedia } from '@wix/sdk';
+import { media as wixMedia } from '@wix/sdk';
 import Image, { ImageProps } from 'next/image';
 import { PLACEHOLDER_IMAGE } from '@app/constants';
+import type { WixClientWithItems } from '@app/hooks/useWixClientServer';
 
 export function getImageUrlForMedia(media: string) {
   if (media.startsWith('wix:image')) {
@@ -11,7 +12,7 @@ export function getImageUrlForMedia(media: string) {
 }
 
 export async function getCollectionImage(
-  client: WixClient,
+  client: WixClientWithItems,
   collectionId: string,
   defaultO: { image: string },
 ) {
