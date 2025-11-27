@@ -1,5 +1,5 @@
 import NewsCarouselCard from '@app/components/News/NewsCarouselCard';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';

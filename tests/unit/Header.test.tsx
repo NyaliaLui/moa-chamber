@@ -1,6 +1,6 @@
 import Header from '@app/components/Layout/Header';
 import { NAVBAR_ITEMS, PAYPAL_URL } from '@app/constants';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';

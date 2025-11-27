@@ -4,7 +4,17 @@ import Link from 'next/link';
 import { BiLogoLinkedinSquare } from 'react-icons/bi';
 import { FaXTwitter } from 'react-icons/fa6';
 
-import { getImageUrlForMedia } from '@app/components/Image/WixMediaImage';
+import { getImageUrlForMedia } from '@app/hooks/Wix';
+
+export interface StaffCardProps {
+  name: string;
+  image: string;
+  role: string;
+  email: string;
+  bio: string;
+  linkedIn: string;
+  twitter: string;
+}
 
 const StaffCard = ({
   name,
@@ -14,15 +24,7 @@ const StaffCard = ({
   bio,
   linkedIn,
   twitter,
-}: {
-  name: string;
-  image: string;
-  role: string;
-  email: string;
-  bio: string;
-  linkedIn: string;
-  twitter: string;
-}) => {
+}: StaffCardProps) => {
   const imgInfo = {
     src: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
     width: 70,

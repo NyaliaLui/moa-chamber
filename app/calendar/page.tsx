@@ -1,16 +1,8 @@
 import CTA from '@app/components/CTA';
-import { getCollectionImage } from '@app/components/Image/WixMediaImage';
-import { DEFAULTS } from '@app/constants';
-import { getWixClient } from '@app/hooks/useWixClientServer';
+import { wix } from '@app/hooks/Wix';
 
 export default async function Calendar() {
-  const wixClient = await getWixClient();
-  const { items } = await wixClient.items.query('TestCalendar').find();
-  const ctaImage = await getCollectionImage(
-    wixClient,
-    'TestCTA',
-    DEFAULTS.home.cta,
-  );
+  const { singleItemCollections } = await wix();
 
   return (
     <section className="px-[5%] mt-16">
@@ -22,17 +14,14 @@ export default async function Calendar() {
         </p>
       </div>
       <div className="container pt-8">
-        {items?.map((item) => (
-          <iframe
-            key={item._id}
-            src={item.calendarSrc}
-            className="border-0"
-            width="100%"
-            height="600"
-          ></iframe>
-        ))}
+        <iframe
+          src={singleItemCollections.calendar}
+          className="border-0"
+          width="100%"
+          height="600"
+        ></iframe>
       </div>
-      <CTA image={ctaImage} />
+      <CTA />
     </section>
   );
 }

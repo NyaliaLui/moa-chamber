@@ -2,19 +2,19 @@ import ReactPlayer from 'react-player';
 
 import { BiEnvelope, BiMap, BiMessageDetail, BiPhone } from 'react-icons/bi';
 import Link from 'next/link';
-import { getWixClient } from '@app/hooks/useWixClientServer';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
+import { wix } from '@app/hooks/Wix';
+import { DEFAULTS } from '@app/constants';
 
 export default async function Project({ params }: any) {
-  const wixClient = await getWixClient();
+  const { collections } = await wix();
   // Dynamic APIs such as params must be awaited.
   // https://nextjs.org/docs/messages/sync-dynamic-apis
   const { slug } = await params;
-  const { items } = await wixClient.items
-    .query('Our-Projects')
-    .eq('slug', slug)
-    .find();
-  const project = items![0];
+  let project = collections.projects.filter((item) => item.slug === slug).pop();
+  if (!project) {
+    project = DEFAULTS.project;
+  }
 
   return (
     <section

@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from 'flowbite-react';
 
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 
 interface CultureBoxProps {
   heading: string;

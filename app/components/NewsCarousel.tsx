@@ -8,14 +8,14 @@ import {
 } from '@app/components/News/NewsCarouselCard';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 
-export interface NewsArticle extends NewsCarouselCardProps {
+export interface NewsCarouselData extends NewsCarouselCardProps {
   id: string;
 }
 
 interface NewsCarouselProps {
-  newsArticles: NewsArticle[];
+  newsArticles: NewsCarouselData[];
 }
 
 const NewsCarousel = ({ newsArticles }: NewsCarouselProps) => {

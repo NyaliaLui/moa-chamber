@@ -6,7 +6,7 @@ import { Button } from 'flowbite-react';
 
 import { NAVBAR_ITEMS, PAYPAL_URL } from '@app/constants';
 import { Logo } from '@app/components/Logo/Logo';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

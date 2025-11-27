@@ -1,14 +1,18 @@
-'use client';
+// IMPORTANT NOTE: This is a server-side component.
 
 import React from 'react';
 import { Button } from 'flowbite-react';
 
-const CTA = ({ image }: { image: string }) => {
+import { wix } from '@app/hooks/Wix';
+
+export default async function CTA() {
+  const { singleItemCollections } = await wix();
+
   return (
     <>
       <div
         className="container text-center text-white px-[5%] mt-16 bg-cover bg-center bg-no-repeat py-12 md:py-18"
-        style={{ backgroundImage: `url(${image})` }}
+        style={{ backgroundImage: `url(${singleItemCollections.ctaImage})` }}
       >
         <h1 className="mb-2 text-2xl font-bold md:mb-3">Join the Chamber</h1>
         <p className="text-md">
@@ -28,6 +32,4 @@ const CTA = ({ image }: { image: string }) => {
       </div>
     </>
   );
-};
-
-export default CTA;
+}

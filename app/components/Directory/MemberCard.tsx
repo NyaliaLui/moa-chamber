@@ -4,20 +4,17 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { getImageUrlForMedia } from '@app/components/Image/WixMediaImage';
-import testIds from '@app/utils/test-ids';
+import { getImageUrlForMedia } from '@app/hooks/Wix';
+import testIds from '@app/test-ids';
 
-const MemberCard = ({
-  media,
-  name,
-  address,
-  slug,
-}: {
+export interface MemberCardProps {
   media: string;
   name: string;
   address: string;
   slug: string;
-}) => {
+}
+
+const MemberCard = ({ media, name, address, slug }: MemberCardProps) => {
   return (
     <Link
       href={`/directory/${slug}`}

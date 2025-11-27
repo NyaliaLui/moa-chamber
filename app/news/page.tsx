@@ -1,11 +1,9 @@
 import NewsCard from '@app/components/News/NewsCard';
 
-import { getWixClient } from '@app/hooks/useWixClientServer';
-import { getImageUrlForMedia } from '@app/components/Image/WixMediaImage';
+import { wix } from '@app/hooks/Wix';
 
 export default async function News() {
-  const wixClient = await getWixClient();
-  const { items } = await wixClient.items.query('News').find();
+  const { collections } = await wix();
 
   return (
     <section className="px-[5%] mt-16">
@@ -21,14 +19,14 @@ export default async function News() {
         </div>
         <div className="flex flex-col justify-start">
           <div className="grid grid-cols-1 gap-x-12 gap-y-12 md:gap-y-16 lg:grid-cols-2">
-            {items!.map((item) => (
+            {collections.newsCards.map((item, index) => (
               <NewsCard
-                key={item._id}
-                image={getImageUrlForMedia(item.image)}
+                key={index}
+                image={item.image}
                 heading={item.heading}
-                description={item.subHeading}
+                description={item.description}
                 slug={item.slug}
-                readTimeM={item.readTime}
+                readTimeM={item.readTimeM}
               />
             ))}
           </div>

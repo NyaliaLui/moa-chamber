@@ -3,7 +3,7 @@ import { BiLogoFacebookCircle } from 'react-icons/bi';
 
 import { Logo } from '@app/components/Logo/Logo';
 import { NAVBAR_ITEMS } from '@app/constants';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 
 const groups = 3;
 

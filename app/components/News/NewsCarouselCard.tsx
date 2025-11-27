@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 import { DateDisplay } from '@app/components/News/DateDisplay';
 
 export interface NewsCarouselCardProps {

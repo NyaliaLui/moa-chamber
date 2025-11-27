@@ -47,7 +47,45 @@ export const DEFAULTS = {
       readTime: '5 min read',
       image: PLACEHOLDER_IMAGE,
       authorImage: PLACEHOLDER_IMAGE,
+      slug: 'sample',
     },
+  },
+  calendar: {
+    calendarSrc: '',
+  },
+  news: {
+    image: PLACEHOLDER_IMAGE,
+    heading: 'Sample News Heading',
+    subHeading: 'Sample news description',
+    slug: 'sample-news',
+    readTimeM: 5,
+    article: {
+      _id: '1234567890',
+      image: PLACEHOLDER_IMAGE,
+      heading: 'Sample News Heading',
+      description: 'Sample news description',
+      slug: 'sample-news',
+      readTimeM: 5,
+      readTime: 5,
+      publishDate: 'Jan 1, 2024',
+      longDescription:
+        'This is a sample long description for the news article. It contains detailed information about the topic.',
+      caption: 'Sample image caption',
+      authorName: 'Sample Author',
+      authorRole: 'Sample Role',
+      authorImage: PLACEHOLDER_IMAGE,
+      gallery: [],
+    },
+  },
+  project: {
+    _id: '1234567890',
+    title: 'Sample Project',
+    longDescription: 'Sample project description',
+    email: 'sample@example.com',
+    website: 'https://example.com',
+    phoneNumber: '(555) 123-4567',
+    address: '123 Sample St, City, ST 12345',
+    slug: 'sample-project',
   },
   resources: {
     culture: {
@@ -63,6 +101,22 @@ export const DEFAULTS = {
       description: 'Sample description',
       website: '',
       image: PLACEHOLDER_IMAGE,
+    },
+  },
+  team: {
+    staff: {
+      name: 'Sample Staff Name',
+      image: PLACEHOLDER_IMAGE,
+      role: 'Sample Role',
+      email: 'staff@example.com',
+      bio: 'Sample bio for staff member',
+      linkedIn: 'sample-linkedin',
+      twitter: 'sample-twitter',
+    },
+    boardMember: {
+      name: 'Sample Board Member',
+      role: 'Sample Board Role',
+      employer: 'Sample Employer',
     },
   },
 };

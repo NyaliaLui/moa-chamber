@@ -1,5 +1,5 @@
 import MemberCard from '@app/components/Directory/MemberCard';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';

@@ -1,5 +1,5 @@
 import NewsCarousel from '@app/components/NewsCarousel';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -19,7 +19,7 @@ describe('NewsCarousel', () => {
     jest.clearAllMocks();
   });
 
-  const mockNewsArticles = [
+  const mockNewsCarouselData = [
     {
       id: '1',
       image: '/news1.jpg',
@@ -56,14 +56,14 @@ describe('NewsCarousel', () => {
   ];
 
   it('renders the component with heading', () => {
-    render(<NewsCarousel newsArticles={mockNewsArticles} />);
+    render(<NewsCarousel newsArticles={mockNewsCarouselData} />);
 
     const heading = screen.getByText('Chamber News');
     expect(heading).toBeInTheDocument();
   });
 
   it('renders all news articles', () => {
-    render(<NewsCarousel newsArticles={mockNewsArticles} />);
+    render(<NewsCarousel newsArticles={mockNewsCarouselData} />);
 
     expect(screen.getByText('First News Article')).toBeInTheDocument();
     expect(screen.getByText('Second News Article')).toBeInTheDocument();
@@ -71,14 +71,14 @@ describe('NewsCarousel', () => {
   });
 
   it('renders View all button on desktop', () => {
-    render(<NewsCarousel newsArticles={mockNewsArticles} />);
+    render(<NewsCarousel newsArticles={mockNewsCarouselData} />);
 
     const viewAllButtons = screen.getAllByText('View all');
     expect(viewAllButtons.length).toBeGreaterThan(0);
   });
 
   it('View all buttons link to /news', () => {
-    render(<NewsCarousel newsArticles={mockNewsArticles} />);
+    render(<NewsCarousel newsArticles={mockNewsCarouselData} />);
 
     const links = screen.getAllByRole('link', { name: /view all/i });
     links.forEach((link) => {
@@ -87,15 +87,15 @@ describe('NewsCarousel', () => {
   });
 
   it('renders pagination dots for each article', () => {
-    render(<NewsCarousel newsArticles={mockNewsArticles} />);
+    render(<NewsCarousel newsArticles={mockNewsCarouselData} />);
 
     // Find all pagination dots (small circular divs)
     const dots = screen.getAllByTestId(testIds.HOME_PAGE.NEWS_CAROUSEL_DOTS);
-    expect(dots.length).toBe(mockNewsArticles.length);
+    expect(dots.length).toBe(mockNewsCarouselData.length);
   });
 
   it('renders navigation arrow buttons', () => {
-    render(<NewsCarousel newsArticles={mockNewsArticles} />);
+    render(<NewsCarousel newsArticles={mockNewsCarouselData} />);
 
     const leftButton = screen.getByLabelText('Scroll left');
     const rightButton = screen.getByLabelText('Scroll right');
@@ -105,7 +105,7 @@ describe('NewsCarousel', () => {
   });
 
   it('scroll buttons are clickable', () => {
-    render(<NewsCarousel newsArticles={mockNewsArticles} />);
+    render(<NewsCarousel newsArticles={mockNewsCarouselData} />);
 
     const leftButton = screen.getByLabelText('Scroll left');
     const rightButton = screen.getByLabelText('Scroll right');
@@ -119,7 +119,7 @@ describe('NewsCarousel', () => {
 
   it('calls scrollTo when clicking left arrow', () => {
     const { container } = render(
-      <NewsCarousel newsArticles={mockNewsArticles} />,
+      <NewsCarousel newsArticles={mockNewsCarouselData} />,
     );
 
     const scrollContainer = container.querySelector('.overflow-x-auto');
@@ -145,7 +145,7 @@ describe('NewsCarousel', () => {
 
   it('calls scrollTo when clicking right arrow', () => {
     const { container } = render(
-      <NewsCarousel newsArticles={mockNewsArticles} />,
+      <NewsCarousel newsArticles={mockNewsCarouselData} />,
     );
 
     const scrollContainer = container.querySelector('.overflow-x-auto');

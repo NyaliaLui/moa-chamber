@@ -1,22 +1,11 @@
-import { getWixClient } from '@app/hooks/useWixClientServer';
 import StaffCard from '@app/components/About/StaffCard';
 import BoardMemberCard from '@app/components/About/BoardMemberCard';
 import CTA from '@app/components/CTA';
-import testIds from '@app/utils/test-ids';
-import { getCollectionImage } from '@app/components/Image/WixMediaImage';
-import { DEFAULTS } from '@app/constants';
+import testIds from '@app/test-ids';
+import { wix } from '@app/hooks/Wix';
 
 export default async function About() {
-  const wixClient = await getWixClient();
-  const { items: team } = await wixClient.items.query('Our-Team').find();
-  const { items: volunteers } = await wixClient.items
-    .query('Volunteers')
-    .find();
-  const ctaImage = await getCollectionImage(
-    wixClient,
-    'TestCTA',
-    DEFAULTS.home.cta,
-  );
+  const { collections } = await wix();
 
   return (
     <section
@@ -38,14 +27,14 @@ export default async function About() {
           </p>
         </div>
         <div className="grid grid-cols-1 items-start justify-center gap-x-8 gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16 lg:gap-x-12">
-          {team!.map((item) => (
+          {collections.team!.map((item, index) => (
             <StaffCard
-              key={item._id}
+              key={index}
               name={item.name}
               image={item.image}
               role={item.role}
               email={item.email}
-              bio={item.about}
+              bio={item.bio}
               linkedIn={item.linkedIn}
               twitter={item.twitter}
             />
@@ -63,9 +52,9 @@ export default async function About() {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-4">
-          {volunteers!.map((item) => (
+          {collections.volunteers!.map((item, index) => (
             <BoardMemberCard
-              key={item._id}
+              key={index}
               name={item.name}
               role={item.role}
               employer={item.employer}
@@ -74,7 +63,7 @@ export default async function About() {
         </div>
         <div className="mt-14 w-full max-w-md md:mt-20 lg:mt-24" />
       </div>
-      <CTA image={ctaImage} />
+      <CTA />
     </section>
   );
 }

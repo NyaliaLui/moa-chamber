@@ -1,23 +1,24 @@
 import { Fragment } from 'react';
 
-import { getWixClient } from '@app/hooks/useWixClientServer';
-import { getImageUrlForMedia } from '@app/components/Image/WixMediaImage';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { RxChevronLeft } from 'react-icons/rx';
 import { HR } from 'flowbite-react';
 
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 import { DateDisplay } from '@app/components/News/DateDisplay';
+import { wix, getImageUrlForMedia } from '@app/hooks/Wix';
+import { DEFAULTS } from '@app/constants';
 
 export default async function New({ params }: any) {
-  const wixClient = await getWixClient();
+  const { collections } = await wix();
   const { slug } = await params;
-  const { items } = await wixClient.items.query('News').eq('slug', slug).find();
-  const item = items![0];
-
-  const authorImgSrc = getImageUrlForMedia(item.authorImage);
+  let article = collections.newsArticles
+    .filter((item) => item.slug === slug)
+    .pop();
+  if (!article) {
+    article = DEFAULTS.news.article;
+  }
 
   return (
     <section
@@ -35,14 +36,14 @@ export default async function New({ params }: any) {
           </Link>
           <div className="rb-4 mb-4 flex w-full items-center justify-start">
             <p className="inline text-sm font-semibold">
-              {item.readTime}min read
+              {article.readTime}min read
             </p>
           </div>
-          <h1 className="text-5xl font-bold">{item.heading}</h1>
+          <h1 className="text-5xl font-bold">{article.heading}</h1>
         </div>
         <div className="mx-auto mb-8 w-full overflow-hidden md:mb-12 lg:mb-8">
           <Image
-            src={getImageUrlForMedia(item.image)}
+            src={getImageUrlForMedia(article.image)}
             className="aspect-[5/2] size-full object-cover"
             alt="Relume placeholder image"
             width={70}
@@ -54,7 +55,7 @@ export default async function New({ params }: any) {
             <div className="mr-8 md:mr-10 lg:mr-12" />
             <div className="mr-8 md:mr-10 lg:mr-12">
               <p className="mb-2">Published on</p>
-              <DateDisplay dateString={item.publishDate} />
+              <DateDisplay dateString={article.publishDate} />
             </div>
           </div>
         </div>
@@ -63,36 +64,36 @@ export default async function New({ params }: any) {
         <div className="mx-auto max-w-lg">
           <div className="prose mb-12 md:prose-md lg:prose-lg md:mb-20">
             <Fragment>
-              <p>{item.longDescription}</p>
+              <p>{article.longDescription}</p>
               <figure>
                 <Image
-                  src={getImageUrlForMedia(item.image)}
+                  src={getImageUrlForMedia(article.image)}
                   alt="Relume placeholder image"
                   width={1280}
                   height={720}
                 />
-                <figcaption>{item.caption}</figcaption>
+                <figcaption>{article.caption}</figcaption>
               </figure>
             </Fragment>
           </div>
           <HR />
           <div className="flex items-center gap-4">
             <Image
-              src={authorImgSrc}
-              alt={item.authorName}
+              src={getImageUrlForMedia(article.authorImage)}
+              alt={article.authorName}
               className="size-14 rounded-full object-cover"
               width={400}
               height={400}
             />
             <div className="grow">
-              <p className="font-semibold md:text-md">{item.authorName}</p>
-              <p>{item.authorRole}</p>
+              <p className="font-semibold md:text-md">{article.authorName}</p>
+              <p>{article.authorRole}</p>
             </div>
           </div>
         </div>
       </div>
       <div className="container pt-16 gap-8 space-y-8 md:columns-3">
-        {item.gallery?.map((image: any, i: number) => (
+        {article.gallery?.map((image: any, i: number) => (
           <div key={i} className="block w-full">
             <Image
               src={getImageUrlForMedia(image.src)}

@@ -4,7 +4,15 @@ import { RxChevronRight } from 'react-icons/rx';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
+
+export interface NewsCardProps {
+  image: string;
+  heading: string;
+  description: string;
+  slug: string;
+  readTimeM: number;
+}
 
 const NewsCard = ({
   image,
@@ -12,13 +20,7 @@ const NewsCard = ({
   description,
   slug,
   readTimeM,
-}: {
-  image: string;
-  heading: string;
-  description: string;
-  slug: string;
-  readTimeM: number;
-}) => {
+}: NewsCardProps) => {
   return (
     <div
       className="grid gap-x-8 gap-y-6 md:grid-cols-[.75fr_1fr] md:gap-y-4"

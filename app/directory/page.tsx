@@ -1,18 +1,10 @@
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 import CTA from '@app/components/CTA';
 import MemberCard from '@app/components/Directory/MemberCard';
-import { getWixClient } from '@app/hooks/useWixClientServer';
-import { getCollectionImage } from '@app/components/Image/WixMediaImage';
-import { DEFAULTS } from '@app/constants';
+import { wix } from '@app/hooks/Wix';
 
-export default async function Projects() {
-  const wixClient = await getWixClient();
-  const { items } = await wixClient.items.query('Our-Projects').find();
-  const ctaImage = await getCollectionImage(
-    wixClient,
-    'TestCTA',
-    DEFAULTS.home.cta,
-  );
+export default async function Directory() {
+  const { collections } = await wix();
 
   return (
     <section className="px-[5%]">
@@ -35,11 +27,11 @@ export default async function Projects() {
           className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12"
           data-testid={testIds.PROJECTS_PAGE.PROJECT_LIST}
         >
-          {items!.map((item) => (
+          {collections?.memberCards.map((item, index) => (
             <MemberCard
-              key={item._id}
-              media={item.cover}
-              name={item.title}
+              key={index}
+              media={item.media}
+              name={item.name}
               address={item.address}
               slug={item.slug}
             />
@@ -47,7 +39,7 @@ export default async function Projects() {
         </div>
         <div className="mt-14 flex justify-center md:mt-20 lg:mt-24" />
       </div>
-      <CTA image={ctaImage} />
+      <CTA />
     </section>
   );
 }

@@ -1,53 +1,10 @@
-import CultureBoxTabs, {
-  type TabContent,
-} from '@app/components/Resources/CultureBoxTabs';
-import BusinessBox, {
-  type Business,
-} from '@app/components/Resources/BusinessBox';
+import CultureBoxTabs from '@app/components/Resources/CultureBoxTabs';
+import BusinessBox from '@app/components/Resources/BusinessBox';
 import CTA from '@app/components/CTA';
-import { DEFAULTS } from '@app/constants';
-import { getWixClient } from '@app/hooks/useWixClientServer';
-import {
-  getCollectionImage,
-  getImageUrlForMedia,
-} from '@app/components/Image/WixMediaImage';
+import { wix } from '@app/hooks/Wix';
 
 export default async function Resources() {
-  const wixClient = await getWixClient();
-  const { items: cultureResourcesRaw } = await wixClient.items
-    .query('CultureResources')
-    .find();
-  const { items: businessResourcesRaw } = await wixClient.items
-    .query('BusinessResources')
-    .find();
-  const ctaImage = await getCollectionImage(
-    wixClient,
-    'TestCTA',
-    DEFAULTS.home.cta,
-  );
-
-  // Convert Wix data to TabContent type
-  const tabsData: TabContent[] = cultureResourcesRaw.map((item) => ({
-    id: item._id,
-    name: item?.name || DEFAULTS.resources.culture.name,
-    heading: item?.heading || DEFAULTS.resources.culture.heading,
-    description: item?.description || DEFAULTS.resources.culture.description,
-    ctaLink: item?.ctaLink || DEFAULTS.resources.culture.ctaLink,
-    ctaLabel: item?.ctaLabel || DEFAULTS.resources.culture.ctaLabel,
-    image: item.image
-      ? getImageUrlForMedia(item.image)
-      : DEFAULTS.resources.culture.image,
-  }));
-
-  // Convert Wix data to Business type
-  const businessesData: Business[] = businessResourcesRaw.map((item) => ({
-    name: item?.name || DEFAULTS.resources.business.name,
-    description: item?.description || DEFAULTS.resources.business.description,
-    website: item?.website || DEFAULTS.resources.business.website,
-    image: item.image
-      ? getImageUrlForMedia(item.image)
-      : DEFAULTS.resources.business.image,
-  }));
+  const { collections } = await wix();
 
   return (
     <section className="px-[5%] mt-16">
@@ -68,7 +25,7 @@ export default async function Resources() {
           </div>
         </div>
         <div className="container mt-16 mb-24">
-          <CultureBoxTabs tabsData={tabsData} />
+          <CultureBoxTabs tabsData={collections.cultureResources} />
         </div>
         <div className="container">
           <div
@@ -83,10 +40,10 @@ export default async function Resources() {
               community.
             </p>
           </div>
-          <BusinessBox businessesData={businessesData} />
+          <BusinessBox businessesData={collections.businessResources} />
         </div>
       </div>
-      <CTA image={ctaImage} />
+      <CTA />
     </section>
   );
 }

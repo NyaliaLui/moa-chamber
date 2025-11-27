@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 
 test.describe('News Page', () => {
   const PATH = '/news';

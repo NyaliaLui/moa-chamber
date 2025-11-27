@@ -1,5 +1,5 @@
 import NewsCard from '@app/components/News/NewsCard';
-import testIds from '@app/utils/test-ids';
+import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
