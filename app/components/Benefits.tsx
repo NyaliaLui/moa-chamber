@@ -1,0 +1,73 @@
+'use client';
+
+import React from 'react';
+import Image from 'next/image';
+import { Button } from 'flowbite-react';
+
+import testIds from '@app/test-ids';
+
+export interface Benefit {
+  id: string;
+  heading: string;
+  description: string;
+  label: string;
+  image: string;
+}
+
+const BenefitCard = ({ benefit }: { benefit: Benefit }) => {
+  return (
+    <div className="flex flex-col border bg-gray-100 border-gray-300">
+      <div className="flex w-full flex-col items-center justify-center self-start">
+        <Image
+          src={benefit.image}
+          alt={`Benefits ${benefit.label} img`}
+          width={1000}
+          height={1000}
+        />
+      </div>
+      <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
+        <div>
+          <p className="mb-2 font-semibold">{benefit.label}</p>
+          <h2 className="mb-3 text-xl font-bold md:mb-4 md:leading-[1.3]">
+            {benefit.heading}
+          </h2>
+          <p>{benefit.description}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
+  return (
+    <section className="px-[5%] mt-16">
+      <div className="container">
+        <div className="mx-auto mb-6 w-full max-w-lg text-center md:mb-9 lg:mb-10">
+          <h1 className="mb-5 text-2xl font-bold md:mb-6">
+            Benefits of Chamber Membership
+          </h1>
+          <p className="text-md">
+            Strategic support for local entrepreneurs and business owners
+          </p>
+        </div>
+        <div className="grid auto-cols-fr grid-cols-1 gap-6 md:gap-8 lg:grid-cols-3">
+          {benefitsData.map((benefit) => (
+            <BenefitCard key={benefit.id} benefit={benefit} />
+          ))}
+        </div>
+      </div>
+      <div className="my-4 flex justify-center items-center gap-4 md:mt-8">
+        <Button
+          color="dark"
+          size="lg"
+          outline
+          data-testid={testIds.BENEFITS.JOIN_BTN}
+        >
+          Join the chamber
+        </Button>
+      </div>
+    </section>
+  );
+};
+
+export default Benefits;

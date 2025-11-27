@@ -1,42 +1,110 @@
-import { getWixClient } from '@app/hooks/useWixClientServer';
-import { WixMediaImage } from '@app/components/Image/WixMediaImage';
-import testIds from '@app/utils/test-ids';
+import { Fragment } from 'react';
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { RxChevronLeft } from 'react-icons/rx';
+import { HR } from 'flowbite-react';
+
+import testIds from '@app/test-ids';
+import { DateDisplay } from '@app/components/News/DateDisplay';
+import { wix, getImageUrlForMedia } from '@app/hooks/Wix';
+import { DEFAULTS } from '@app/constants';
 
 export default async function New({ params }: any) {
-  const wixClient = await getWixClient();
+  const { collections } = await wix();
   const { slug } = await params;
-  const { items } = await wixClient.items.query('News').eq('slug', slug).find();
-  const item = items![0];
+  let article = collections.newsArticles
+    .filter((item) => item.slug === slug)
+    .pop();
+  if (!article) {
+    article = DEFAULTS.news.article;
+  }
 
   return (
-    <div className="relative" data-testid={testIds.NEWS_DETAILS_PAGE.CONTAINER}>
-      <div className="w-full h-[400px] relative">
-        <WixMediaImage
-          media="https://static.wixstatic.com/media/0b340f_0b4d1813105145bfa782ce1d7a379151~mv2_d_5760_3840_s_4_2.jpg/v1/fill/w_1920,h_492,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/0b340f_0b4d1813105145bfa782ce1d7a379151~mv2_d_5760_3840_s_4_2.jpg"
-          alt={item.title}
-          objectFit="cover"
-          sizes="100vw"
-          disableZoom={true}
-        />
-      </div>
-      <div className="max-w-7xl mx-auto mt-[-120px] relative bg-white px-8 sm:px-20 text-center">
-        <h1 className="py-8 font-site">{item.title}</h1>
-        <p className="py-6 max-w-3xl text-lg mx-auto">
-          {item.shortDescription}
-        </p>
-        <div className="relative h-[400px]">
-          <WixMediaImage
-            media={item.image}
-            alt={item.title}
-            sizes="100vw"
-            objectFit="contain"
+    <section
+      className="px-[5%] mt-16"
+      data-testid={testIds.NEWS_DETAILS_PAGE.CONTAINER}
+    >
+      <div className="container">
+        <div className="rb-12 mb-6 flex flex-col items-start justify-start md:mb-9 lg:mb-10">
+          <Link
+            className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0 mb-8 md:mb-10 lg:mb-12"
+            href="/news"
+          >
+            <RxChevronLeft />
+            Back to posts
+          </Link>
+          <div className="rb-4 mb-4 flex w-full items-center justify-start">
+            <p className="inline text-sm font-semibold">
+              {article.readTime}min read
+            </p>
+          </div>
+          <h1 className="text-5xl font-bold">{article.heading}</h1>
+        </div>
+        <div className="mx-auto mb-8 w-full overflow-hidden md:mb-12 lg:mb-8">
+          <Image
+            src={getImageUrlForMedia(article.image)}
+            className="aspect-[5/2] size-full object-cover"
+            alt="Relume placeholder image"
+            width={70}
+            height={36}
           />
         </div>
-        <p
-          className="py-6 max-w-3xl text-sm mx-auto"
-          dangerouslySetInnerHTML={{ __html: item.longDescription }}
-        />
+        <div className="flex w-full flex-col items-start justify-between md:flex-row">
+          <div className="rb-4 mb-4 flex items-center sm:mb-8 md:mb-0">
+            <div className="mr-8 md:mr-10 lg:mr-12" />
+            <div className="mr-8 md:mr-10 lg:mr-12">
+              <p className="mb-2">Published on</p>
+              <DateDisplay dateString={article.publishDate} />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      <div className="container">
+        <div className="mx-auto max-w-lg">
+          <div className="prose mb-12 md:prose-md lg:prose-lg md:mb-20">
+            <Fragment>
+              <p>{article.longDescription}</p>
+              <figure>
+                <Image
+                  src={getImageUrlForMedia(article.image)}
+                  alt="Relume placeholder image"
+                  width={1280}
+                  height={720}
+                />
+                <figcaption>{article.caption}</figcaption>
+              </figure>
+            </Fragment>
+          </div>
+          <HR />
+          <div className="flex items-center gap-4">
+            <Image
+              src={getImageUrlForMedia(article.authorImage)}
+              alt={article.authorName}
+              className="size-14 rounded-full object-cover"
+              width={400}
+              height={400}
+            />
+            <div className="grow">
+              <p className="font-semibold md:text-md">{article.authorName}</p>
+              <p>{article.authorRole}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container pt-16 gap-8 space-y-8 md:columns-3">
+        {article.gallery?.map((image: any, i: number) => (
+          <div key={i} className="block w-full">
+            <Image
+              src={getImageUrlForMedia(image.src)}
+              alt={`gallery img-${i}`}
+              className="size-full object-cover"
+              width={70}
+              height={36}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
