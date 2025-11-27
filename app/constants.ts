@@ -2,10 +2,30 @@ export const WIX_ACCESS_TOKEN = 'wix_accessToken';
 export const WIX_REFRESH_TOKEN = 'wix_refreshToken';
 
 export const PLACEHOLDER_IMAGE = '/images/placeholder.jpg';
+export const CLOUDFRONT_PLACEHOLDER_IMAGE =
+  'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg';
 
 export const LOGO_IMAGE = {
   light: '/images/MOA-Logo-Small.png',
   dark: '/images/MOA-Logo-Dark-Small.png',
+};
+
+export const SOCIAL_MEDIA_URLS = {
+  linkedIn: 'https://www.linkedin.com/in/',
+  twitter: 'https://x.com/',
+};
+
+export const WIX_IMAGE_PREFIX = 'wix:image://v1';
+
+export const IMAGE_DIMENSIONS = {
+  placeholder: {
+    width: 70,
+    height: 36,
+  },
+  staffCard: {
+    width: 256,
+    height: 128,
+  },
 };
 
 export const NAVBAR_ITEMS = [

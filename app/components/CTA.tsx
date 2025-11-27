@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from 'flowbite-react';
 
 import { wix } from '@app/hooks/Wix';
+import testIds from '@app/test-ids';
 
 export default async function CTA() {
   const { singleItemCollections } = await wix();
@@ -23,7 +24,7 @@ export default async function CTA() {
           <Button
             color="dark"
             size="lg"
-            data-testid="cta-apply-btn"
+            data-testid={testIds.CTA.APPLY_BTN}
             href="/join"
           >
             Apply now

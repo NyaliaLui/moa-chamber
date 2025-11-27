@@ -11,7 +11,7 @@ export default async function Project({ params }: any) {
   // Dynamic APIs such as params must be awaited.
   // https://nextjs.org/docs/messages/sync-dynamic-apis
   const { slug } = await params;
-  let project = collections.projects.filter((item) => item.slug === slug).pop();
+  let project = collections.members.filter((item) => item.slug === slug).pop();
   if (!project) {
     project = DEFAULTS.project;
   }

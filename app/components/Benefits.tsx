@@ -4,6 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from 'flowbite-react';
 
+import testIds from '@app/test-ids';
+
 export interface Benefit {
   id: string;
   heading: string;
@@ -55,7 +57,12 @@ const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
         </div>
       </div>
       <div className="my-4 flex justify-center items-center gap-4 md:mt-8">
-        <Button color="dark" size="lg" outline data-testid="benefits-join-btn">
+        <Button
+          color="dark"
+          size="lg"
+          outline
+          data-testid={testIds.BENEFITS.JOIN_BTN}
+        >
           Join the chamber
         </Button>
       </div>

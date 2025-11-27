@@ -34,6 +34,15 @@ const ids = {
   },
   RESOURCES: {
     CULTURE_BOX: 'culture-box',
+    CONTAINER: 'community-resources-demo',
+    HEADING: 'community-resources-heading',
+    BUSINESSES_HEADING: 'community-businesses-heading',
+  },
+  CTA: {
+    APPLY_BTN: 'cta-apply-btn',
+  },
+  BENEFITS: {
+    JOIN_BTN: 'benefits-join-btn',
   },
 };
 

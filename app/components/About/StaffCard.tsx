@@ -5,6 +5,12 @@ import { BiLogoLinkedinSquare } from 'react-icons/bi';
 import { FaXTwitter } from 'react-icons/fa6';
 
 import { getImageUrlForMedia } from '@app/hooks/Wix';
+import {
+  CLOUDFRONT_PLACEHOLDER_IMAGE,
+  WIX_IMAGE_PREFIX,
+  IMAGE_DIMENSIONS,
+  SOCIAL_MEDIA_URLS,
+} from '@app/constants';
 
 export interface StaffCardProps {
   name: string;
@@ -26,15 +32,15 @@ const StaffCard = ({
   twitter,
 }: StaffCardProps) => {
   const imgInfo = {
-    src: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
-    width: 70,
-    height: 36,
+    src: CLOUDFRONT_PLACEHOLDER_IMAGE,
+    width: IMAGE_DIMENSIONS.placeholder.width,
+    height: IMAGE_DIMENSIONS.placeholder.height,
   };
 
-  if (image.startsWith('wix:image://v1')) {
+  if (image.startsWith(WIX_IMAGE_PREFIX)) {
     imgInfo.src = getImageUrlForMedia(image);
-    imgInfo.width = 256;
-    imgInfo.height = 128;
+    imgInfo.width = IMAGE_DIMENSIONS.staffCard.width;
+    imgInfo.height = IMAGE_DIMENSIONS.staffCard.height;
   }
 
   return (
@@ -55,10 +61,10 @@ const StaffCard = ({
       </div>
       <p>{bio}</p>
       <div className="mt-6 grid grid-flow-col grid-cols-[max-content] gap-[0.875rem] self-center">
-        <Link href={`https://www.linkedin.com/in/${linkedIn}/`}>
+        <Link href={`${SOCIAL_MEDIA_URLS.linkedIn}${linkedIn}/`}>
           <BiLogoLinkedinSquare className="size-6" />
         </Link>
-        <Link href={`https://x.com/${twitter}`}>
+        <Link href={`${SOCIAL_MEDIA_URLS.twitter}${twitter}`}>
           <FaXTwitter className="size-6 p-0.5" />
         </Link>
       </div>

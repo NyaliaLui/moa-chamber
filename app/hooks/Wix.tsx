@@ -53,9 +53,9 @@ export type WixClientWithItems = WixClient<
 
 export interface Collections {
   team: StaffCardProps[];
-  volunteers: BoardMemberCardProps[];
+  boardMembers: BoardMemberCardProps[];
   memberCards: MemberCardProps[];
-  projects: Project[];
+  members: Project[];
   newsCards: NewsCardProps[];
   newsArticles: NewsArticle[];
   newsCarouselData: NewsCarouselData[];
@@ -235,11 +235,11 @@ export async function getWixCollections(): Promise<Collections> {
   const { items: team } = await wixClient.items
     .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_TEAM!)
     .find();
-  const { items: volunteers } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_VOLUNTEERS!)
+  const { items: boardMembers } = await wixClient.items
+    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_BOARD_MEMBERS!)
     .find();
-  const { items: projects } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_PROJECTS!)
+  const { items: members } = await wixClient.items
+    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_MEMBERS!)
     .find();
   const { items: news } = await wixClient.items
     .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_NEWS!)
@@ -261,9 +261,9 @@ export async function getWixCollections(): Promise<Collections> {
 
   return {
     team: team.map(makeStaffCard),
-    volunteers: volunteers.map(makeBoardMemberCard),
-    memberCards: projects.map(makeMemberCard),
-    projects: projects.map(makeProject),
+    boardMembers: boardMembers.map(makeBoardMemberCard),
+    memberCards: members.map(makeMemberCard),
+    members: members.map(makeProject),
     newsCards: news.map(makeNewsCard),
     newsArticles: news.map(makeNewsArticle),
     newsCarouselData: news.map(makeNewsCarouselData),

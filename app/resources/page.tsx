@@ -2,16 +2,17 @@ import CultureBoxTabs from '@app/components/Resources/CultureBoxTabs';
 import BusinessBox from '@app/components/Resources/BusinessBox';
 import CTA from '@app/components/CTA';
 import { wix } from '@app/hooks/Wix';
+import testIds from '@app/test-ids';
 
 export default async function Resources() {
   const { collections } = await wix();
 
   return (
     <section className="px-[5%] mt-16">
-      <div className="container" data-testid="community-resources-demo">
+      <div className="container" data-testid={testIds.RESOURCES.CONTAINER}>
         <div
           className="flex flex-col items-start"
-          data-testid="community-resources-heading"
+          data-testid={testIds.RESOURCES.HEADING}
         >
           <div className="mx-auto mb-6 max-w-lg md:mb-9 lg:mb-10">
             <h2 className="mb-5 text-center text-3xl font-bold md:mb-6">
@@ -30,7 +31,7 @@ export default async function Resources() {
         <div className="container">
           <div
             className="mb-12 max-w-lg text-left md:mb-18 lg:mb-20"
-            data-testid="community-businesses-heading"
+            data-testid={testIds.RESOURCES.BUSINESSES_HEADING}
           >
             <h1 className="rb-5 mb-5 text-3xl font-bold md:mb-6">
               Influencial businesses and organizations

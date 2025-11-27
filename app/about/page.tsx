@@ -52,7 +52,7 @@ export default async function About() {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-4">
-          {collections.volunteers!.map((item, index) => (
+          {collections.boardMembers!.map((item, index) => (
             <BoardMemberCard
               key={index}
               name={item.name}
