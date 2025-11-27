@@ -140,7 +140,8 @@ describe('Header', () => {
 
       const navLinks = screen.getAllByText(NAVBAR_ITEMS[0].label);
       // Find the link in the mobile menu (there are duplicates for desktop/mobile)
-      fireEvent.click(navLinks[0]);
+      // Choose the second link since Jest auto loads on mobile first.
+      fireEvent.click(navLinks[1]);
 
       // Menu should be closed - button should say "Open menu" again
       const openButton = screen.getByRole('button', { name: /open menu/i });

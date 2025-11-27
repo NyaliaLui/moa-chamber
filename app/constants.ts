@@ -8,6 +8,8 @@ export const CLOUDFRONT_PLACEHOLDER_IMAGE =
 export const LOGO_IMAGE = {
   light: '/images/MOA-Logo-Small.png',
   dark: '/images/MOA-Logo-Dark-Small.png',
+  width: 28,
+  height: 32,
 };
 
 export const SOCIAL_MEDIA_URLS = {

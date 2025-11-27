@@ -7,8 +7,8 @@ export const Logo = () => {
     <Image
       src={LOGO_IMAGE.light}
       alt="MOA Chamber Logo"
-      width={28}
-      height={32}
+      width={LOGO_IMAGE.width}
+      height={LOGO_IMAGE.height}
     />
   );
 };

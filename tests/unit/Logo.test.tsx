@@ -1,7 +1,8 @@
-import { Logo } from '@app/components/Logo/Logo';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { Logo } from '@app/components/Logo/Logo';
+import { LOGO_IMAGE } from '@app/constants';
 
 describe('Logo', () => {
   it('renders the logo component', () => {
@@ -22,24 +23,17 @@ describe('Logo', () => {
     render(<Logo />);
 
     const logo = screen.getByAltText('MOA Chamber Logo');
-    expect(logo).toHaveAttribute(
-      'src',
-      expect.stringContaining('logo-image.svg'),
-    );
+    // The NextJS image optimizer changes the string to use %2F for / characters.
+    const src = LOGO_IMAGE.light.replaceAll('/', '%2F');
+    expect(logo).toHaveAttribute('src', expect.stringContaining(src));
   });
 
-  it('renders image with correct width', () => {
+  it('renders image with correct dimensions', () => {
     render(<Logo />);
 
     const logo = screen.getByAltText('MOA Chamber Logo');
-    expect(logo).toHaveAttribute('width', '70');
-  });
-
-  it('renders image with correct height', () => {
-    render(<Logo />);
-
-    const logo = screen.getByAltText('MOA Chamber Logo');
-    expect(logo).toHaveAttribute('height', '36');
+    expect(logo).toHaveAttribute('width', `${LOGO_IMAGE.width}`);
+    expect(logo).toHaveAttribute('height', `${LOGO_IMAGE.height}`);
   });
 
   it('image is visible', () => {
