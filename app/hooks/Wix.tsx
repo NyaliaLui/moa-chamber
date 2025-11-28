@@ -41,6 +41,7 @@ export interface Project {
   website: string;
   phoneNumber: string;
   address: string;
+  cover: WixImage;
 }
 
 export type WixClientWithItems = WixClient<
@@ -189,6 +190,7 @@ export function makeProject(item: items.WixDataItem): Project {
     website: item.website || DEFAULTS.project.website,
     phoneNumber: item.phoneNumber || DEFAULTS.project.phoneNumber,
     address: item.address || DEFAULTS.project.address,
+    cover: item.cover ? makeWixImage(item.cover) : DEFAULTS.project.cover,
   };
 }
 
