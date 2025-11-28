@@ -75,18 +75,18 @@ const Header = () => {
           onClick={toggleMenu}
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {(isMenuOpen
               ? [
-                  'rotate-45 translate-y-[13px]',
+                  'rotate-45 translate-y-[9px]',
                   'opacity-0 h-0',
-                  '-rotate-45 translate-y-[-13px]',
+                  '-rotate-45 translate-y-[-9px]',
                 ]
               : ['', '', '']
             ).map((className, index) => (
               <span
                 key={index}
-                className={`block h-[3px] w-6 bg-black transform transition duration-500 ease-in-out ${className}`}
+                className={`block h-[2px] w-5 bg-black transform transition duration-500 ease-in-out ${className}`}
               />
             ))}
           </div>
