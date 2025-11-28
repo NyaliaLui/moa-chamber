@@ -1,5 +1,5 @@
 import Testimonials, { Testimonial } from '@app/components/Testimonials';
-import { PLACEHOLDER_IMAGE } from '@app/constants';
+import { DEFAULT_WIX_IMAGE } from '@app/constants';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -12,7 +12,7 @@ const mockTestimonialsData: Testimonial[] = [
     name: 'Jane Doe',
     businessName: 'Jane Consulting',
     businessRole: 'Owner',
-    image: PLACEHOLDER_IMAGE,
+    image: DEFAULT_WIX_IMAGE,
   },
   {
     id: '2',
@@ -21,7 +21,7 @@ const mockTestimonialsData: Testimonial[] = [
     name: 'John Smith',
     businessName: 'Green Prairie Farms',
     businessRole: 'Founder',
-    image: PLACEHOLDER_IMAGE,
+    image: DEFAULT_WIX_IMAGE,
   },
   {
     id: '3',
@@ -30,7 +30,7 @@ const mockTestimonialsData: Testimonial[] = [
     name: 'Madison Anderson',
     businessName: 'Anderson Hardware',
     businessRole: 'Manager',
-    image: PLACEHOLDER_IMAGE,
+    image: DEFAULT_WIX_IMAGE,
   },
 ];
 
@@ -115,7 +115,7 @@ describe('Testimonials', () => {
         name: 'Test Name',
         businessName: 'Test Business',
         businessRole: 'Test Role',
-        image: PLACEHOLDER_IMAGE,
+        image: DEFAULT_WIX_IMAGE,
       },
     ];
 

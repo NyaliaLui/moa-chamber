@@ -3,13 +3,14 @@ import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { DEFAULT_WIX_IMAGE } from '@app/constants';
 
 describe('NewsCarouselCard', () => {
   const mockProps = {
-    image: '/test-image.jpg',
+    image: DEFAULT_WIX_IMAGE,
     heading: 'Test News Heading',
     subHeading: 'Test news description content',
-    authorImage: '/test-author.jpg',
+    authorImage: DEFAULT_WIX_IMAGE,
     authorName: 'John Doe',
     publishDate: '2024-01-15',
     readTime: '5',

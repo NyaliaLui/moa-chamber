@@ -4,6 +4,7 @@ import CultureBoxTabs, {
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { DEFAULT_WIX_IMAGE } from '@app/constants';
 
 const mockTabsData: TabContent[] = [
   {
@@ -13,7 +14,7 @@ const mockTabsData: TabContent[] = [
     description: 'Culture description 1',
     ctaLink: '/culture-1',
     ctaLabel: 'Learn More 1',
-    image: '/images/culture-1.jpg',
+    image: DEFAULT_WIX_IMAGE,
   },
   {
     id: 'culture-2',
@@ -22,7 +23,7 @@ const mockTabsData: TabContent[] = [
     description: 'Culture description 2',
     ctaLink: '/culture-2',
     ctaLabel: 'Learn More 2',
-    image: '/images/culture-2.jpg',
+    image: DEFAULT_WIX_IMAGE,
   },
   {
     id: 'culture-3',
@@ -31,7 +32,7 @@ const mockTabsData: TabContent[] = [
     description: 'Culture description 3',
     ctaLink: '/culture-3',
     ctaLabel: 'Learn More 3',
-    image: '/images/culture-3.jpg',
+    image: DEFAULT_WIX_IMAGE,
   },
 ];
 
