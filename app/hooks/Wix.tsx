@@ -276,25 +276,26 @@ export interface SingleItemCollections {
 
 export async function getSingleItemCollections(): Promise<SingleItemCollections> {
   const wixClient = await getWixClient();
+  const getRawData = async (dataCollectionId: string, defaultValue: any) => {
+    const { items } = await wixClient.items
+      .query(dataCollectionId)
+      .limit(1)
+      .find();
+    return items.length > 0 ? items[0] : defaultValue;
+  };
 
-  const { items: ctaItems } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_CTA!)
-    .limit(1)
-    .find();
-  const ctaRaw = ctaItems.length > 0 ? ctaItems[0] : DEFAULTS.home.cta;
-
-  const { items: calendarItems } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_CALENDAR!)
-    .limit(1)
-    .find();
-  const calendarRaw =
-    calendarItems.length > 0 ? calendarItems[0] : DEFAULTS.calendar;
-
-  const { items: heroItems } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_HERO!)
-    .limit(1)
-    .find();
-  const heroRaw = heroItems.length > 0 ? heroItems[0] : DEFAULTS.home.hero;
+  const ctaRaw = await getRawData(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_CTA!,
+    DEFAULTS.home.cta,
+  );
+  const calendarRaw = await getRawData(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_CALENDAR!,
+    DEFAULTS.calendar,
+  );
+  const heroRaw = await getRawData(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_HERO!,
+    DEFAULTS.home.hero,
+  );
 
   return {
     ctaImage: ctaRaw.image
