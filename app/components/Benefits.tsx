@@ -62,9 +62,10 @@ const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
           color="dark"
           size="lg"
           outline
+          className="text-black! hover:text-white!"
           data-testid={testIds.BENEFITS.JOIN_BTN}
         >
-          <span className="text-black">Join the chamber</span>
+          Join the chamber
         </Button>
       </div>
     </section>

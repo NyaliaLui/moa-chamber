@@ -7,6 +7,9 @@
   --color-purple-site: #8751bd;
 }
 
+/* This disable dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @font-face {
   font-display: block;
   font-family: Avenir-LT-W01_35-Light1475496;

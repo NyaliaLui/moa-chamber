@@ -60,10 +60,17 @@ const Header = () => {
               as="a"
               target="_blank"
               rel="noopener noreferrer"
+              className="hover:text-white!"
             >
               Pay Fees
             </Button>
-            <Button color="blue" size="sm" href="/join" as={Link}>
+            <Button
+              color="blue"
+              size="sm"
+              href="/join"
+              as={Link}
+              className="text-white!"
+            >
               Apply
             </Button>
           </div>
@@ -126,6 +133,7 @@ const Header = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
+                className="hover:text-white!"
               >
                 Pay Fees
               </Button>
@@ -137,6 +145,7 @@ const Header = () => {
                 href="/join"
                 as={Link}
                 onClick={closeMenu}
+                className="text-white!"
               >
                 Apply
               </Button>

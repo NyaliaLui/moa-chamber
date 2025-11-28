@@ -49,7 +49,7 @@ const NewsCarousel = ({ newsArticles }: NewsCarouselProps) => {
             size="lg"
             outline
             href="/news"
-            className="hidden md:flex"
+            className="hidden md:flex hover:text-white! border-gray-600!"
           >
             View all
           </Button>
@@ -110,7 +110,13 @@ const NewsCarousel = ({ newsArticles }: NewsCarouselProps) => {
         </div>
 
         <div className="mt-6 md:hidden flex justify-center">
-          <Button color="dark" size="lg" outline href="/news">
+          <Button
+            color="dark"
+            size="lg"
+            className="hover:text-white!"
+            outline
+            href="/news"
+          >
             View all
           </Button>
         </div>
