@@ -64,7 +64,7 @@ const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
           outline
           data-testid={testIds.BENEFITS.JOIN_BTN}
         >
-          Join the chamber
+          <span className="text-black">Join the chamber</span>
         </Button>
       </div>
     </section>
