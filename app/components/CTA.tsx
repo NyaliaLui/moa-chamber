@@ -13,7 +13,9 @@ export default async function CTA() {
     <>
       <div
         className="container text-center text-white px-[5%] mt-16 bg-cover bg-center bg-no-repeat py-12 md:py-18"
-        style={{ backgroundImage: `url(${singleItemCollections.ctaImage})` }}
+        style={{
+          backgroundImage: `url(${singleItemCollections.ctaImage.url})`,
+        }}
       >
         <h1 className="mb-2 text-2xl font-bold md:mb-3">Join the Chamber</h1>
         <p className="text-md">

@@ -5,13 +5,14 @@ import Image from 'next/image';
 import { Button } from 'flowbite-react';
 
 import testIds from '@app/test-ids';
+import { WixImage } from '@app/constants';
 
 interface CultureBoxProps {
   heading: string;
   description: string;
   ctaLink: string;
   ctaLabel: string;
-  image: string;
+  image: WixImage;
   imageAlt?: string;
 }
 
@@ -37,11 +38,11 @@ const CultureBox = ({
       </div>
       <div className="flex items-center justify-center px-8 py-8">
         <Image
-          src={image}
+          src={image.url}
           className="w-full object-contain aspect-video"
           alt={imageAlt}
-          width={1000}
-          height={1000}
+          width={image.width}
+          height={image.height}
         />
       </div>
     </div>

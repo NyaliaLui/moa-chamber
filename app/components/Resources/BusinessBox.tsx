@@ -3,12 +3,13 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import BusinessCard from '@app/components/Resources/BusinessCard';
+import { WixImage } from '@app/constants';
 
 export interface Business {
   name: string;
   description: string;
   website: string;
-  image: string;
+  image: WixImage;
 }
 
 interface BusinessBoxProps {
@@ -44,11 +45,11 @@ const BusinessBox = ({ businessesData }: BusinessBoxProps) => {
       </div>
       <div className="flex items-center justify-center lg:col-span-2">
         <Image
-          src={selectedBusiness.image}
+          src={selectedBusiness.image.url}
           className="w-full h-full object-contain aspect-square"
           alt={selectedBusiness.name}
-          width={1000}
-          height={1000}
+          width={selectedBusiness.image.width}
+          height={selectedBusiness.image.height}
         />
       </div>
     </div>

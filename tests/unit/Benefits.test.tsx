@@ -1,5 +1,5 @@
 import Benefits, { Benefit } from '@app/components/Benefits';
-import { PLACEHOLDER_IMAGE } from '@app/constants';
+import { DEFAULT_WIX_IMAGE } from '@app/constants';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -10,7 +10,7 @@ const mockBenefitsData: Benefit[] = [
     heading: 'Amplify your business visibility',
     description: 'Showcase your brand through chamber-sponsored events',
     label: 'Promote',
-    image: PLACEHOLDER_IMAGE,
+    image: DEFAULT_WIX_IMAGE,
   },
   {
     id: '2',
@@ -18,7 +18,7 @@ const mockBenefitsData: Benefit[] = [
     description:
       'Create meaningful partnerships that drive local economic growth',
     label: 'Connect',
-    image: PLACEHOLDER_IMAGE,
+    image: DEFAULT_WIX_IMAGE,
   },
   {
     id: '3',
@@ -26,7 +26,7 @@ const mockBenefitsData: Benefit[] = [
     description:
       'Make a lasting impact through collaborative local initiatives',
     label: 'Serve',
-    image: PLACEHOLDER_IMAGE,
+    image: DEFAULT_WIX_IMAGE,
   },
 ];
 
@@ -146,7 +146,7 @@ describe('Benefits', () => {
         heading: 'Test Heading',
         description: 'Test description',
         label: 'Test',
-        image: PLACEHOLDER_IMAGE,
+        image: DEFAULT_WIX_IMAGE,
       },
     ];
 

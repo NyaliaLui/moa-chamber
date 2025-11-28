@@ -5,6 +5,15 @@ export const PLACEHOLDER_IMAGE = '/images/placeholder.jpg';
 export const CLOUDFRONT_PLACEHOLDER_IMAGE =
   'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg';
 
+export interface WixImage {
+  id: string;
+  url: string;
+  height: number;
+  width: number;
+  altText?: string | undefined;
+  filename?: string | undefined;
+}
+
 export const LOGO_IMAGE = {
   light: '/images/MOA-Logo-Small.png',
   dark: '/images/MOA-Logo-Dark-Small.png',
@@ -40,26 +49,33 @@ export const NAVBAR_ITEMS = [
 
 export const PAYPAL_URL = 'https://www.paypal.com/ncp/payment/7TMP7X7UP7TLS';
 
+export const DEFAULT_WIX_IMAGE: WixImage = {
+  id: '',
+  url: PLACEHOLDER_IMAGE,
+  height: -1,
+  width: -1,
+};
+
 export const DEFAULTS = {
   home: {
     hero: {
-      image: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
     },
     benefit: {
       heading: 'Sample Heading',
       description: 'Sample description',
       label: 'Sample',
-      image: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
     },
     testimonial: {
       quote: 'Sample testimonial quote',
       name: 'Sample Name',
       businessName: 'Sample Business',
       businessRole: 'Sample Role',
-      image: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
     },
     cta: {
-      image: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
     },
     news: {
       heading: 'Sample News Heading',
@@ -67,8 +83,8 @@ export const DEFAULTS = {
       authorName: 'Sample Author',
       publishDate: 'Jan 1, 2024',
       readTime: '5 min read',
-      image: PLACEHOLDER_IMAGE,
-      authorImage: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
+      authorImage: DEFAULT_WIX_IMAGE,
       slug: 'sample',
     },
   },
@@ -76,14 +92,14 @@ export const DEFAULTS = {
     calendarSrc: '',
   },
   news: {
-    image: PLACEHOLDER_IMAGE,
+    image: DEFAULT_WIX_IMAGE,
     heading: 'Sample News Heading',
     subHeading: 'Sample news description',
     slug: 'sample-news',
     readTimeM: 5,
     article: {
       _id: '1234567890',
-      image: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
       heading: 'Sample News Heading',
       description: 'Sample news description',
       slug: 'sample-news',
@@ -95,7 +111,7 @@ export const DEFAULTS = {
       caption: 'Sample image caption',
       authorName: 'Sample Author',
       authorRole: 'Sample Role',
-      authorImage: PLACEHOLDER_IMAGE,
+      authorImage: DEFAULT_WIX_IMAGE,
       gallery: [],
     },
   },
@@ -108,6 +124,7 @@ export const DEFAULTS = {
     phoneNumber: '(555) 123-4567',
     address: '123 Sample St, City, ST 12345',
     slug: 'sample-project',
+    cover: DEFAULT_WIX_IMAGE,
   },
   resources: {
     culture: {
@@ -116,19 +133,19 @@ export const DEFAULTS = {
       description: 'Sample description',
       ctaLink: '',
       ctaLabel: 'CTA',
-      image: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
     },
     business: {
       name: 'Sample Business',
       description: 'Sample description',
       website: '',
-      image: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
     },
   },
   team: {
     staff: {
       name: 'Sample Staff Name',
-      image: PLACEHOLDER_IMAGE,
+      image: DEFAULT_WIX_IMAGE,
       role: 'Sample Role',
       email: 'staff@example.com',
       bio: 'Sample bio for staff member',

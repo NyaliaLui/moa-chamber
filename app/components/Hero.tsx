@@ -3,8 +3,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from 'flowbite-react';
+import { WixImage } from '@app/constants';
 
-const Hero = ({ image }: { image: string }) => {
+const Hero = ({ image }: { image: WixImage }) => {
   return (
     <>
       <div className="px-[5%] container">
@@ -34,11 +35,11 @@ const Hero = ({ image }: { image: string }) => {
           </div>
           <div className="flex items-center justify-center">
             <Image
-              src={image}
+              src={image.url}
               className="w-full object-cover"
               alt="Hero image"
-              width={1000}
-              height={1000}
+              width={image.width}
+              height={image.height}
             />
           </div>
         </div>

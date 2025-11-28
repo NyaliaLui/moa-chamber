@@ -3,6 +3,7 @@ import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { DEFAULT_WIX_IMAGE } from '@app/constants';
 
 const clientWidth = 1000;
 const scrollLeft = 500;
@@ -22,10 +23,10 @@ describe('NewsCarousel', () => {
   const mockNewsCarouselData = [
     {
       id: '1',
-      image: '/news1.jpg',
+      image: DEFAULT_WIX_IMAGE,
       heading: 'First News Article',
       subHeading: 'First article description',
-      authorImage: '/author1.jpg',
+      authorImage: DEFAULT_WIX_IMAGE,
       authorName: 'John Doe',
       publishDate: '2024-01-15',
       readTime: '5',
@@ -33,10 +34,10 @@ describe('NewsCarousel', () => {
     },
     {
       id: '2',
-      image: '/news2.jpg',
+      image: DEFAULT_WIX_IMAGE,
       heading: 'Second News Article',
       subHeading: 'Second article description',
-      authorImage: '/author2.jpg',
+      authorImage: DEFAULT_WIX_IMAGE,
       authorName: 'Jane Smith',
       publishDate: '2024-01-20',
       readTime: '7',
@@ -44,10 +45,10 @@ describe('NewsCarousel', () => {
     },
     {
       id: '3',
-      image: '/news3.jpg',
+      image: DEFAULT_WIX_IMAGE,
       heading: 'Third News Article',
       subHeading: 'Third article description',
-      authorImage: '/author3.jpg',
+      authorImage: DEFAULT_WIX_IMAGE,
       authorName: 'Mike Johnson',
       publishDate: '2024-01-25',
       readTime: '3',

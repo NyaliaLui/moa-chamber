@@ -3,10 +3,11 @@ import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { DEFAULT_WIX_IMAGE } from '@app/constants';
 
 describe('NewsCard', () => {
   const mockProps = {
-    image: '/news/article-image.jpg',
+    image: DEFAULT_WIX_IMAGE,
     heading: 'Chamber Announces New Business Initiative',
     description:
       'The Meriden-Ozawkie Area Chamber has launched a new program to support local businesses.',
@@ -35,7 +36,7 @@ describe('NewsCard', () => {
     const image = screen.getByAltText(mockProps.heading);
     expect(image).toHaveAttribute(
       'src',
-      expect.stringContaining('article-image.jpg'),
+      expect.stringContaining('placeholder.jpg'),
     );
   });
 
@@ -86,11 +87,11 @@ describe('NewsCard', () => {
     expect(links).toHaveLength(3); // Image link, heading link, and Read more link
   });
 
-  it('image has correct dimensions', () => {
+  it('image has correct dimensions from WixImage', () => {
     render(<NewsCard {...mockProps} />);
 
     const image = screen.getByAltText(mockProps.heading);
-    expect(image).toHaveAttribute('width', '1280');
-    expect(image).toHaveAttribute('height', '720');
+    expect(image).toHaveAttribute('width', String(mockProps.image.width));
+    expect(image).toHaveAttribute('height', String(mockProps.image.height));
   });
 });

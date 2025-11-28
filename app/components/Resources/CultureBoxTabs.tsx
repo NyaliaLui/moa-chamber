@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import CultureBox from '@app/components/Resources/CultureBox';
+import { WixImage } from '@app/constants';
 
 export interface TabContent {
   id: string;
@@ -10,7 +11,7 @@ export interface TabContent {
   description: string;
   ctaLink: string;
   ctaLabel: string;
-  image: string;
+  image: WixImage;
 }
 
 interface CultureBoxTabsProps {

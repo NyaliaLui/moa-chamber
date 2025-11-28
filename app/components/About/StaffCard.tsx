@@ -4,17 +4,11 @@ import Link from 'next/link';
 import { BiLogoLinkedinSquare } from 'react-icons/bi';
 import { FaXTwitter } from 'react-icons/fa6';
 
-import { getImageUrlForMedia } from '@app/hooks/Wix';
-import {
-  CLOUDFRONT_PLACEHOLDER_IMAGE,
-  WIX_IMAGE_PREFIX,
-  IMAGE_DIMENSIONS,
-  SOCIAL_MEDIA_URLS,
-} from '@app/constants';
+import { SOCIAL_MEDIA_URLS, WixImage } from '@app/constants';
 
 export interface StaffCardProps {
   name: string;
-  image: string;
+  image: WixImage;
   role: string;
   email: string;
   bio: string;
@@ -31,27 +25,15 @@ const StaffCard = ({
   linkedIn,
   twitter,
 }: StaffCardProps) => {
-  const imgInfo = {
-    src: CLOUDFRONT_PLACEHOLDER_IMAGE,
-    width: IMAGE_DIMENSIONS.placeholder.width,
-    height: IMAGE_DIMENSIONS.placeholder.height,
-  };
-
-  if (image.startsWith(WIX_IMAGE_PREFIX)) {
-    imgInfo.src = getImageUrlForMedia(image);
-    imgInfo.width = IMAGE_DIMENSIONS.staffCard.width;
-    imgInfo.height = IMAGE_DIMENSIONS.staffCard.height;
-  }
-
   return (
     <div className="flex flex-col text-center">
       <div className="rb-5 mb-5 flex w-full items-center justify-center md:mb-6">
         <Image
-          src={imgInfo.src}
+          src={image.url}
           alt={role}
           className="aspect-square size-full object-cover"
-          width={imgInfo.width}
-          height={imgInfo.height}
+          width={image.width}
+          height={image.height}
         />
       </div>
       <div className="mb-3 md:mb-4">
@@ -60,7 +42,7 @@ const StaffCard = ({
         <h6 className="md:text-md">{email}</h6>
       </div>
       <p>{bio}</p>
-      <div className="mt-6 grid grid-flow-col grid-cols-[max-content] gap-[0.875rem] self-center">
+      <div className="mt-6 grid grid-flow-col grid-cols-[max-content] gap-3.5 self-center">
         <Link href={`${SOCIAL_MEDIA_URLS.linkedIn}${linkedIn}/`}>
           <BiLogoLinkedinSquare className="size-6" />
         </Link>

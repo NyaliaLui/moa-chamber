@@ -5,12 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import testIds from '@app/test-ids';
 import { DateDisplay } from '@app/components/News/DateDisplay';
+import { WixImage } from '@app/constants';
 
 export interface NewsCarouselCardProps {
-  image: string;
+  image: WixImage;
   heading: string;
   subHeading: string;
-  authorImage: string;
+  authorImage: WixImage;
   authorName: string;
   publishDate: string;
   readTime: string;
@@ -30,9 +31,9 @@ export const NewsCarouselCard = ({
   return (
     <Link href={href} className="block h-full group">
       <div className="flex flex-col h-full">
-        <div className="relative w-full aspect-[4/3] overflow-hidden">
+        <div className="relative w-full aspect-4/3 overflow-hidden">
           <Image
-            src={image}
+            src={image.url}
             alt={heading}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -45,9 +46,9 @@ export const NewsCarouselCard = ({
             className="flex items-start gap-3 mt-2"
             data-testid={testIds.HOME_PAGE.NEWS_CAROUSEL_CARD_AUTHOR}
           >
-            <div className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-full overflow-hidden flex-shrink-0">
+            <div className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-full overflow-hidden shrink-0">
               <Image
-                src={authorImage}
+                src={authorImage.url}
                 alt={authorName}
                 fill
                 className="object-cover"

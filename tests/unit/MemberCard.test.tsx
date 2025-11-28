@@ -1,12 +1,12 @@
 import MemberCard from '@app/components/Directory/MemberCard';
-import testIds from '@app/test-ids';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { DEFAULT_WIX_IMAGE } from '@app/constants';
 
 describe('MemberCard', () => {
   const mockProps = {
-    media: 'wix:image://v1/member-logo.jpg',
+    media: DEFAULT_WIX_IMAGE,
     name: 'ABC Corporation',
     address: '123 Main Street, City, State 12345',
     slug: 'abc-corporation',
@@ -35,13 +35,13 @@ describe('MemberCard', () => {
     expect(image).toBeInTheDocument();
   });
 
-  it('renders image with Wix media URL', () => {
+  it('renders image with correct URL', () => {
     render(<MemberCard {...mockProps} />);
 
     const image = screen.getByAltText(mockProps.name);
     expect(image).toHaveAttribute(
       'src',
-      expect.stringContaining('static.wixstatic.com%2Fmedia%2Fmember-logo.jpg'),
+      expect.stringContaining('placeholder.jpg'),
     );
   });
 

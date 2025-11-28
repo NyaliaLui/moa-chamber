@@ -2,11 +2,12 @@ import StaffCard from '@app/components/About/StaffCard';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { DEFAULT_WIX_IMAGE } from '@app/constants';
 
 describe('StaffCard', () => {
   const mockProps = {
     name: 'John Doe',
-    image: 'https://example.com/image.jpg',
+    image: DEFAULT_WIX_IMAGE,
     role: 'Executive Director',
     email: 'john.doe@example.com',
     bio: 'A passionate leader with 10 years of experience.',
@@ -105,28 +106,21 @@ describe('StaffCard', () => {
     expect(links).toHaveLength(2);
   });
 
-  it('uses placeholder image when image is not a Wix image', () => {
+  it('renders image with correct src from WixImage', () => {
     render(<StaffCard {...mockProps} />);
 
     const image = screen.getByAltText(mockProps.role);
     expect(image).toHaveAttribute(
       'src',
-      expect.stringContaining('placeholder-image.svg'),
+      expect.stringContaining('placeholder.jpg'),
     );
   });
 
-  it('uses Wix image URL when image starts with wix:image://v1', () => {
-    const wixProps = {
-      ...mockProps,
-      image: 'wix:image://v1/test-image.jpg',
-    };
+  it('renders image with correct dimensions from WixImage', () => {
+    render(<StaffCard {...mockProps} />);
 
-    render(<StaffCard {...wixProps} />);
-
-    const image = screen.getByAltText(wixProps.role);
-    expect(image).toHaveAttribute(
-      'src',
-      expect.stringContaining('static.wixstatic.com%2Fmedia%2Ftest-image.jpg'),
-    );
+    const image = screen.getByAltText(mockProps.role);
+    expect(image).toHaveAttribute('width', String(mockProps.image.width));
+    expect(image).toHaveAttribute('height', String(mockProps.image.height));
   });
 });

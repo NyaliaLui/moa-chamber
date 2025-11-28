@@ -7,7 +7,7 @@ import {
 } from '@wix/sdk';
 
 import { items } from '@wix/data';
-import { DEFAULTS } from '@app/constants';
+import { DEFAULT_WIX_IMAGE, DEFAULTS, WixImage } from '@app/constants';
 import type { TabContent } from '@app/components/Resources/CultureBoxTabs';
 import type { Business } from '@app/components/Resources/BusinessBox';
 import type { Benefit } from '@app/components/Benefits';
@@ -22,14 +22,14 @@ export interface NewsArticle {
   slug: string;
   readTime: number;
   heading: string;
-  image: string;
+  image: WixImage;
   publishDate: string;
   longDescription: string;
   caption: string;
-  authorImage: string;
+  authorImage: WixImage;
   authorName: string;
   authorRole: string;
-  gallery?: Array<{ src: string }>;
+  gallery?: WixImage[];
 }
 
 export interface Project {
@@ -65,11 +65,11 @@ export interface Collections {
   testimonialsData: Testimonial[];
 }
 
-export function getImageUrlForMedia(media: string) {
-  if (media.startsWith('wix:image')) {
-    return wixMedia.getImageUrl(media).url;
+export function makeWixImage(src: string): WixImage {
+  if (src.startsWith('wix:image')) {
+    return wixMedia.getImageUrl(src);
   } else {
-    return media;
+    return DEFAULT_WIX_IMAGE;
   }
 }
 
@@ -82,7 +82,7 @@ export function makeTabContent(item: items.WixDataItem): TabContent {
     ctaLink: item.ctaLink || DEFAULTS.resources.culture.ctaLink,
     ctaLabel: item.ctaLabel || DEFAULTS.resources.culture.ctaLabel,
     image: item.image
-      ? getImageUrlForMedia(item.image)
+      ? makeWixImage(item.image)
       : DEFAULTS.resources.culture.image,
   };
 }
@@ -93,7 +93,7 @@ export function makeBusiness(item: items.WixDataItem): Business {
     description: item.description || DEFAULTS.resources.business.description,
     website: item.website || DEFAULTS.resources.business.website,
     image: item.image
-      ? getImageUrlForMedia(item.image)
+      ? makeWixImage(item.image)
       : DEFAULTS.resources.business.image,
   };
 }
@@ -104,9 +104,7 @@ export function makeBenefit(item: items.WixDataItem): Benefit {
     heading: item.heading || DEFAULTS.home.benefit.heading,
     description: item.description || DEFAULTS.home.benefit.description,
     label: item.label || DEFAULTS.home.benefit.label,
-    image: item.image
-      ? getImageUrlForMedia(item.image)
-      : DEFAULTS.home.benefit.image,
+    image: item.image ? makeWixImage(item.image) : DEFAULTS.home.benefit.image,
   };
 }
 
@@ -118,7 +116,7 @@ export function makeTestimonial(item: items.WixDataItem): Testimonial {
     businessName: item.businessName || DEFAULTS.home.testimonial.businessName,
     businessRole: item.businessRole || DEFAULTS.home.testimonial.businessRole,
     image: item.image
-      ? getImageUrlForMedia(item.image)
+      ? makeWixImage(item.image)
       : DEFAULTS.home.testimonial.image,
   };
 }
@@ -133,11 +131,9 @@ export function makeNewsCarouselData(
     authorName: item?.authorName || DEFAULTS.home.news.authorName,
     publishDate: item?.publishDate || DEFAULTS.home.news.publishDate,
     readTime: item?.readTime || DEFAULTS.home.news.readTime,
-    image: item.image
-      ? getImageUrlForMedia(item.image)
-      : DEFAULTS.home.news.image,
+    image: item.image ? makeWixImage(item.image) : DEFAULTS.home.news.image,
     authorImage: item.authorImage
-      ? getImageUrlForMedia(item.authorImage)
+      ? makeWixImage(item.authorImage)
       : DEFAULTS.home.news.authorImage,
     href: `/news/${item.slug}`,
   };
@@ -145,9 +141,7 @@ export function makeNewsCarouselData(
 
 export function makeNewsCard(item: items.WixDataItem): NewsCardProps {
   return {
-    image: item.image
-      ? getImageUrlForMedia(item.image)
-      : DEFAULTS.home.news.image,
+    image: item.image ? makeWixImage(item.image) : DEFAULTS.home.news.image,
     heading: item.heading || DEFAULTS.home.news.heading,
     description: item.description || DEFAULTS.home.news.subHeading,
     slug: item.slug || DEFAULTS.home.news.slug,
@@ -160,25 +154,25 @@ export function makeNewsArticle(item: items.WixDataItem): NewsArticle {
     slug: item.slug || DEFAULTS.news.article.slug,
     readTime: item.readTime || DEFAULTS.news.article.readTime,
     heading: item.heading || DEFAULTS.news.article.heading,
-    image: item.image
-      ? getImageUrlForMedia(item.image)
-      : DEFAULTS.news.article.image,
+    image: item.image ? makeWixImage(item.image) : DEFAULTS.news.article.image,
     publishDate: item.publishDate || DEFAULTS.news.article.publishDate,
     longDescription:
       item.longDescription || DEFAULTS.news.article.longDescription,
     caption: item.caption || DEFAULTS.news.article.caption,
     authorImage: item.authorImage
-      ? getImageUrlForMedia(item.authorImage)
+      ? makeWixImage(item.authorImage)
       : DEFAULTS.news.article.authorImage,
     authorName: item.authorName || DEFAULTS.news.article.authorName,
     authorRole: item.authorRole || DEFAULTS.news.article.authorRole,
-    gallery: item.gallery || DEFAULTS.news.article.gallery,
+    gallery: item.gallery
+      ? item.gallery.map((obj: any) => makeWixImage(obj.src))
+      : DEFAULTS.news.article.gallery,
   };
 }
 
 export function makeMemberCard(item: items.WixDataItem): MemberCardProps {
   return {
-    media: item.cover || DEFAULTS.project._id,
+    media: item.cover ? makeWixImage(item.cover) : DEFAULTS.project.cover,
     name: item.title || DEFAULTS.project.title,
     address: item.address || DEFAULTS.project.address,
     slug: item.slug || DEFAULTS.project.slug,
@@ -201,7 +195,7 @@ export function makeProject(item: items.WixDataItem): Project {
 export function makeStaffCard(item: items.WixDataItem): StaffCardProps {
   return {
     name: item.name || DEFAULTS.team.staff.name,
-    image: item.image || DEFAULTS.team.staff.image,
+    image: item.image ? makeWixImage(item.image) : DEFAULTS.team.staff.image,
     role: item.role || DEFAULTS.team.staff.role,
     email: item.email || DEFAULTS.team.staff.email,
     bio: item.about || DEFAULTS.team.staff.bio,
@@ -275,42 +269,43 @@ export async function getWixCollections(): Promise<Collections> {
 }
 
 export interface SingleItemCollections {
-  ctaImage: string;
+  ctaImage: WixImage;
   calendar: string;
-  heroImage: string;
+  heroImage: WixImage;
 }
 
 export async function getSingleItemCollections(): Promise<SingleItemCollections> {
   const wixClient = await getWixClient();
+  const getRawData = async (dataCollectionId: string, defaultValue: any) => {
+    const { items } = await wixClient.items
+      .query(dataCollectionId)
+      .limit(1)
+      .find();
+    return items.length > 0 ? items[0] : defaultValue;
+  };
 
-  const { items: ctaItems } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_CTA!)
-    .limit(1)
-    .find();
-  const ctaRaw = ctaItems.length > 0 ? ctaItems[0] : DEFAULTS.home.cta;
-
-  const { items: calendarItems } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_CALENDAR!)
-    .limit(1)
-    .find();
-  const calendarRaw =
-    calendarItems.length > 0 ? calendarItems[0] : DEFAULTS.calendar;
-
-  const { items: heroItems } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_HERO!)
-    .limit(1)
-    .find();
-  const heroRaw = heroItems.length > 0 ? heroItems[0] : DEFAULTS.home.hero;
+  const ctaRaw = await getRawData(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_CTA!,
+    DEFAULTS.home.cta,
+  );
+  const calendarRaw = await getRawData(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_CALENDAR!,
+    DEFAULTS.calendar,
+  );
+  const heroRaw = await getRawData(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_HERO!,
+    DEFAULTS.home.hero,
+  );
 
   return {
     ctaImage: ctaRaw.image
-      ? getImageUrlForMedia(ctaRaw.image)
+      ? makeWixImage(ctaRaw.image)
       : DEFAULTS.home.cta.image,
     calendar: calendarRaw.calendarSrc
       ? calendarRaw.calendarSrc
       : DEFAULTS.calendar.calendarSrc,
     heroImage: heroRaw.image
-      ? getImageUrlForMedia(heroRaw.image)
+      ? makeWixImage(heroRaw.image)
       : DEFAULTS.home.hero.image,
   };
 }
