@@ -1,4 +1,6 @@
-import BusinessBox, { Business } from '@app/components/Resources/BusinessBox';
+import HistoricalBusinesses, {
+  Business,
+} from '@app/components/Resources/HistoricalBusinesses';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -26,9 +28,9 @@ const mockBusinessesData: Business[] = [
   },
 ];
 
-describe('BusinessBox', () => {
-  it('renders the BusinessBox component', () => {
-    render(<BusinessBox businessesData={mockBusinessesData} />);
+describe('HistoricalBusinesses', () => {
+  it('renders the HistoricalBusinesses component', () => {
+    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
 
     mockBusinessesData.forEach((business: Business) => {
       expect(screen.getByTestId(business.name)).toBeInTheDocument();
@@ -36,7 +38,7 @@ describe('BusinessBox', () => {
   });
 
   it('renders all business cards', () => {
-    render(<BusinessBox businessesData={mockBusinessesData} />);
+    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
     mockBusinessesData.forEach((business: Business) => {
       const card = screen.getByTestId(business.name);
       expect(card).toBeInTheDocument();
@@ -44,7 +46,7 @@ describe('BusinessBox', () => {
   });
 
   it('displays first business image by default', () => {
-    render(<BusinessBox businessesData={mockBusinessesData} />);
+    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
 
     const image = screen.getByAltText(mockBusinessesData[0].name);
     expect(image).toBeInTheDocument();
@@ -55,7 +57,7 @@ describe('BusinessBox', () => {
   });
 
   it('renders business descriptions', () => {
-    render(<BusinessBox businessesData={mockBusinessesData} />);
+    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
 
     mockBusinessesData.forEach((business: Business) => {
       expect(screen.getByText(business.description)).toBeInTheDocument();
@@ -63,7 +65,7 @@ describe('BusinessBox', () => {
   });
 
   it('renders business website links', () => {
-    render(<BusinessBox businessesData={mockBusinessesData} />);
+    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
 
     mockBusinessesData.forEach((business: Business) => {
       const card = screen.getByTestId(business.name);
@@ -73,7 +75,7 @@ describe('BusinessBox', () => {
   });
 
   it('image has correct attributes', () => {
-    render(<BusinessBox businessesData={mockBusinessesData} />);
+    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
 
     const image = screen.getByAltText(mockBusinessesData[0].name);
     expect(image).toHaveAttribute(
@@ -88,7 +90,7 @@ describe('BusinessBox', () => {
   });
 
   it('returns null when businessesData is empty', () => {
-    const { container } = render(<BusinessBox businessesData={[]} />);
+    const { container } = render(<HistoricalBusinesses businessesData={[]} />);
 
     expect(container.firstChild).toBeNull();
   });

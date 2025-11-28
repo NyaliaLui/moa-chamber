@@ -12,11 +12,13 @@ export interface Business {
   image: WixImage;
 }
 
-interface BusinessBoxProps {
+interface HistoricalBusinessesProps {
   businessesData: Business[];
 }
 
-const BusinessBox = ({ businessesData }: BusinessBoxProps) => {
+const HistoricalBusinesses = ({
+  businessesData,
+}: HistoricalBusinessesProps) => {
   const [selectedBusiness, setSelectedBusiness] = useState<Business>(
     businessesData[0],
   );
@@ -56,4 +58,4 @@ const BusinessBox = ({ businessesData }: BusinessBoxProps) => {
   );
 };
 
-export default BusinessBox;
+export default HistoricalBusinesses;

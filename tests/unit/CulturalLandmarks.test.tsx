@@ -1,6 +1,6 @@
-import CultureBoxTabs, {
+import CulturalLandmarks, {
   TabContent,
-} from '@app/components/Resources/CultureBoxTabs';
+} from '@app/components/Resources/CulturalLandmarks';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -36,9 +36,9 @@ const mockTabsData: TabContent[] = [
   },
 ];
 
-describe('CultureBoxTabs', () => {
-  it('renders the CultureBoxTabs component', () => {
-    render(<CultureBoxTabs tabsData={mockTabsData} />);
+describe('CulturalLandmarks', () => {
+  it('renders the CulturalLandmarks component', () => {
+    render(<CulturalLandmarks tabsData={mockTabsData} />);
 
     expect(screen.getByText('Culture Tab 1')).toBeInTheDocument();
     expect(screen.getByText('Culture Tab 2')).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe('CultureBoxTabs', () => {
   });
 
   it('renders all tab buttons', () => {
-    render(<CultureBoxTabs tabsData={mockTabsData} />);
+    render(<CulturalLandmarks tabsData={mockTabsData} />);
 
     const tab1 = screen.getByTestId('culture-tab-culture-1');
     const tab2 = screen.getByTestId('culture-tab-culture-2');
@@ -58,7 +58,7 @@ describe('CultureBoxTabs', () => {
   });
 
   it('renders CultureBox component with correct props', () => {
-    render(<CultureBoxTabs tabsData={mockTabsData} />);
+    render(<CulturalLandmarks tabsData={mockTabsData} />);
 
     const cultureBox = screen.getByTestId('culture-box');
     expect(cultureBox).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('CultureBoxTabs', () => {
   });
 
   it('returns null when tabsData is empty', () => {
-    const { container } = render(<CultureBoxTabs tabsData={[]} />);
+    const { container } = render(<CulturalLandmarks tabsData={[]} />);
 
     expect(container.firstChild).toBeNull();
   });

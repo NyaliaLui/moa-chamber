@@ -14,11 +14,11 @@ export interface TabContent {
   image: WixImage;
 }
 
-interface CultureBoxTabsProps {
+interface CulturalLandmarksProps {
   tabsData: TabContent[];
 }
 
-const CultureBoxTabs = ({ tabsData }: CultureBoxTabsProps) => {
+const CulturalLandmarks = ({ tabsData }: CulturalLandmarksProps) => {
   const [activeTab, setActiveTab] = useState<string>(tabsData[0]?.id || '');
 
   const activeContent =
@@ -58,4 +58,4 @@ const CultureBoxTabs = ({ tabsData }: CultureBoxTabsProps) => {
   );
 };
 
-export default CultureBoxTabs;
+export default CulturalLandmarks;
