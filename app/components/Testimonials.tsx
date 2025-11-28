@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { BiSolidStar } from 'react-icons/bi';
+import { WixImage } from '@app/constants';
 
 export interface Testimonial {
   id: string;
@@ -10,7 +11,7 @@ export interface Testimonial {
   name: string;
   businessName: string;
   businessRole: string;
-  image: string;
+  image: WixImage;
 }
 
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
@@ -28,11 +29,11 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
       </div>
       <div className="mt-5 flex w-full flex-col items-start md:mt-6 md:w-fit md:flex-row md:items-center">
         <Image
-          src={testimonial.image}
+          src={testimonial.image.url}
           alt={`Testimonial ${testimonial.businessName} img`}
           className="mb-4 size-12 min-h-12 min-w-12 rounded-full object-cover md:mb-0 md:mr-4"
-          width={1000}
-          height={1000}
+          width={testimonial.image.width}
+          height={testimonial.image.height}
         />
         <div>
           <p className="font-semibold">{testimonial.name}</p>

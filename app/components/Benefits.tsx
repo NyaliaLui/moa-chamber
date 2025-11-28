@@ -5,13 +5,14 @@ import Image from 'next/image';
 import { Button } from 'flowbite-react';
 
 import testIds from '@app/test-ids';
+import { WixImage } from '@app/constants';
 
 export interface Benefit {
   id: string;
   heading: string;
   description: string;
   label: string;
-  image: string;
+  image: WixImage;
 }
 
 const BenefitCard = ({ benefit }: { benefit: Benefit }) => {
@@ -19,10 +20,10 @@ const BenefitCard = ({ benefit }: { benefit: Benefit }) => {
     <div className="flex flex-col border bg-gray-100 border-gray-300">
       <div className="flex w-full flex-col items-center justify-center self-start">
         <Image
-          src={benefit.image}
+          src={benefit.image.url}
           alt={`Benefits ${benefit.label} img`}
-          width={1000}
-          height={1000}
+          width={benefit.image.width}
+          height={benefit.image.height}
         />
       </div>
       <div className="flex flex-1 flex-col justify-center p-6 md:p-8">

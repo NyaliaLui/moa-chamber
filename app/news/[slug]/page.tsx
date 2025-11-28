@@ -7,8 +7,8 @@ import { HR } from 'flowbite-react';
 
 import testIds from '@app/test-ids';
 import { DateDisplay } from '@app/components/News/DateDisplay';
-import { wix, getImageUrlForMedia } from '@app/hooks/Wix';
-import { DEFAULTS } from '@app/constants';
+import { wix } from '@app/hooks/Wix';
+import { DEFAULTS, WixImage } from '@app/constants';
 
 export default async function New({ params }: any) {
   const { collections } = await wix();
@@ -43,11 +43,11 @@ export default async function New({ params }: any) {
         </div>
         <div className="mx-auto mb-8 w-full overflow-hidden md:mb-12 lg:mb-8">
           <Image
-            src={getImageUrlForMedia(article.image)}
-            className="aspect-[5/2] size-full object-cover"
+            src={article.image.url}
+            className="aspect-5/2 size-full object-cover"
             alt="Relume placeholder image"
-            width={70}
-            height={36}
+            width={article.image.width}
+            height={article.image.height}
           />
         </div>
         <div className="flex w-full flex-col items-start justify-between md:flex-row">
@@ -67,10 +67,10 @@ export default async function New({ params }: any) {
               <p>{article.longDescription}</p>
               <figure>
                 <Image
-                  src={getImageUrlForMedia(article.image)}
+                  src={article.image.url}
                   alt="Relume placeholder image"
-                  width={1280}
-                  height={720}
+                  width={article.image.width}
+                  height={article.image.height}
                 />
                 <figcaption>{article.caption}</figcaption>
               </figure>
@@ -79,11 +79,11 @@ export default async function New({ params }: any) {
           <HR />
           <div className="flex items-center gap-4">
             <Image
-              src={getImageUrlForMedia(article.authorImage)}
+              src={article.authorImage.url}
               alt={article.authorName}
               className="size-14 rounded-full object-cover"
-              width={400}
-              height={400}
+              width={article.authorImage.width}
+              height={article.authorImage.height}
             />
             <div className="grow">
               <p className="font-semibold md:text-md">{article.authorName}</p>
@@ -93,14 +93,14 @@ export default async function New({ params }: any) {
         </div>
       </div>
       <div className="container pt-16 gap-8 space-y-8 md:columns-3">
-        {article.gallery?.map((image: any, i: number) => (
+        {article.gallery?.map((image: WixImage, i: number) => (
           <div key={i} className="block w-full">
             <Image
-              src={getImageUrlForMedia(image.src)}
+              src={image.url}
               alt={`gallery img-${i}`}
               className="size-full object-cover"
-              width={70}
-              height={36}
+              width={image.width}
+              height={image.height}
             />
           </div>
         ))}

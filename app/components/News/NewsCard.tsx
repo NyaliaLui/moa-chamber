@@ -5,9 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import testIds from '@app/test-ids';
+import { WixImage } from '@app/constants';
 
 export interface NewsCardProps {
-  image: string;
+  image: WixImage;
   heading: string;
   description: string;
   slug: string;
@@ -28,11 +29,11 @@ const NewsCard = ({
     >
       <Link href="#" className="w-full">
         <Image
-          src={image}
+          src={image.url}
           alt={heading}
           className="aspect-square w-full object-cover"
-          width={1280}
-          height={720}
+          width={image.width}
+          height={image.height}
         />
       </Link>
       <div className="flex h-full flex-col items-start justify-start">
