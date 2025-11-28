@@ -38,10 +38,10 @@ const StaffCard = ({
       </div>
       <div className="mb-3 md:mb-4">
         <h5 className="text-md font-semibold md:text-lg">{name}</h5>
-        <h6 className="md:text-md">{role}</h6>
-        <h6 className="md:text-md">{email}</h6>
+        <h6 className="text-sm md:text-md">{role}</h6>
+        <h6 className="text-sm md:text-md">{email}</h6>
       </div>
-      <p>{bio}</p>
+      <p className="text-sm md:text-md">{bio}</p>
       <div className="mt-6 grid grid-flow-col grid-cols-[max-content] gap-3.5 self-center">
         <Link href={`${SOCIAL_MEDIA_URLS.linkedIn}${linkedIn}/`}>
           <BiLogoLinkedinSquare className="size-6" />
