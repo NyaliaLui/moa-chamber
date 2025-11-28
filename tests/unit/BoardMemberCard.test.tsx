@@ -55,7 +55,7 @@ describe('BoardMemberCard', () => {
     render(<BoardMemberCard {...mockProps} />);
 
     const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading).toHaveClass('text-lg', 'font-semibold', 'md:text-lg');
+    expect(heading).toHaveClass('text-base', 'md:text-lg', 'font-semibold');
   });
 
   it('renders all three text elements in correct order', () => {
