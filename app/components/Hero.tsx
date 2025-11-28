@@ -19,16 +19,10 @@ const Hero = ({ image }: { image: WixImage }) => {
               our community and unlock opportunities for your business.
             </p>
             <div className="mt-6 flex flex-col gap-4 md:mt-8 md:flex-row md:items-center">
-              <Button size="lg" href="/join" className="w-full md:w-auto">
+              <Button size="lg" href="/join">
                 Join Us
               </Button>
-              <Button
-                color="dark"
-                size="lg"
-                outline
-                href="/about"
-                className="w-full md:w-auto"
-              >
+              <Button color="dark" size="lg" outline href="/about">
                 Who we are
               </Button>
             </div>

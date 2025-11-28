@@ -49,7 +49,7 @@ const NewsCarousel = ({ newsArticles }: NewsCarouselProps) => {
             size="lg"
             outline
             href="/news"
-            className="hidden md:block"
+            className="hidden md:flex"
           >
             View all
           </Button>
@@ -87,20 +87,21 @@ const NewsCarousel = ({ newsArticles }: NewsCarouselProps) => {
               />
             ))}
           </div>
+          {/* The News Carousel Arrows are built-in buttons instead of Flowbite for more control over the style. */}
           <div
             className="flex gap-2"
             data-testid={testIds.HOME_PAGE.NEWS_CAROUSEL_ARROWS}
           >
             <button
               onClick={() => scroll('left')}
-              className="p-3 rounded-full bg-gray-300 hover:bg-gray-600 transition-colors"
+              className="p-3 rounded-lg bg-gray-300 hover:bg-gray-600 transition-colors"
               aria-label="Scroll left"
             >
               <FaChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() => scroll('right')}
-              className="p-3 rounded-full bg-gray-300 hover:bg-gray-600 transition-colors"
+              className="p-3 rounded-lg bg-gray-300 hover:bg-gray-600 transition-colors"
               aria-label="Scroll right"
             >
               <FaChevronRight className="w-5 h-5" />

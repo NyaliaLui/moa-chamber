@@ -111,7 +111,7 @@ const Header = () => {
                 >
                   {label}
                 </Link>
-                <span className="absolute -bottom-5 border-b-2 w-48 left-[calc(50%_-_theme(space.24))]" />
+                <span className="absolute -bottom-5 border-b-2 w-48 left-[calc(50%-theme(space.24))]" />
               </li>
             ))}
 
