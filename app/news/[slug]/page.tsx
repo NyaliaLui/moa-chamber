@@ -93,17 +93,20 @@ export default async function New({ params }: any) {
         </div>
       </div>
       <div className="container pt-16 gap-8 space-y-8 md:columns-3">
-        {article.gallery?.map((image: WixImage, i: number) => (
-          <div key={i} className="block w-full">
-            <Image
-              src={image.url}
-              alt={`gallery img-${i}`}
-              className="size-full object-cover"
-              width={image.width}
-              height={image.height}
-            />
-          </div>
-        ))}
+        {/* Here we sort the gallery so larger images are shown first */}
+        {article.gallery
+          ?.sort((a, b) => b.width * b.height - a.width * a.height)
+          .map((image: WixImage, i: number) => (
+            <div key={i} className="block w-full">
+              <Image
+                src={image.url}
+                alt={`gallery img-${i}`}
+                className="size-full object-cover"
+                width={image.width}
+                height={image.height}
+              />
+            </div>
+          ))}
       </div>
     </section>
   );
