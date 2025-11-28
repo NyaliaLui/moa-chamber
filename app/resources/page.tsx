@@ -1,5 +1,5 @@
-import CultureBoxTabs from '@app/components/Resources/CultureBoxTabs';
-import BusinessBox from '@app/components/Resources/BusinessBox';
+import CulturalLandmarks from '@app/components/Resources/CulturalLandmarks';
+import HistoricalBusinesses from '@app/components/Resources/HistoricalBusinesses';
 import CTA from '@app/components/CTA';
 import { wix } from '@app/hooks/Wix';
 import testIds from '@app/test-ids';
@@ -26,7 +26,7 @@ export default async function Resources() {
           </div>
         </div>
         <div className="container mt-16 mb-24">
-          <CultureBoxTabs tabsData={collections.cultureResources} />
+          <CulturalLandmarks tabsData={collections.cultureResources} />
         </div>
         <div className="container">
           <div
@@ -41,7 +41,9 @@ export default async function Resources() {
               community.
             </p>
           </div>
-          <BusinessBox businessesData={collections.businessResources} />
+          <HistoricalBusinesses
+            businessesData={collections.businessResources}
+          />
         </div>
       </div>
       <CTA />

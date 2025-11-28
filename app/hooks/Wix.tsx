@@ -8,8 +8,8 @@ import {
 
 import { items } from '@wix/data';
 import { DEFAULT_WIX_IMAGE, DEFAULTS, WixImage } from '@app/constants';
-import type { TabContent } from '@app/components/Resources/CultureBoxTabs';
-import type { Business } from '@app/components/Resources/BusinessBox';
+import type { TabContent } from '@app/components/Resources/CulturalLandmarks';
+import type { Business } from '@app/components/Resources/HistoricalBusinesses';
 import type { Benefit } from '@app/components/Benefits';
 import type { Testimonial } from '@app/components/Testimonials';
 import { NewsCarouselData } from '@app/components/NewsCarousel';
