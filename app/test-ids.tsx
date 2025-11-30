@@ -39,6 +39,7 @@ const ids = {
     CULTURE_BOX: 'culture-box',
     CONTAINER: 'community-resources-demo',
     HEADING: 'community-resources-heading',
+    BUSINESS_BOX: 'business-box',
     BUSINESSES_HEADING: 'community-businesses-heading',
   },
   CTA: {
