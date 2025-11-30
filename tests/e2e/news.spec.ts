@@ -11,7 +11,7 @@ test.describe('News Page', () => {
   test.describe('Page Load and Structure', () => {
     test('should load the news page successfully', async ({ page }) => {
       await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(/MOA/i);
+      await expect(page).toHaveTitle(/MOA Chamber/i);
     });
 
     test('should display the header', async ({ page }) => {
@@ -25,13 +25,13 @@ test.describe('News Page', () => {
     });
   });
 
-  test.describe('News Header Section', () => {
-    test('should display page heading', async ({ page }) => {
+  test.describe('News Page Header Section', () => {
+    test('should display news page heading', async ({ page }) => {
       const heading = page.getByRole('heading', { name: /Chamber News/i });
       await expect(heading).toBeVisible();
     });
 
-    test('should display page description', async ({ page }) => {
+    test('should display news page description', async ({ page }) => {
       const description = page.getByText(
         /Stay informed about the economic pulse and community developments/i,
       );
@@ -39,73 +39,145 @@ test.describe('News Page', () => {
     });
   });
 
-  test.describe('News List Section', () => {
-    test('should display news items in a grid layout', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForSelector('text=Chamber News', { timeout: 10000 });
+  test.describe('News Cards Section', () => {
+    test('should display at least one news card', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
 
-      // Check that the news grid exists
-      const newsGrid = page.locator('.grid.grid-cols-1.gap-x-12.gap-y-12');
-      await expect(newsGrid).toBeVisible();
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const count = await newsCards.count();
+
+      expect(count).toBeGreaterThan(0);
     });
 
-    test('should display news cards when data is loaded', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForSelector('text=Chamber News', { timeout: 10000 });
+    test('should display news card images', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
 
-      // Check if news cards container exists
-      const newsSection = page.locator('section.px-\\[5\\%\\].mt-16');
-      await expect(newsSection).toBeVisible();
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const count = await newsCards.count();
+
+      expect(count).toBeGreaterThan(0);
+
+      // Check that each card has an image
+      for (let i = 0; i < count; i++) {
+        const image = newsCards.nth(i).locator('img');
+        await expect(image).toBeVisible();
+      }
     });
 
-    test('should have responsive grid layout classes', async ({ page }) => {
-      const newsGrid = page.locator('.grid.grid-cols-1.gap-x-12.gap-y-12');
+    test('should display news card headings', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
 
-      await expect(newsGrid).toHaveClass(/lg:grid-cols-2/);
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const count = await newsCards.count();
+
+      expect(count).toBeGreaterThan(0);
+
+      // Check that each card has a heading (h3 element)
+      for (let i = 0; i < count; i++) {
+        const heading = newsCards.nth(i).locator('h3');
+        await expect(heading).toBeVisible();
+      }
+    });
+
+    test('should display news card descriptions', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
+
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const count = await newsCards.count();
+
+      expect(count).toBeGreaterThan(0);
+
+      // Check that each card has a description (p element)
+      for (let i = 0; i < count; i++) {
+        const description = newsCards.nth(i).locator('p').first();
+        await expect(description).toBeVisible();
+      }
+    });
+
+    test('should display read time on each card', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
+
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const count = await newsCards.count();
+
+      expect(count).toBeGreaterThan(0);
+
+      // Check that each card has read time
+      for (let i = 0; i < count; i++) {
+        const readTime = newsCards.nth(i).getByText(/min read/i);
+        await expect(readTime).toBeVisible();
+      }
+    });
+
+    test('should display "Read more" CTA on each card', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
+
+      const ctaElements = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA);
+      const count = await ctaElements.count();
+
+      expect(count).toBeGreaterThan(0);
+
+      // Check that each CTA is visible
+      for (let i = 0; i < count; i++) {
+        await expect(ctaElements.nth(i)).toBeVisible();
+        await expect(ctaElements.nth(i)).toHaveText(/Read more/i);
+      }
+    });
+
+    test('should have clickable "Read more" links', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
+
+      const ctaElements = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA);
+      const count = await ctaElements.count();
+
+      expect(count).toBeGreaterThan(0);
+
+      // Check that each CTA is a link with proper href
+      for (let i = 0; i < count; i++) {
+        const href = await ctaElements.nth(i).getAttribute('href');
+        expect(href).toBeTruthy();
+        expect(href).toContain('/news/');
+      }
+    });
+
+    test('should display chevron icon on "Read more" button', async ({
+      page,
+    }) => {
+      await page.waitForLoadState('networkidle');
+
+      const ctaElements = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA);
+      const firstCta = ctaElements.first();
+
+      // Check for chevron icon
+      const chevron = firstCta.locator('svg');
+      await expect(chevron).toBeVisible();
     });
   });
 
-  test.describe('News Cards', () => {
-    test('should display news card elements when available', async ({
-      page,
-    }) => {
-      // Wait for content to load
-      await page.waitForSelector('text=Chamber News', { timeout: 10000 });
+  test.describe('Grid Layout', () => {
+    test('should display news cards in grid layout', async ({ page }) => {
+      const newsGrid = page.locator('.grid.grid-cols-1');
+      await expect(newsGrid.first()).toBeVisible();
 
-      // Check if any news card links exist
-      const newsLinks = page.locator('a[href^="/news/"]');
-      const count = await newsLinks.count();
-
-      // If news items exist, verify they have proper structure
-      if (count > 0) {
-        const firstLink = newsLinks.first();
-        await expect(firstLink).toBeVisible();
-
-        // Verify href format
-        const href = await firstLink.getAttribute('href');
-        expect(href).toMatch(/^\/news\/.+/);
-      }
+      // Check for responsive grid class
+      const classes = await newsGrid.first().getAttribute('class');
+      expect(classes).toContain('lg:grid-cols-2');
     });
   });
 
   test.describe('Navigation', () => {
-    test('should navigate to news detail page when clicking a news card', async ({
+    test('should navigate to news detail page when clicking "Read more"', async ({
       page,
     }) => {
-      // Wait for content to load
-      await page.waitForSelector('text=Chamber News', { timeout: 10000 });
+      await page.waitForLoadState('networkidle');
 
-      // Try to find and click a news card link if it exists
-      const newsLinks = page.locator('a[href^="/news/"]');
-      const count = await newsLinks.count();
+      const firstCta = page
+        .getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA)
+        .first();
+      await firstCta.click();
 
-      if (count > 0) {
-        const firstLink = newsLinks.first();
-        const href = await firstLink.getAttribute('href');
-
-        // Verify the link is valid before attempting navigation
-        expect(href).toMatch(/^\/news\/.+/);
-      }
+      // Should navigate to a news slug page
+      await expect(page).toHaveURL(/\/news\/.+/);
     });
   });
 
@@ -116,8 +188,8 @@ test.describe('News Page', () => {
       const heading = page.getByRole('heading', { name: /Chamber News/i });
       await expect(heading).toBeVisible();
 
-      const newsSection = page.locator('section.px-\\[5\\%\\].mt-16');
-      await expect(newsSection).toBeVisible();
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      await expect(newsCards.first()).toBeVisible();
     });
 
     test('should display correctly on tablet viewport', async ({ page }) => {
@@ -126,20 +198,69 @@ test.describe('News Page', () => {
       const heading = page.getByRole('heading', { name: /Chamber News/i });
       await expect(heading).toBeVisible();
 
-      const description = page.getByText(
-        /Stay informed about the economic pulse/i,
-      );
-      await expect(description).toBeVisible();
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      await expect(newsCards.first()).toBeVisible();
     });
 
-    test('should adapt to desktop viewport with two-column layout', async ({
-      page,
-    }) => {
+    test('should display correctly on desktop viewport', async ({ page }) => {
       await page.setViewportSize({ width: 1920, height: 1080 });
 
-      const newsGrid = page.locator('.grid.grid-cols-1.gap-x-12.gap-y-12');
-      await expect(newsGrid).toBeVisible();
-      await expect(newsGrid).toHaveClass(/lg:grid-cols-2/);
+      const heading = page.getByRole('heading', { name: /Chamber News/i });
+      await expect(heading).toBeVisible();
+
+      // News cards should be in 2-column grid on desktop
+      await page.waitForLoadState('networkidle');
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const count = await newsCards.count();
+      expect(count).toBeGreaterThan(0);
+    });
+  });
+
+  test.describe('Content Validation', () => {
+    test('should have at least one news article', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
+
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const count = await newsCards.count();
+
+      expect(count).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  test.describe('Accessibility', () => {
+    test('should have proper heading hierarchy', async ({ page }) => {
+      const h1 = page.getByRole('heading', { name: /Chamber News/i });
+      await expect(h1).toBeVisible();
+
+      // Verify it's an h1 element
+      const tagName = await h1.evaluate((el) => el.tagName.toLowerCase());
+      expect(tagName).toBe('h1');
+    });
+
+    test('should have descriptive alt text for images', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
+
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const firstCard = newsCards.first();
+      const image = firstCard.locator('img');
+
+      const alt = await image.getAttribute('alt');
+      expect(alt).toBeTruthy();
+      expect(alt).not.toBe('');
+    });
+  });
+
+  test.describe('Image Display', () => {
+    test('should display images with aspect-square class', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
+
+      const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
+      const firstCard = newsCards.first();
+      const image = firstCard.locator('img');
+
+      const classes = await image.getAttribute('class');
+      expect(classes).toContain('aspect-square');
+      expect(classes).toContain('object-cover');
     });
   });
 });

@@ -77,7 +77,10 @@ export default async function New({ params }: any) {
             </Fragment>
           </div>
           <HR />
-          <div className="flex items-center gap-4">
+          <div
+            className="flex items-center gap-4"
+            data-testid={testIds.NEWS_DETAILS_PAGE.AUTHOR_SECTION}
+          >
             <Image
               src={article.authorImage.url}
               alt={article.authorName}
@@ -86,8 +89,15 @@ export default async function New({ params }: any) {
               height={article.authorImage.height}
             />
             <div className="grow">
-              <p className="font-semibold md:text-md">{article.authorName}</p>
-              <p>{article.authorRole}</p>
+              <p
+                className="font-semibold md:text-md"
+                data-testid={testIds.NEWS_DETAILS_PAGE.AUTHOR_NAME}
+              >
+                {article.authorName}
+              </p>
+              <p data-testid={testIds.NEWS_DETAILS_PAGE.AUTHOR_ROLE}>
+                {article.authorRole}
+              </p>
             </div>
           </div>
         </div>

@@ -31,6 +31,9 @@ const ids = {
   },
   NEWS_DETAILS_PAGE: {
     CONTAINER: 'news-details-page.container',
+    AUTHOR_SECTION: 'news-details-page.author-section',
+    AUTHOR_NAME: 'news-details-page.author-name',
+    AUTHOR_ROLE: 'news-details-page.author-role',
   },
   RESOURCES: {
     CULTURE_BOX: 'culture-box',
