@@ -1,16 +1,48 @@
+'use client';
+
 import { BiEnvelope, BiMap, BiMessageDetail, BiPhone } from 'react-icons/bi';
 import Link from 'next/link';
 import Image from 'next/image';
+import { use } from 'react';
 import testIds from '@app/test-ids';
-import { wix } from '@app/hooks/Wix';
+import { useWixMembers } from '@app/hooks/Wix';
 import { DEFAULTS } from '@app/constants';
 
-export default async function Member({ params }: any) {
-  const { collections } = await wix();
-  // Dynamic APIs such as params must be awaited.
-  // https://nextjs.org/docs/messages/sync-dynamic-apis
-  const { slug } = await params;
-  let member = collections.members.filter((item) => item.slug === slug).pop();
+export default function Member({ params }: any) {
+  const { data: members, isLoading, error } = useWixMembers();
+  const { slug } = use(params) as { slug: string };
+
+  if (isLoading) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg">Loading...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg text-red-600">Error: {error.message}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!members) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg text-red-600">Error: members are undefined</p>
+        </div>
+      </section>
+    );
+  }
+
+  let member = members.filter((item) => item.slug === slug).pop();
   if (!member) {
     member = DEFAULTS.project;
   }

@@ -1,10 +1,44 @@
+'use client';
+
 import testIds from '@app/test-ids';
 import CTA from '@app/components/CTA';
 import MemberCard from '@app/components/Directory/MemberCard';
-import { wix } from '@app/hooks/Wix';
+import { useWixMemberCards } from '@app/hooks/Wix';
 
-export default async function Directory() {
-  const { collections } = await wix();
+export default function Directory() {
+  const { data: memberCards, isLoading, error } = useWixMemberCards();
+
+  if (isLoading) {
+    return (
+      <section className="px-[5%]">
+        <div className="container mx-auto text-center mt-16">
+          <p className="text-lg">Loading...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="px-[5%]">
+        <div className="container mx-auto text-center mt-16">
+          <p className="text-lg text-red-600">Error: {error.message}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!memberCards) {
+    return (
+      <section className="px-[5%]">
+        <div className="container mx-auto text-center mt-16">
+          <p className="text-lg text-red-600">
+            Error: member cards are undefined
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="px-[5%]">
@@ -27,7 +61,7 @@ export default async function Directory() {
           className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12"
           data-testid={testIds.PROJECTS_PAGE.PROJECT_LIST}
         >
-          {collections?.memberCards.map((item, index) => (
+          {memberCards.map((item, index) => (
             <MemberCard
               key={index}
               media={item.media}
