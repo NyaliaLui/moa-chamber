@@ -1,9 +1,42 @@
+'use client';
+
 import NewsCard from '@app/components/News/NewsCard';
+import { useWixNewsCards } from '@app/hooks/Wix';
 
-import { wix } from '@app/hooks/Wix';
+export default function News() {
+  const { data: newsCards, isLoading, error } = useWixNewsCards();
 
-export default async function News() {
-  const { collections } = await wix();
+  if (isLoading) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg">Loading...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg text-red-600">Error: {error.message}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!newsCards) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg text-red-600">
+            Error: news cards are undefined
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="px-[5%] mt-16">
@@ -19,7 +52,7 @@ export default async function News() {
         </div>
         <div className="flex flex-col justify-start">
           <div className="grid grid-cols-1 gap-x-12 gap-y-12 md:gap-y-16 lg:grid-cols-2">
-            {collections.newsCards.map((item, index) => (
+            {newsCards.map((item, index) => (
               <NewsCard
                 key={index}
                 image={item.image}

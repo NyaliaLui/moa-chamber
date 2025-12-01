@@ -1,4 +1,6 @@
-import { Fragment } from 'react';
+'use client';
+
+import { Fragment, use } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -7,15 +9,46 @@ import { HR } from 'flowbite-react';
 
 import testIds from '@app/test-ids';
 import { DateDisplay } from '@app/components/News/DateDisplay';
-import { wix } from '@app/hooks/Wix';
+import { useWixNews } from '@app/hooks/Wix';
 import { DEFAULTS, WixImage } from '@app/constants';
 
-export default async function New({ params }: any) {
-  const { collections } = await wix();
-  const { slug } = await params;
-  let article = collections.newsArticles
-    .filter((item) => item.slug === slug)
-    .pop();
+export default function New({ params }: any) {
+  const { data: newsArticles, isLoading, error } = useWixNews();
+  const { slug } = use(params) as { slug: string };
+
+  if (isLoading) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg">Loading...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg text-red-600">Error: {error.message}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!newsArticles) {
+    return (
+      <section className="px-[5%] mt-16">
+        <div className="container mx-auto text-center">
+          <p className="text-lg text-red-600">
+            Error: news articles are undefined
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  let article = newsArticles.filter((item) => item.slug === slug).pop();
   if (!article) {
     article = DEFAULTS.news.article;
   }
