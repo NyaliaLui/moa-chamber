@@ -4,39 +4,26 @@ import testIds from '@app/test-ids';
 import CTA from '@app/components/CTA';
 import MemberCard from '@app/components/Directory/MemberCard';
 import { useWixMemberCards } from '@app/hooks/Wix';
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
 
 export default function Directory() {
   const { data: memberCards, isLoading, error } = useWixMemberCards();
 
   if (isLoading) {
-    return (
-      <section className="px-[5%]">
-        <div className="container mx-auto text-center mt-16">
-          <p className="text-lg">Loading...</p>
-        </div>
-      </section>
-    );
+    return <LoadingState className="px-[5%]" />;
   }
 
   if (error) {
-    return (
-      <section className="px-[5%]">
-        <div className="container mx-auto text-center mt-16">
-          <p className="text-lg text-red-600">Error: {error.message}</p>
-        </div>
-      </section>
-    );
+    return <ErrorState error={error} className="px-[5%]" />;
   }
 
   if (!memberCards) {
     return (
-      <section className="px-[5%]">
-        <div className="container mx-auto text-center mt-16">
-          <p className="text-lg text-red-600">
-            Error: member cards are undefined
-          </p>
-        </div>
-      </section>
+      <ErrorState
+        error={new Error('member cards are undefined')}
+        className="px-[5%]"
+      />
     );
   }
 

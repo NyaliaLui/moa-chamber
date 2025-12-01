@@ -2,40 +2,22 @@
 
 import NewsCard from '@app/components/News/NewsCard';
 import { useWixNewsCards } from '@app/hooks/Wix';
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
 
 export default function News() {
   const { data: newsCards, isLoading, error } = useWixNewsCards();
 
   if (isLoading) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg">Loading...</p>
-        </div>
-      </section>
-    );
+    return <LoadingState />;
   }
 
   if (error) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg text-red-600">Error: {error.message}</p>
-        </div>
-      </section>
-    );
+    return <ErrorState error={error} />;
   }
 
   if (!newsCards) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg text-red-600">
-            Error: news cards are undefined
-          </p>
-        </div>
-      </section>
-    );
+    return <ErrorState error={new Error('news cards are undefined')} />;
   }
 
   return (

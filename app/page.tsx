@@ -12,6 +12,9 @@ import {
   useWixTestimonials,
 } from '@app/hooks/Wix';
 
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
+
 export default function Home() {
   const {
     data: heroImage,
@@ -39,35 +42,15 @@ export default function Home() {
   const error = heroError || newsError || benefitsError || testimonialsError;
 
   if (isLoading) {
-    return (
-      <div className="mx-auto relative sm:px-20 py-2.5">
-        <div className="container mx-auto text-center py-20">
-          <p className="text-lg">Loading...</p>
-        </div>
-      </div>
-    );
+    return <LoadingState />;
   }
 
   if (error) {
-    return (
-      <div className="mx-auto relative sm:px-20 py-2.5">
-        <div className="container mx-auto text-center py-20">
-          <p className="text-lg text-red-600">Error: {error.message}</p>
-        </div>
-      </div>
-    );
+    return <ErrorState error={error} />;
   }
 
   if (!heroImage || !newsCarouselData || !benefitsData || !testimonialsData) {
-    return (
-      <div className="mx-auto relative sm:px-20 py-2.5">
-        <div className="container mx-auto text-center py-20">
-          <p className="text-lg text-red-600">
-            Error: home page data is undefined
-          </p>
-        </div>
-      </div>
-    );
+    return <ErrorState error={new Error('home page data is undefined')} />;
   }
 
   return (

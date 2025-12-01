@@ -8,6 +8,8 @@ import {
   useWixBusinessResources,
 } from '@app/hooks/Wix';
 import testIds from '@app/test-ids';
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
 
 export default function Resources() {
   const {
@@ -25,33 +27,15 @@ export default function Resources() {
   const error = cultureError || businessError;
 
   if (isLoading) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg">Loading...</p>
-        </div>
-      </section>
-    );
+    return <LoadingState />;
   }
 
   if (error) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg text-red-600">Error: {error.message}</p>
-        </div>
-      </section>
-    );
+    return <ErrorState error={error} />;
   }
 
   if (!cultureResources || !businessResources) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg text-red-600">Error: resources are undefined</p>
-        </div>
-      </section>
-    );
+    return <ErrorState error={new Error('resources are undefined')} />;
   }
 
   return (

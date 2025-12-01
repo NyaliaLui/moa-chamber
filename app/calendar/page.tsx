@@ -2,38 +2,22 @@
 
 import CTA from '@app/components/CTA';
 import { useWixCalendar } from '@app/hooks/Wix';
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
 
 export default function Calendar() {
   const { data: calendar, isLoading, error } = useWixCalendar();
 
   if (isLoading) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg">Loading...</p>
-        </div>
-      </section>
-    );
+    return <LoadingState />;
   }
 
   if (error) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg text-red-600">Error: {error.message}</p>
-        </div>
-      </section>
-    );
+    return <ErrorState error={error} />;
   }
 
   if (!calendar) {
-    return (
-      <section className="px-[5%] mt-16">
-        <div className="container mx-auto text-center">
-          <p className="text-lg text-red-600">Error: calendar is undefined</p>
-        </div>
-      </section>
-    );
+    return <ErrorState error={new Error('calendar is undefined')} />;
   }
 
   return (

@@ -6,31 +6,22 @@ import { Button } from 'flowbite-react';
 import { useWixCta } from '@app/hooks/Wix';
 import testIds from '@app/test-ids';
 
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
+
 export default function CTA() {
   const { data: ctaImage, isLoading, error } = useWixCta();
 
   if (isLoading) {
-    return (
-      <div className="container text-center px-[5%] mt-16 py-12 md:py-18">
-        <p className="text-lg">Loading...</p>
-      </div>
-    );
+    return <LoadingState />;
   }
 
   if (error) {
-    return (
-      <div className="container text-center px-[5%] mt-16 py-12 md:py-18">
-        <p className="text-lg text-red-600">Error: {error.message}</p>
-      </div>
-    );
+    return <ErrorState error={error} />;
   }
 
   if (!ctaImage) {
-    return (
-      <div className="container text-center px-[5%] mt-16 py-12 md:py-18">
-        <p className="text-lg text-red-600">Error: CTA image is undefined</p>
-      </div>
-    );
+    return <ErrorState error={new Error('CTA image is undefined')} />;
   }
 
   return (
