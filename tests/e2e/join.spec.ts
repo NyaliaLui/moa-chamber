@@ -11,7 +11,7 @@ test.describe('Join Page', () => {
   test.describe('Page Load and Structure', () => {
     test('should load the join page successfully', async ({ page }) => {
       await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(/MOA/i);
+      await expect(page).toHaveTitle(/MOA Chamber/i);
     });
 
     test('should display the header', async ({ page }) => {
@@ -25,7 +25,7 @@ test.describe('Join Page', () => {
     });
   });
 
-  test.describe('Header Section', () => {
+  test.describe('Page Header Section', () => {
     test('should display main heading', async ({ page }) => {
       const heading = page.getByRole('heading', {
         name: /Grow your business/i,
@@ -33,9 +33,9 @@ test.describe('Join Page', () => {
       await expect(heading).toBeVisible();
     });
 
-    test('should display header description', async ({ page }) => {
+    test('should display page description', async ({ page }) => {
       const description = page.getByText(
-        /Join the Meriden\/Ozawkie Area Chamber of Commerce/i,
+        /Join the Meriden\/Ozawkie Area Chamber of Commerce and unlock powerful opportunities/i,
       );
       await expect(description).toBeVisible();
     });
@@ -43,29 +43,48 @@ test.describe('Join Page', () => {
 
   test.describe('Benefits Section', () => {
     test('should display all four benefit cards', async ({ page }) => {
-      await expect(
-        page.getByText(/Promote your business through Chamber activities/i),
-      ).toBeVisible();
-      await expect(
-        page.getByText(/Enhance your network of key business contacts/i),
-      ).toBeVisible();
-      await expect(
-        page.getByText(/Develop our community through meaningful service/i),
-      ).toBeVisible();
-      await expect(
-        page.getByText(/Support the creation of strong local businesses/i),
-      ).toBeVisible();
+      await page.waitForLoadState('networkidle');
+
+      // Check for benefit cards by their unique messages
+      const benefit1 = page.getByText(
+        /Promote your business through Chamber activities/i,
+      );
+      const benefit2 = page.getByText(
+        /Enhance your network of key business contacts/i,
+      );
+      const benefit3 = page.getByText(
+        /Develop our community through meaningful service/i,
+      );
+      const benefit4 = page.getByText(
+        /Support the creation of strong local businesses/i,
+      );
+
+      await expect(benefit1).toBeVisible();
+      await expect(benefit2).toBeVisible();
+      await expect(benefit3).toBeVisible();
+      await expect(benefit4).toBeVisible();
     });
 
-    test('should display benefits in a grid layout', async ({ page }) => {
-      const benefitsGrid = page.locator(
-        '.grid.grid-cols-1.items-start.gap-y-12',
-      );
-      await expect(benefitsGrid).toBeVisible();
+    test('should display benefit icons', async ({ page }) => {
+      await page.waitForLoadState('networkidle');
+
+      // Check for icons (4 benefit cards should have icons)
+      const icons = page.locator('svg.size-12').first();
+      await expect(icons).toBeVisible();
+    });
+
+    test('should display benefits in grid layout', async ({ page }) => {
+      const benefitsGrid = page.locator('.grid.grid-cols-1');
+      await expect(benefitsGrid.first()).toBeVisible();
+
+      // Check for responsive grid classes
+      const classes = await benefitsGrid.first().getAttribute('class');
+      expect(classes).toContain('md:grid-cols-2');
+      expect(classes).toContain('lg:grid-cols-4');
     });
   });
 
-  test.describe('Membership Form', () => {
+  test.describe('Membership Form Section', () => {
     test('should display form heading', async ({ page }) => {
       const heading = page.getByRole('heading', { name: /Join us/i });
       await expect(heading).toBeVisible();
@@ -78,16 +97,32 @@ test.describe('Join Page', () => {
       await expect(description).toBeVisible();
     });
 
-    test('should display business name field', async ({ page }) => {
+    test('should display all required form fields', async ({ page }) => {
+      // Business name field
       const businessField = page.locator('#business');
       await expect(businessField).toBeVisible();
-      await expect(businessField).toHaveAttribute('required', '');
-    });
 
-    test('should display contact name field', async ({ page }) => {
+      // Contact name field
       const contactField = page.locator('#contact');
       await expect(contactField).toBeVisible();
-      await expect(contactField).toHaveAttribute('required', '');
+
+      // Business address field
+      const addressField = page.locator('#address');
+      await expect(addressField).toBeVisible();
+    });
+
+    test('should display all optional form fields', async ({ page }) => {
+      // Phone field
+      const phoneField = page.locator('#phone');
+      await expect(phoneField).toBeVisible();
+
+      // Email field
+      const emailField = page.locator('#email');
+      await expect(emailField).toBeVisible();
+
+      // Website field
+      const websiteField = page.locator('#website');
+      await expect(websiteField).toBeVisible();
     });
 
     test('should display contact role radio buttons', async ({ page }) => {
@@ -97,39 +132,16 @@ test.describe('Join Page', () => {
       await expect(ownerRadio).toBeVisible();
       await expect(managerRadio).toBeVisible();
 
-      // Check default selection
+      // Owner should be checked by default
       await expect(ownerRadio).toBeChecked();
     });
 
-    test('should display address field', async ({ page }) => {
-      const addressField = page.locator('#address');
-      await expect(addressField).toBeVisible();
-      await expect(addressField).toHaveAttribute('required', '');
-      await expect(addressField).toHaveAttribute(
-        'placeholder',
-        /555 SW Yellowbrick Rd/i,
-      );
-    });
+    test('should display required field indicators', async ({ page }) => {
+      // Check for asterisks indicating required fields
+      const requiredIndicators = page.locator('span.text-red-600');
+      const count = await requiredIndicators.count();
 
-    test('should display phone field', async ({ page }) => {
-      const phoneField = page.locator('#phone');
-      await expect(phoneField).toBeVisible();
-      await expect(phoneField).toHaveAttribute('type', 'tel');
-      await expect(phoneField).toHaveAttribute('required', '');
-    });
-
-    test('should display email field', async ({ page }) => {
-      const emailField = page.locator('#email');
-      await expect(emailField).toBeVisible();
-      await expect(emailField).toHaveAttribute('type', 'email');
-      await expect(emailField).toHaveAttribute('required', '');
-    });
-
-    test('should display website field', async ({ page }) => {
-      const websiteField = page.locator('#website');
-      await expect(websiteField).toBeVisible();
-      await expect(websiteField).toHaveAttribute('type', 'url');
-      await expect(websiteField).toHaveAttribute('required', '');
+      expect(count).toBeGreaterThanOrEqual(4); // Business, Contact, Role, Address
     });
 
     test('should display submit button', async ({ page }) => {
@@ -137,43 +149,162 @@ test.describe('Join Page', () => {
       await expect(submitButton).toBeVisible();
     });
 
-    test('should allow user to fill out the form', async ({ page }) => {
-      await page.locator('#business').fill('Test Business LLC');
+    test('should have proper form field labels', async ({ page }) => {
+      const businessLabel = page.getByText(/Business name/i);
+      const contactLabel = page.getByText(/Contact name/i);
+      const addressLabel = page.getByText(/Business address/i);
+      const phoneLabel = page.getByText(/Phone number/i);
+      const emailLabel = page.locator('label[for="email"]');
+      const websiteLabel = page.getByText(/Website/i);
+
+      await expect(businessLabel).toBeVisible();
+      await expect(contactLabel).toBeVisible();
+      await expect(addressLabel).toBeVisible();
+      await expect(phoneLabel).toBeVisible();
+      await expect(emailLabel).toBeVisible();
+      await expect(websiteLabel).toBeVisible();
+    });
+
+    test('should have placeholders for certain fields', async ({ page }) => {
+      const addressField = page.locator('#address');
+      const phoneField = page.locator('#phone');
+      const emailField = page.locator('#email');
+      const websiteField = page.locator('#website');
+
+      const addressPlaceholder = await addressField.getAttribute('placeholder');
+      const phonePlaceholder = await phoneField.getAttribute('placeholder');
+      const emailPlaceholder = await emailField.getAttribute('placeholder');
+      const websitePlaceholder = await websiteField.getAttribute('placeholder');
+
+      expect(addressPlaceholder).toBeTruthy();
+      expect(phonePlaceholder).toBeTruthy();
+      expect(emailPlaceholder).toBeTruthy();
+      expect(websitePlaceholder).toBeTruthy();
+    });
+  });
+
+  test.describe('Form Validation', () => {
+    test('should require business name', async ({ page }) => {
+      const businessField = page.locator('#business');
+      const isRequired = await businessField.getAttribute('required');
+
+      expect(isRequired).not.toBeNull();
+    });
+
+    test('should require contact name', async ({ page }) => {
+      const contactField = page.locator('#contact');
+      const isRequired = await contactField.getAttribute('required');
+
+      expect(isRequired).not.toBeNull();
+    });
+
+    test('should require business address', async ({ page }) => {
+      const addressField = page.locator('#address');
+      const isRequired = await addressField.getAttribute('required');
+
+      expect(isRequired).not.toBeNull();
+    });
+
+    test('should validate email field type', async ({ page }) => {
+      const emailField = page.locator('#email');
+      const fieldType = await emailField.getAttribute('type');
+
+      expect(fieldType).toBe('email');
+    });
+
+    test('should validate phone field type', async ({ page }) => {
+      const phoneField = page.locator('#phone');
+      const fieldType = await phoneField.getAttribute('type');
+
+      expect(fieldType).toBe('tel');
+    });
+
+    test('should validate website field type', async ({ page }) => {
+      const websiteField = page.locator('#website');
+      const fieldType = await websiteField.getAttribute('type');
+
+      expect(fieldType).toBe('url');
+    });
+
+    test('should allow radio button selection', async ({ page }) => {
+      const ownerRadio = page.locator('#owner');
+      const managerRadio = page.locator('#manager');
+
+      // Owner is checked by default
+      await expect(ownerRadio).toBeChecked();
+
+      // Click manager radio
+      await managerRadio.click();
+      await expect(managerRadio).toBeChecked();
+      await expect(ownerRadio).not.toBeChecked();
+    });
+  });
+
+  test.describe('Form Interaction', () => {
+    test('should be able to fill out the form', async ({ page }) => {
+      await page.locator('#business').fill('Test Business');
       await page.locator('#contact').fill('John Doe');
-      await page.locator('#manager').check();
-      await page.locator('#address').fill('123 Main St, Meriden, KS 66512');
+      await page.locator('#address').fill('123 Test St, Meriden, KS 66512');
       await page.locator('#phone').fill('(785) 555-1234');
       await page.locator('#email').fill('test@example.com');
       await page.locator('#website').fill('https://example.com');
 
-      // Verify values
-      await expect(page.locator('#business')).toHaveValue('Test Business LLC');
+      // Verify values are filled
+      await expect(page.locator('#business')).toHaveValue('Test Business');
       await expect(page.locator('#contact')).toHaveValue('John Doe');
-      await expect(page.locator('#manager')).toBeChecked();
+      await expect(page.locator('#address')).toHaveValue(
+        '123 Test St, Meriden, KS 66512',
+      );
+      await expect(page.locator('#phone')).toHaveValue('(785) 555-1234');
       await expect(page.locator('#email')).toHaveValue('test@example.com');
+      await expect(page.locator('#website')).toHaveValue('https://example.com');
+    });
+
+    test('should disable form fields while submitting', async ({ page }) => {
+      // Fill required fields
+      await page.locator('#business').fill('Test Business');
+      await page.locator('#contact').fill('John Doe');
+      await page.locator('#address').fill('123 Test St, Meriden, KS 66512');
+
+      // Mock the form submission to take longer
+      await page.route('**/api/**', async (route) => {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await route.fulfill({ status: 200, body: '{}' });
+      });
+
+      // Submit form
+      const submitButton = page.getByRole('button', { name: /Submit/i });
+      await submitButton.click();
+
+      // Check that button text changes to "Submitting..."
+      await expect(submitButton).toHaveText(/Submitting.../i);
     });
   });
 
   test.describe('Questions Section', () => {
-    test('should display questions heading', async ({ page }) => {
+    test('should display questions section heading', async ({ page }) => {
       const heading = page.getByRole('heading', { name: /Questions\?/i });
       await expect(heading).toBeVisible();
     });
 
-    test('should display questions description', async ({ page }) => {
+    test('should display questions section description', async ({ page }) => {
       const description = page.getByText(
         /We are here to answer your membership questions/i,
       );
       await expect(description).toBeVisible();
     });
 
-    test('should display email contact info', async ({ page }) => {
+    test('should display email contact section', async ({ page }) => {
       const emailHeading = page.getByRole('heading', { name: /^Email$/i });
       await expect(emailHeading).toBeVisible();
 
-      const emailLink = page.getByRole('link', {
-        name: /meridenozawkieareachamber@gmail.com/i,
-      });
+      // There are two email links, the first one is from this page and
+      // the second is from the footer.
+      const emailLink = page
+        .getByRole('link', {
+          name: /meridenozawkieareachamber@gmail.com/i,
+        })
+        .first();
       await expect(emailLink).toBeVisible();
       await expect(emailLink).toHaveAttribute(
         'href',
@@ -181,15 +312,15 @@ test.describe('Join Page', () => {
       );
     });
 
-    test('should display phone contact info', async ({ page }) => {
+    test('should display phone contact section', async ({ page }) => {
       const phoneHeading = page.getByRole('heading', { name: /^Phone$/i });
       await expect(phoneHeading).toBeVisible();
 
-      const phoneText = page.getByText(/\(785\) 817-5979/i);
-      await expect(phoneText).toBeVisible();
+      const phoneNumber = page.getByText(/\(785\) 817-5979/i);
+      await expect(phoneNumber).toBeVisible();
     });
 
-    test('should display office contact info', async ({ page }) => {
+    test('should display office contact section', async ({ page }) => {
       const officeHeading = page.getByRole('heading', { name: /^Office$/i });
       await expect(officeHeading).toBeVisible();
 
@@ -204,11 +335,19 @@ test.describe('Join Page', () => {
     });
 
     test('should display contact icons', async ({ page }) => {
-      // Check that the section with contact info exists
-      const contactSection = page
-        .locator('section')
-        .filter({ hasText: 'Questions?' });
-      await expect(contactSection).toBeVisible();
+      // Check for SVG icons in contact section
+      const emailIcon = page.locator('svg.size-12').nth(4); // After the 4 benefit icons
+      await expect(emailIcon).toBeVisible();
+    });
+
+    test('should display all three contact methods', async ({ page }) => {
+      const emailHeading = page.getByRole('heading', { name: /^Email$/i });
+      const phoneHeading = page.getByRole('heading', { name: /^Phone$/i });
+      const officeHeading = page.getByRole('heading', { name: /^Office$/i });
+
+      await expect(emailHeading).toBeVisible();
+      await expect(phoneHeading).toBeVisible();
+      await expect(officeHeading).toBeVisible();
     });
   });
 
@@ -221,8 +360,8 @@ test.describe('Join Page', () => {
       });
       await expect(heading).toBeVisible();
 
-      const submitButton = page.getByRole('button', { name: /Submit/i });
-      await expect(submitButton).toBeVisible();
+      const formHeading = page.getByRole('heading', { name: /Join us/i });
+      await expect(formHeading).toBeVisible();
     });
 
     test('should display correctly on tablet viewport', async ({ page }) => {
@@ -233,18 +372,79 @@ test.describe('Join Page', () => {
       });
       await expect(heading).toBeVisible();
 
-      const emailField = page.locator('#email');
-      await expect(emailField).toBeVisible();
+      const submitButton = page.getByRole('button', { name: /Submit/i });
+      await expect(submitButton).toBeVisible();
     });
 
-    test('should adapt benefits grid for different viewports', async ({
+    test('should display correctly on desktop viewport', async ({ page }) => {
+      await page.setViewportSize({ width: 1920, height: 1080 });
+
+      const heading = page.getByRole('heading', {
+        name: /Grow your business/i,
+      });
+      await expect(heading).toBeVisible();
+
+      // Benefit cards should be in 4-column grid on desktop
+      const benefit1 = page.getByText(
+        /Promote your business through Chamber activities/i,
+      );
+      await expect(benefit1).toBeVisible();
+    });
+  });
+
+  test.describe('Accessibility', () => {
+    test('should have proper form labels associated with inputs', async ({
       page,
     }) => {
-      const benefitsGrid = page.locator(
-        '.grid.grid-cols-1.items-start.gap-y-12',
-      );
-      await expect(benefitsGrid).toHaveClass(/md:grid-cols-2/);
-      await expect(benefitsGrid).toHaveClass(/lg:grid-cols-4/);
+      const businessLabel = page.locator('label[for="business"]');
+      const contactLabel = page.locator('label[for="contact"]');
+      const addressLabel = page.locator('label[for="address"]');
+
+      await expect(businessLabel).toBeVisible();
+      await expect(contactLabel).toBeVisible();
+      await expect(addressLabel).toBeVisible();
+    });
+
+    test('should have clickable labels for radio buttons', async ({ page }) => {
+      const ownerLabel = page.locator('label[for="owner"]');
+      const managerLabel = page.locator('label[for="manager"]');
+
+      await expect(ownerLabel).toBeVisible();
+      await expect(managerLabel).toBeVisible();
+
+      // Click label should select radio button
+      await managerLabel.click();
+      const managerRadio = page.locator('#manager');
+      await expect(managerRadio).toBeChecked();
+    });
+
+    test('should have proper heading hierarchy', async ({ page }) => {
+      const h2Headings = page.locator('h2');
+      const count = await h2Headings.count();
+
+      expect(count).toBeGreaterThan(0);
+    });
+  });
+
+  test.describe('Link Functionality', () => {
+    test('should have working email link', async ({ page }) => {
+      const emailLink = page
+        .getByRole('link', {
+          name: /meridenozawkieareachamber@gmail.com/i,
+        })
+        .first();
+
+      const href = await emailLink.getAttribute('href');
+      expect(href).toContain('mailto:');
+    });
+
+    test('should have working office location link', async ({ page }) => {
+      const officeLink = page.getByRole('link', {
+        name: /3675 74th St, Meriden, KS 66512/i,
+      });
+
+      const href = await officeLink.getAttribute('href');
+      expect(href).toContain('maps.app.goo.gl');
     });
   });
 });

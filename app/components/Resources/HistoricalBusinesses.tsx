@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import BusinessCard from '@app/components/Resources/BusinessCard';
 import { WixImage } from '@app/constants';
+import testIds from '@app/test-ids';
 
 export interface Business {
   name: string;
@@ -28,7 +29,10 @@ const HistoricalBusinesses = ({
   }
 
   return (
-    <div className="grid auto-cols-fr grid-cols-1 lg:grid-cols-3 gap-6">
+    <div
+      className="grid auto-cols-fr grid-cols-1 lg:grid-cols-3 gap-6"
+      data-testid={testIds.RESOURCES.BUSINESS_BOX}
+    >
       <div className="flex flex-col lg:col-span-1">
         {businessesData.map((business, index) => (
           <div
