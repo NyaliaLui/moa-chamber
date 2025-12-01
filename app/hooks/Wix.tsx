@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import {
   createClient,
   IOAuthStrategy,
@@ -216,58 +219,422 @@ export function makeBoardMemberCard(
   };
 }
 
-export async function getWixClient() {
-  const wixClient: WixClientWithItems = createClient({
-    modules: { items },
-    auth: OAuthStrategy({ clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID! }),
-  });
-  const tokens = await wixClient.auth.generateVisitorTokens();
-  wixClient.auth.setTokens(tokens);
-  return wixClient;
+export function useWixClient() {
+  const [wixClient, setWixClient] = useState<WixClientWithItems | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function initializeWixClient() {
+      try {
+        setIsLoading(true);
+        const client: WixClientWithItems = createClient({
+          modules: { items },
+          auth: OAuthStrategy({
+            clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
+          }),
+        });
+        const tokens = await client.auth.generateVisitorTokens();
+        client.auth.setTokens(tokens);
+
+        if (isMounted) {
+          setWixClient(client);
+          setError(null);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(
+            err instanceof Error
+              ? err
+              : new Error('Failed to initialize Wix client'),
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    initializeWixClient();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  return { wixClient, isLoading, error };
 }
 
-export async function getWixCollections(): Promise<Collections> {
-  const wixClient = await getWixClient();
-  const { items: team } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_TEAM!)
-    .find();
-  const { items: boardMembers } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_BOARD_MEMBERS!)
-    .find();
-  const { items: members } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_MEMBERS!)
-    .find();
-  const { items: news } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_NEWS!)
-    .find();
-  const { items: cultureResources } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_CULTURE_RESOURCES!)
-    .find();
-  const { items: businessResources } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_BUSINESS_RESOURCES!)
-    .find();
-  const { items: benefitsData } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_BENEFITS!)
-    .find();
-  const { items: testimonialsData } = await wixClient.items
-    .query(process.env.NEXT_PUBLIC_WIX_COLLECTION_TESTIMONIALS!)
-    .find();
+// Generic hook for fetching a single Wix collection
+function useWixCollection<T>(
+  collectionId: string,
+  mapper: (item: items.WixDataItem) => T,
+  collectionName: string,
+) {
+  const {
+    wixClient,
+    isLoading: clientLoading,
+    error: clientError,
+  } = useWixClient();
+  const [data, setData] = useState<T[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  // Validation happens in the map handlers
+  useEffect(() => {
+    if (clientLoading) return;
+    if (clientError) {
+      setError(clientError);
+      setIsLoading(false);
+      return;
+    }
+    if (!wixClient) return;
 
-  return {
-    team: team.map(makeStaffCard),
-    boardMembers: boardMembers.map(makeBoardMemberCard),
-    memberCards: members.map(makeMemberCard),
-    members: members.map(makeProject),
-    newsCards: news.map(makeNewsCard),
-    newsArticles: news.map(makeNewsArticle),
-    newsCarouselData: news.map(makeNewsCarouselData),
-    cultureResources: cultureResources.map(makeTabContent),
-    businessResources: businessResources.map(makeBusiness),
-    benefitsData: benefitsData.map(makeBenefit),
-    testimonialsData: testimonialsData.map(makeTestimonial),
-  };
+    let isMounted = true;
+
+    async function fetchCollection(client: WixClientWithItems) {
+      try {
+        setIsLoading(true);
+        const { items: fetchedItems } = await client.items
+          .query(collectionId)
+          .find();
+
+        if (isMounted) {
+          setData(fetchedItems.map(mapper));
+          setError(null);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(
+            err instanceof Error
+              ? err
+              : new Error(`Failed to fetch ${collectionName}`),
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    fetchCollection(wixClient);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [
+    wixClient,
+    clientLoading,
+    clientError,
+    collectionId,
+    mapper,
+    collectionName,
+  ]);
+
+  return { data, isLoading, error };
+}
+
+export function useWixTeam() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_TEAM!,
+    makeStaffCard,
+    'team',
+  );
+}
+
+export function useWixBoardMembers() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_BOARD_MEMBERS!,
+    makeBoardMemberCard,
+    'board members',
+  );
+}
+
+export function useWixMembers() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_MEMBERS!,
+    makeProject,
+    'members',
+  );
+}
+
+export function useWixMemberCards() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_MEMBERS!,
+    makeMemberCard,
+    'member cards',
+  );
+}
+
+export function useWixNews() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_NEWS!,
+    makeNewsArticle,
+    'news',
+  );
+}
+
+export function useWixNewsCards() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_NEWS!,
+    makeNewsCard,
+    'news cards',
+  );
+}
+
+export function useWixNewsCarousel() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_NEWS!,
+    makeNewsCarouselData,
+    'news carousel',
+  );
+}
+
+export function useWixCultureResources() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_CULTURE_RESOURCES!,
+    makeTabContent,
+    'culture resources',
+  );
+}
+
+export function useWixBusinessResources() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_BUSINESS_RESOURCES!,
+    makeBusiness,
+    'business resources',
+  );
+}
+
+export function useWixBenefits() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_BENEFITS!,
+    makeBenefit,
+    'benefits',
+  );
+}
+
+export function useWixTestimonials() {
+  return useWixCollection(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_TESTIMONIALS!,
+    makeTestimonial,
+    'testimonials',
+  );
+}
+
+export function useWixCollections() {
+  const { data: team, isLoading: teamLoading, error: teamError } = useWixTeam();
+  const {
+    data: boardMembers,
+    isLoading: boardLoading,
+    error: boardError,
+  } = useWixBoardMembers();
+  const {
+    data: members,
+    isLoading: membersLoading,
+    error: membersError,
+  } = useWixMembers();
+  const {
+    data: memberCards,
+    isLoading: memberCardsLoading,
+    error: memberCardsError,
+  } = useWixMemberCards();
+  const {
+    data: newsArticles,
+    isLoading: newsLoading,
+    error: newsError,
+  } = useWixNews();
+  const {
+    data: newsCards,
+    isLoading: newsCardsLoading,
+    error: newsCardsError,
+  } = useWixNewsCards();
+  const {
+    data: newsCarouselData,
+    isLoading: newsCarouselLoading,
+    error: newsCarouselError,
+  } = useWixNewsCarousel();
+  const {
+    data: cultureResources,
+    isLoading: cultureLoading,
+    error: cultureError,
+  } = useWixCultureResources();
+  const {
+    data: businessResources,
+    isLoading: businessLoading,
+    error: businessError,
+  } = useWixBusinessResources();
+  const {
+    data: benefitsData,
+    isLoading: benefitsLoading,
+    error: benefitsError,
+  } = useWixBenefits();
+  const {
+    data: testimonialsData,
+    isLoading: testimonialsLoading,
+    error: testimonialsError,
+  } = useWixTestimonials();
+
+  const isLoading =
+    teamLoading ||
+    boardLoading ||
+    membersLoading ||
+    memberCardsLoading ||
+    newsLoading ||
+    newsCardsLoading ||
+    newsCarouselLoading ||
+    cultureLoading ||
+    businessLoading ||
+    benefitsLoading ||
+    testimonialsLoading;
+
+  const error =
+    teamError ||
+    boardError ||
+    membersError ||
+    memberCardsError ||
+    newsError ||
+    newsCardsError ||
+    newsCarouselError ||
+    cultureError ||
+    businessError ||
+    benefitsError ||
+    testimonialsError;
+
+  const collections: Collections | null =
+    team &&
+    boardMembers &&
+    members &&
+    memberCards &&
+    newsArticles &&
+    newsCards &&
+    newsCarouselData &&
+    cultureResources &&
+    businessResources &&
+    benefitsData &&
+    testimonialsData
+      ? {
+          team,
+          boardMembers,
+          memberCards,
+          members,
+          newsCards,
+          newsArticles,
+          newsCarouselData,
+          cultureResources,
+          businessResources,
+          benefitsData,
+          testimonialsData,
+        }
+      : null;
+
+  return { collections, isLoading, error };
+}
+
+// Generic hook for fetching a single item from a Wix collection
+function useWixSingleItem<T>(
+  collectionId: string,
+  defaultValue: any,
+  mapper: (rawData: any) => T,
+  itemName: string,
+) {
+  const {
+    wixClient,
+    isLoading: clientLoading,
+    error: clientError,
+  } = useWixClient();
+  const [data, setData] = useState<T | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (clientLoading) return;
+    if (clientError) {
+      setError(clientError);
+      setIsLoading(false);
+      return;
+    }
+    if (!wixClient) return;
+
+    let isMounted = true;
+
+    async function fetchSingleItem(client: WixClientWithItems) {
+      try {
+        setIsLoading(true);
+        const { items } = await client.items
+          .query(collectionId)
+          .limit(1)
+          .find();
+        const rawData = items.length > 0 ? items[0] : defaultValue;
+
+        if (isMounted) {
+          setData(mapper(rawData));
+          setError(null);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(
+            err instanceof Error
+              ? err
+              : new Error(`Failed to fetch ${itemName}`),
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    fetchSingleItem(wixClient);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [
+    wixClient,
+    clientLoading,
+    clientError,
+    collectionId,
+    defaultValue,
+    mapper,
+    itemName,
+  ]);
+
+  return { data, isLoading, error };
+}
+
+export function useWixCta() {
+  return useWixSingleItem(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_CTA!,
+    DEFAULTS.home.cta,
+    (rawData) =>
+      rawData.image ? makeWixImage(rawData.image) : DEFAULTS.home.cta.image,
+    'CTA image',
+  );
+}
+
+export function useWixCalendar() {
+  return useWixSingleItem(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_CALENDAR!,
+    DEFAULTS.calendar,
+    (rawData) =>
+      rawData.calendarSrc ? rawData.calendarSrc : DEFAULTS.calendar.calendarSrc,
+    'calendar',
+  );
+}
+
+export function useWixHero() {
+  return useWixSingleItem(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_HERO!,
+    DEFAULTS.home.hero,
+    (rawData) =>
+      rawData.image ? makeWixImage(rawData.image) : DEFAULTS.home.hero.image,
+    'hero image',
+  );
 }
 
 export interface SingleItemCollections {
@@ -276,52 +643,34 @@ export interface SingleItemCollections {
   heroImage: WixImage;
 }
 
-export async function getSingleItemCollections(): Promise<SingleItemCollections> {
-  const wixClient = await getWixClient();
-  const getRawData = async (dataCollectionId: string, defaultValue: any) => {
-    const { items } = await wixClient.items
-      .query(dataCollectionId)
-      .limit(1)
-      .find();
-    return items.length > 0 ? items[0] : defaultValue;
-  };
+export function useSingleItemCollections() {
+  const {
+    data: ctaImage,
+    isLoading: ctaLoading,
+    error: ctaError,
+  } = useWixCta();
+  const {
+    data: calendar,
+    isLoading: calendarLoading,
+    error: calendarError,
+  } = useWixCalendar();
+  const {
+    data: heroImage,
+    isLoading: heroLoading,
+    error: heroError,
+  } = useWixHero();
 
-  const ctaRaw = await getRawData(
-    process.env.NEXT_PUBLIC_WIX_COLLECTION_CTA!,
-    DEFAULTS.home.cta,
-  );
-  const calendarRaw = await getRawData(
-    process.env.NEXT_PUBLIC_WIX_COLLECTION_CALENDAR!,
-    DEFAULTS.calendar,
-  );
-  const heroRaw = await getRawData(
-    process.env.NEXT_PUBLIC_WIX_COLLECTION_HERO!,
-    DEFAULTS.home.hero,
-  );
+  const isLoading = ctaLoading || calendarLoading || heroLoading;
+  const error = ctaError || calendarError || heroError;
 
-  return {
-    ctaImage: ctaRaw.image
-      ? makeWixImage(ctaRaw.image)
-      : DEFAULTS.home.cta.image,
-    calendar: calendarRaw.calendarSrc
-      ? calendarRaw.calendarSrc
-      : DEFAULTS.calendar.calendarSrc,
-    heroImage: heroRaw.image
-      ? makeWixImage(heroRaw.image)
-      : DEFAULTS.home.hero.image,
-  };
-}
+  const singleItemCollections: SingleItemCollections | null =
+    ctaImage && calendar && heroImage
+      ? {
+          ctaImage,
+          calendar,
+          heroImage,
+        }
+      : null;
 
-export interface WixData {
-  collections: Collections;
-  singleItemCollections: SingleItemCollections;
-}
-
-export async function wix(): Promise<WixData> {
-  const collections = await getWixCollections();
-  const singleItemCollections = await getSingleItemCollections();
-  return {
-    collections: collections,
-    singleItemCollections: singleItemCollections,
-  };
+  return { singleItemCollections, isLoading, error };
 }
