@@ -102,9 +102,6 @@ test.describe('Home Page', () => {
 
   test.describe('Testimonials Section', () => {
     test('should display testimonials section', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       // Check that page has loaded multiple sections
       const sections = page.locator('section');
       const count = await sections.count();

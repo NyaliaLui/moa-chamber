@@ -43,8 +43,6 @@ test.describe('Join Page', () => {
 
   test.describe('Benefits Section', () => {
     test('should display all four benefit cards', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       // Check for benefit cards by their unique messages
       const benefit1 = page.getByText(
         /Promote your business through Chamber activities/i,
@@ -66,8 +64,6 @@ test.describe('Join Page', () => {
     });
 
     test('should display benefit icons', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       // Check for icons (4 benefit cards should have icons)
       const icons = page.locator('svg.size-12').first();
       await expect(icons).toBeVisible();

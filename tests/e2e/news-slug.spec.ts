@@ -7,7 +7,6 @@ test.describe('News Article Detail Page', () => {
   test.beforeEach(async ({ page }) => {
     // First navigate to the news page to get an article slug
     await page.goto('/news');
-    await page.waitForLoadState('networkidle');
 
     // Get the first news card and extract the slug from its href
     const firstNewsCard = page
@@ -125,7 +124,6 @@ test.describe('News Article Detail Page', () => {
 
     test('should display publication date', async ({ page }) => {
       // Wait for the date to be rendered
-      await page.waitForLoadState('networkidle');
 
       // The date should be rendered after "Published on"
       const dateSection = page.locator('text=Published on').locator('..');
@@ -180,8 +178,6 @@ test.describe('News Article Detail Page', () => {
     });
 
     test('should display author name', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       // Author name should be in a semibold paragraph
       const authorSection = page.getByTestId(
         testIds.NEWS_DETAILS_PAGE.AUTHOR_SECTION,
@@ -198,8 +194,6 @@ test.describe('News Article Detail Page', () => {
     });
 
     test('should display author role', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const authorSection = page.getByTestId(
         testIds.NEWS_DETAILS_PAGE.AUTHOR_SECTION,
       );
@@ -221,8 +215,6 @@ test.describe('News Article Detail Page', () => {
 
   test.describe('Gallery Section', () => {
     test('should display gallery images if available', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       // Check if gallery section exists
       const gallerySection = page.locator('.container.pt-16');
       const galleryImages = gallerySection.locator('img');
@@ -244,8 +236,6 @@ test.describe('News Article Detail Page', () => {
     test('should display gallery images with proper alt text', async ({
       page,
     }) => {
-      await page.waitForLoadState('networkidle');
-
       const gallerySection = page.locator('.container.pt-16');
       const galleryImages = gallerySection.locator('img');
       const count = await galleryImages.count();
