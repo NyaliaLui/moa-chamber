@@ -325,14 +325,8 @@ function useWixCollection<T>(
     return () => {
       isMounted = false;
     };
-  }, [
-    wixClient,
-    clientLoading,
-    clientError,
-    collectionId,
-    mapper,
-    collectionName,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wixClient, clientLoading, clientError]);
 
   return { data, isLoading, error };
 }
@@ -594,15 +588,8 @@ function useWixSingleItem<T>(
     return () => {
       isMounted = false;
     };
-  }, [
-    wixClient,
-    clientLoading,
-    clientError,
-    collectionId,
-    defaultValue,
-    mapper,
-    itemName,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wixClient, clientLoading, clientError]);
 
   return { data, isLoading, error };
 }

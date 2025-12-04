@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import testIds from '@app/test-ids';
 import CTA from '@app/components/CTA';
 import MemberCard from '@app/components/Directory/MemberCard';
@@ -7,8 +8,11 @@ import { useWixMemberCards } from '@app/hooks/Wix';
 import LoadingState from '@app/components/LoadingState';
 import ErrorState from '@app/components/ErrorState';
 
+const MEMBERS_PER_PAGE = 6;
+
 export default function Directory() {
   const { data: memberCards, isLoading, error } = useWixMemberCards();
+  const [displayCount, setDisplayCount] = useState(MEMBERS_PER_PAGE);
 
   if (isLoading) {
     return <LoadingState className="px-[5%]" />;
@@ -26,6 +30,13 @@ export default function Directory() {
       />
     );
   }
+
+  const displayedMembers = memberCards.slice(0, displayCount);
+  const hasMore = displayCount < memberCards.length;
+
+  const handleLoadMore = () => {
+    setDisplayCount((prev) => prev + MEMBERS_PER_PAGE);
+  };
 
   return (
     <section className="px-[5%]">
@@ -48,7 +59,7 @@ export default function Directory() {
           className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12"
           data-testid={testIds.PROJECTS_PAGE.PROJECT_LIST}
         >
-          {memberCards.map((item, index) => (
+          {displayedMembers.map((item, index) => (
             <MemberCard
               key={index}
               media={item.media}
@@ -58,7 +69,16 @@ export default function Directory() {
             />
           ))}
         </div>
-        <div className="mt-14 flex justify-center md:mt-20 lg:mt-24" />
+        {hasMore && (
+          <div className="mt-14 flex justify-center md:mt-20 lg:mt-24">
+            <button
+              onClick={handleLoadMore}
+              className="rounded-md bg-blue-600 px-8 py-3 text-base font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            >
+              Load more
+            </button>
+          </div>
+        )}
       </div>
       <CTA />
     </section>
