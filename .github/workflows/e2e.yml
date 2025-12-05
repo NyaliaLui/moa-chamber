@@ -25,6 +25,7 @@ jobs:
       NEXT_PUBLIC_WIX_COLLECTION_CALENDAR: ${{ secrets.NEXT_PUBLIC_WIX_COLLECTION_CALENDAR }}
       NEXT_PUBLIC_WIX_COLLECTION_HERO: ${{ secrets.NEXT_PUBLIC_WIX_COLLECTION_HERO }}
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      RESEND_TARGET_EMAIL: ${{ secrets.RESEND_TARGET_EMAIL }}
 
     steps:
       - uses: actions/checkout@v4

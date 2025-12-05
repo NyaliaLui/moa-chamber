@@ -1,6 +1,7 @@
 'use server';
 
 import { Resend } from 'resend';
+import { DEFAULT_TARGET_EMAIL } from '@app/constants';
 
 export async function submitMembershipForm(formData: FormData): Promise<void> {
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -27,7 +28,7 @@ Website: ${website || 'Not provided'}
 
   const { error } = await resend.emails.send({
     from: 'onboarding@resend.dev',
-    to: 'luinyalia@gmail.com',
+    to: process.env.RESEND_TARGET_EMAIL || DEFAULT_TARGET_EMAIL,
     subject: `New Membership Application - ${businessName}`,
     text: emailBody,
   });
