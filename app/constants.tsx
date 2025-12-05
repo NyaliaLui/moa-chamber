@@ -15,10 +15,10 @@ export interface WixImage {
 }
 
 export const LOGO_IMAGE = {
-  light: '/images/MOA-Logo-Small.png',
-  dark: '/images/MOA-Logo-Dark-Small.png',
-  width: 28,
-  height: 32,
+  light: '/images/MOA-Logo-2.svg',
+  dark: '/images/MOA-Logo-2-Dark.svg',
+  width: 72,
+  height: 72,
 };
 
 export const SVG_ICONS = {

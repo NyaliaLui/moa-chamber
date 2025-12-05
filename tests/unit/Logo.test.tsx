@@ -23,9 +23,10 @@ describe('Logo', () => {
     render(<Logo />);
 
     const logo = screen.getByAltText('MOA Chamber Logo');
-    // The NextJS image optimizer changes the string to use %2F for / characters.
-    const src = LOGO_IMAGE.light.replaceAll('/', '%2F');
-    expect(logo).toHaveAttribute('src', expect.stringContaining(src));
+    expect(logo).toHaveAttribute(
+      'src',
+      expect.stringContaining(LOGO_IMAGE.light),
+    );
   });
 
   it('renders image with correct dimensions', () => {
