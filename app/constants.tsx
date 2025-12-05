@@ -52,6 +52,7 @@ export const IMAGE_DIMENSIONS = {
 };
 
 export const NAVBAR_ITEMS = [
+  { href: '/', label: 'Home' },
   { href: '/directory', label: 'Our Members' },
   { href: '/calendar', label: 'Calendar' },
   { href: '/news', label: 'News' },
