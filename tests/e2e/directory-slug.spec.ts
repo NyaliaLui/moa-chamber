@@ -7,7 +7,6 @@ test.describe('Directory Member Detail Page', () => {
   test.beforeEach(async ({ page }) => {
     // First navigate to the directory page to get a member slug
     await page.goto('/directory');
-    await page.waitForLoadState('networkidle');
 
     // Get the first member card and extract the slug from its href
     const firstMemberCard = page
@@ -131,9 +130,6 @@ test.describe('Directory Member Detail Page', () => {
     });
 
     test('should display contact icons', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       // Check for SVG icons (4 contact sections should have icons)
       const icons = page.locator('svg.size-12');
       const count = await icons.count();

@@ -76,9 +76,6 @@ test.describe('About Page', () => {
     });
 
     test('should display staff member names', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       // Find all staff cards
       const staffCards = page.locator('div.flex.flex-col.text-center');
       const count = await staffCards.count();
@@ -93,9 +90,6 @@ test.describe('About Page', () => {
     });
 
     test('should display staff member roles and emails', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       const staffCards = page.locator('div.flex.flex-col.text-center');
       const count = await staffCards.count();
 
@@ -110,9 +104,6 @@ test.describe('About Page', () => {
     });
 
     test('should display staff member bios', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       const staffCards = page.locator('div.flex.flex-col.text-center');
       const count = await staffCards.count();
 
@@ -126,9 +117,6 @@ test.describe('About Page', () => {
     });
 
     test('should display social media links for staff', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       const staffCards = page.locator('div.flex.flex-col.text-center');
       const count = await staffCards.count();
 
@@ -143,9 +131,6 @@ test.describe('About Page', () => {
     });
 
     test('should have working LinkedIn links', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       const linkedInLinks = page.locator('a[href*="linkedin.com"]');
       const count = await linkedInLinks.count();
 
@@ -159,9 +144,6 @@ test.describe('About Page', () => {
     });
 
     test('should have working Twitter/X links', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       const twitterLinks = page.locator(
         'a[href*="twitter.com"], a[href*="x.com"]',
       );
@@ -204,9 +186,6 @@ test.describe('About Page', () => {
     });
 
     test('should display board member names', async ({ page }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       // Find board member cards (they have a different structure than staff)
       const boardCards = page.locator('div.flex.flex-col.items-start');
       const count = await boardCards.count();
@@ -223,9 +202,6 @@ test.describe('About Page', () => {
     test('should display board member roles and employers', async ({
       page,
     }) => {
-      // Wait for content to load
-      await page.waitForLoadState('networkidle');
-
       const boardCards = page.locator('div.flex.flex-col.items-start');
       const count = await boardCards.count();
 
@@ -308,8 +284,6 @@ test.describe('About Page', () => {
 
   test.describe('Content Validation', () => {
     test('should have at least one staff member', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const staffCards = page.locator('div.flex.flex-col.text-center');
       const count = await staffCards.count();
 
@@ -317,8 +291,6 @@ test.describe('About Page', () => {
     });
 
     test('should have at least one board member', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const boardCards = page.locator('div.flex.flex-col.items-start');
       const count = await boardCards.count();
 

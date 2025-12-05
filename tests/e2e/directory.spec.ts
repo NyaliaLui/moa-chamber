@@ -47,8 +47,6 @@ test.describe('Directory Page', () => {
     });
 
     test('should display at least one member card', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const memberCards = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
       );
@@ -58,8 +56,6 @@ test.describe('Directory Page', () => {
     });
 
     test('should display member card images', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const memberCards = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
       );
@@ -75,8 +71,6 @@ test.describe('Directory Page', () => {
     });
 
     test('should display member names', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const memberCards = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
       );
@@ -92,8 +86,6 @@ test.describe('Directory Page', () => {
     });
 
     test('should display member addresses', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const memberCards = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
       );
@@ -111,8 +103,6 @@ test.describe('Directory Page', () => {
     test('should display "Find out more" CTA on each card', async ({
       page,
     }) => {
-      await page.waitForLoadState('networkidle');
-
       const ctaElements = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CTA,
       );
@@ -128,8 +118,6 @@ test.describe('Directory Page', () => {
     });
 
     test('should have clickable member cards', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const memberCards = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
       );
@@ -172,8 +160,6 @@ test.describe('Directory Page', () => {
     test('should navigate to member detail page when clicking a member card', async ({
       page,
     }) => {
-      await page.waitForLoadState('networkidle');
-
       const memberCard = page
         .getByTestId(testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER)
         .first();
@@ -243,7 +229,6 @@ test.describe('Directory Page', () => {
       await expect(heading).toBeVisible();
 
       // Member cards should be in grid layout on desktop
-      await page.waitForLoadState('networkidle');
       const memberCards = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
       );
@@ -254,8 +239,6 @@ test.describe('Directory Page', () => {
 
   test.describe('Content Validation', () => {
     test('should have at least one member', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const memberCards = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
       );

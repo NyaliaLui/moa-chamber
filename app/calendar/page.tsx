@@ -1,8 +1,24 @@
-import CTA from '@app/components/CTA';
-import { wix } from '@app/hooks/Wix';
+'use client';
 
-export default async function Calendar() {
-  const { singleItemCollections } = await wix();
+import CTA from '@app/components/CTA';
+import { useWixCalendar } from '@app/hooks/Wix';
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
+
+export default function Calendar() {
+  const { data: calendar, isLoading, error } = useWixCalendar();
+
+  if (isLoading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState error={error} />;
+  }
+
+  if (!calendar) {
+    return <ErrorState error={new Error('calendar is undefined')} />;
+  }
 
   return (
     <section className="px-[5%] mt-16">
@@ -15,7 +31,7 @@ export default async function Calendar() {
       </div>
       <div className="container pt-8">
         <iframe
-          src={singleItemCollections.calendar}
+          src={calendar}
           className="border-0"
           width="100%"
           height="600"

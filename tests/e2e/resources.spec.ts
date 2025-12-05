@@ -53,8 +53,6 @@ test.describe('Resources Page', () => {
 
   test.describe('Cultural Landmarks Section', () => {
     test('should display culture tabs', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       // Look for tab buttons
       const tabs = page.locator('[data-testid^="culture-tab-"]');
       const count = await tabs.count();
@@ -63,8 +61,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should display at least one culture tab', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const tabs = page.locator('[data-testid^="culture-tab-"]');
       const count = await tabs.count();
 
@@ -72,8 +68,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should have first tab active by default', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const firstTab = page.locator('[data-testid^="culture-tab-"]').first();
       const classes = await firstTab.getAttribute('class');
 
@@ -81,8 +75,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should switch tabs when clicked', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const tabs = page.locator('[data-testid^="culture-tab-"]');
       const count = await tabs.count();
 
@@ -140,8 +132,6 @@ test.describe('Resources Page', () => {
     test('should update culture box content when switching tabs', async ({
       page,
     }) => {
-      await page.waitForLoadState('networkidle');
-
       const tabs = page.locator('[data-testid^="culture-tab-"]');
       const count = await tabs.count();
 
@@ -210,8 +200,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should display at least one business card', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       // Business cards have cursor-pointer class
       const businessCards = page.locator('.cursor-pointer');
       const count = await businessCards.count();
@@ -220,8 +208,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should display business card names', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const count = await businessCards.count();
 
@@ -235,8 +221,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should display business card descriptions', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const count = await businessCards.count();
 
@@ -250,8 +234,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should display business card website links', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const count = await businessCards.count();
 
@@ -268,8 +250,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should have first business selected by default', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const firstCard = businessCards.first();
       const firstCardInner = firstCard.locator('div').first();
@@ -279,8 +259,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should display business image', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       // Look for the business image in the right column (lg:col-span-2)
       const imageContainer = page.locator('.lg\\:col-span-2');
       const image = imageContainer.locator('img');
@@ -289,8 +267,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should switch business when clicking on a card', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const count = await businessCards.count();
 
@@ -317,8 +293,6 @@ test.describe('Resources Page', () => {
     test('should update selected state when clicking business card', async ({
       page,
     }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const count = await businessCards.count();
 
@@ -337,8 +311,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should have website links that open in new tab', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const firstCard = businessCards.first();
       const link = firstCard.locator('a');
@@ -360,8 +332,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should have hover effect on business cards', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const firstCard = businessCards.first();
 
@@ -445,8 +415,6 @@ test.describe('Resources Page', () => {
 
   test.describe('Content Validation', () => {
     test('should have at least one cultural landmark tab', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const tabs = page.locator('[data-testid^="culture-tab-"]');
       const count = await tabs.count();
 
@@ -454,8 +422,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should have at least one historical business', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const count = await businessCards.count();
 
@@ -487,8 +453,6 @@ test.describe('Resources Page', () => {
     test('should have descriptive alt text for business image', async ({
       page,
     }) => {
-      await page.waitForLoadState('networkidle');
-
       const imageContainer = page.locator('.lg\\:col-span-2');
       const image = imageContainer.locator('img');
 
@@ -500,8 +464,6 @@ test.describe('Resources Page', () => {
 
   test.describe('Interactive Elements', () => {
     test('should have clickable tabs', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const tabs = page.locator('[data-testid^="culture-tab-"]');
       const firstTab = tabs.first();
 
@@ -511,8 +473,6 @@ test.describe('Resources Page', () => {
     });
 
     test('should have clickable business cards', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const businessCards = page.locator('.cursor-pointer');
       const firstCard = businessCards.first();
 

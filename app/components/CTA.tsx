@@ -1,20 +1,35 @@
-// IMPORTANT NOTE: This is a server-side component.
+'use client';
 
 import React from 'react';
 import { Button } from 'flowbite-react';
 
-import { wix } from '@app/hooks/Wix';
+import { useWixCta } from '@app/hooks/Wix';
 import testIds from '@app/test-ids';
 
-export default async function CTA() {
-  const { singleItemCollections } = await wix();
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
+
+export default function CTA() {
+  const { data: ctaImage, isLoading, error } = useWixCta();
+
+  if (isLoading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState error={error} />;
+  }
+
+  if (!ctaImage) {
+    return <ErrorState error={new Error('CTA image is undefined')} />;
+  }
 
   return (
     <>
       <div
         className="container text-center text-white px-[5%] mt-16 bg-cover bg-center bg-no-repeat py-12 md:py-18 relative"
         style={{
-          backgroundImage: `url(${singleItemCollections.ctaImage.url})`,
+          backgroundImage: `url(${ctaImage.url})`,
         }}
       >
         <div className="absolute inset-0 bg-black/50" />

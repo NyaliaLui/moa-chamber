@@ -41,8 +41,6 @@ test.describe('News Page', () => {
 
   test.describe('News Cards Section', () => {
     test('should display at least one news card', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const count = await newsCards.count();
 
@@ -50,8 +48,6 @@ test.describe('News Page', () => {
     });
 
     test('should display news card images', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const count = await newsCards.count();
 
@@ -65,8 +61,6 @@ test.describe('News Page', () => {
     });
 
     test('should display news card headings', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const count = await newsCards.count();
 
@@ -80,8 +74,6 @@ test.describe('News Page', () => {
     });
 
     test('should display news card descriptions', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const count = await newsCards.count();
 
@@ -95,8 +87,6 @@ test.describe('News Page', () => {
     });
 
     test('should display read time on each card', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const count = await newsCards.count();
 
@@ -110,8 +100,6 @@ test.describe('News Page', () => {
     });
 
     test('should display "Read more" CTA on each card', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const ctaElements = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA);
       const count = await ctaElements.count();
 
@@ -125,8 +113,6 @@ test.describe('News Page', () => {
     });
 
     test('should have clickable "Read more" links', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const ctaElements = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA);
       const count = await ctaElements.count();
 
@@ -143,8 +129,6 @@ test.describe('News Page', () => {
     test('should display chevron icon on "Read more" button', async ({
       page,
     }) => {
-      await page.waitForLoadState('networkidle');
-
       const ctaElements = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA);
       const firstCta = ctaElements.first();
 
@@ -169,8 +153,6 @@ test.describe('News Page', () => {
     test('should navigate to news detail page when clicking "Read more"', async ({
       page,
     }) => {
-      await page.waitForLoadState('networkidle');
-
       const firstCta = page
         .getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CTA)
         .first();
@@ -209,7 +191,6 @@ test.describe('News Page', () => {
       await expect(heading).toBeVisible();
 
       // News cards should be in 2-column grid on desktop
-      await page.waitForLoadState('networkidle');
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const count = await newsCards.count();
       expect(count).toBeGreaterThan(0);
@@ -218,8 +199,6 @@ test.describe('News Page', () => {
 
   test.describe('Content Validation', () => {
     test('should have at least one news article', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const count = await newsCards.count();
 
@@ -238,8 +217,6 @@ test.describe('News Page', () => {
     });
 
     test('should have descriptive alt text for images', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const firstCard = newsCards.first();
       const image = firstCard.locator('img');
@@ -252,8 +229,6 @@ test.describe('News Page', () => {
 
   test.describe('Image Display', () => {
     test('should display images with aspect-square class', async ({ page }) => {
-      await page.waitForLoadState('networkidle');
-
       const newsCards = page.getByTestId(testIds.NEWS_PAGE.NEWS_ITEM_CONTAINER);
       const firstCard = newsCards.first();
       const image = firstCard.locator('img');

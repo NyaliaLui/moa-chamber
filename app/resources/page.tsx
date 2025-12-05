@@ -1,11 +1,42 @@
+'use client';
+
 import CulturalLandmarks from '@app/components/Resources/CulturalLandmarks';
 import HistoricalBusinesses from '@app/components/Resources/HistoricalBusinesses';
 import CTA from '@app/components/CTA';
-import { wix } from '@app/hooks/Wix';
+import {
+  useWixCultureResources,
+  useWixBusinessResources,
+} from '@app/hooks/Wix';
 import testIds from '@app/test-ids';
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
 
-export default async function Resources() {
-  const { collections } = await wix();
+export default function Resources() {
+  const {
+    data: cultureResources,
+    isLoading: cultureLoading,
+    error: cultureError,
+  } = useWixCultureResources();
+  const {
+    data: businessResources,
+    isLoading: businessLoading,
+    error: businessError,
+  } = useWixBusinessResources();
+
+  const isLoading = cultureLoading || businessLoading;
+  const error = cultureError || businessError;
+
+  if (isLoading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState error={error} />;
+  }
+
+  if (!cultureResources || !businessResources) {
+    return <ErrorState error={new Error('resources are undefined')} />;
+  }
 
   return (
     <section className="px-[5%] mt-16">
@@ -26,7 +57,7 @@ export default async function Resources() {
           </div>
         </div>
         <div className="container mt-16 mb-24">
-          <CulturalLandmarks tabsData={collections.cultureResources} />
+          <CulturalLandmarks tabsData={cultureResources} />
         </div>
         <div className="container">
           <div
@@ -41,9 +72,7 @@ export default async function Resources() {
               community.
             </p>
           </div>
-          <HistoricalBusinesses
-            businessesData={collections.businessResources}
-          />
+          <HistoricalBusinesses businessesData={businessResources} />
         </div>
       </div>
       <CTA />

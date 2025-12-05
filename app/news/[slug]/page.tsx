@@ -1,4 +1,6 @@
-import { Fragment } from 'react';
+'use client';
+
+import { Fragment, use } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -7,15 +9,28 @@ import { HR } from 'flowbite-react';
 
 import testIds from '@app/test-ids';
 import { DateDisplay } from '@app/components/News/DateDisplay';
-import { wix } from '@app/hooks/Wix';
+import { useWixNews } from '@app/hooks/Wix';
 import { DEFAULTS, WixImage } from '@app/constants';
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
 
-export default async function New({ params }: any) {
-  const { collections } = await wix();
-  const { slug } = await params;
-  let article = collections.newsArticles
-    .filter((item) => item.slug === slug)
-    .pop();
+export default function New({ params }: any) {
+  const { data: newsArticles, isLoading, error } = useWixNews();
+  const { slug } = use(params) as { slug: string };
+
+  if (isLoading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState error={error} />;
+  }
+
+  if (!newsArticles) {
+    return <ErrorState error={new Error('news articles are undefined')} />;
+  }
+
+  let article = newsArticles.filter((item) => item.slug === slug).pop();
   if (!article) {
     article = DEFAULTS.news.article;
   }

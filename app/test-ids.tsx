@@ -48,6 +48,14 @@ const ids = {
   BENEFITS: {
     JOIN_BTN: 'benefits-join-btn',
   },
+  LOADING_STATE: {
+    CONTAINER: 'loading-state.container',
+    TEXT: 'loading-state.text',
+  },
+  ERROR_STATE: {
+    CONTAINER: 'error-state.container',
+    TEXT: 'error-state.text',
+  },
 };
 
 export default ids;

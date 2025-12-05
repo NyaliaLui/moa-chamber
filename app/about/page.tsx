@@ -1,11 +1,35 @@
+'use client';
+
 import StaffCard from '@app/components/About/StaffCard';
 import BoardMemberCard from '@app/components/About/BoardMemberCard';
 import CTA from '@app/components/CTA';
 import testIds from '@app/test-ids';
-import { wix } from '@app/hooks/Wix';
+import { useWixTeam, useWixBoardMembers } from '@app/hooks/Wix';
+import LoadingState from '@app/components/LoadingState';
+import ErrorState from '@app/components/ErrorState';
 
-export default async function About() {
-  const { collections } = await wix();
+export default function About() {
+  const { data: team, isLoading: teamLoading, error: teamError } = useWixTeam();
+  const {
+    data: boardMembers,
+    isLoading: boardLoading,
+    error: boardError,
+  } = useWixBoardMembers();
+
+  const isLoading = teamLoading || boardLoading;
+  const error = teamError || boardError;
+
+  if (isLoading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState error={error} />;
+  }
+
+  if (!team || !boardMembers) {
+    return <ErrorState error={new Error('collections are undefined')} />;
+  }
 
   return (
     <section
@@ -27,7 +51,7 @@ export default async function About() {
           </p>
         </div>
         <div className="grid grid-cols-1 items-start justify-center gap-x-8 gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16 lg:gap-x-12">
-          {collections.team!.map((item, index) => (
+          {team.map((item, index) => (
             <StaffCard
               key={index}
               name={item.name}
@@ -52,7 +76,7 @@ export default async function About() {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-4">
-          {collections.boardMembers!.map((item, index) => (
+          {boardMembers.map((item, index) => (
             <BoardMemberCard
               key={index}
               name={item.name}

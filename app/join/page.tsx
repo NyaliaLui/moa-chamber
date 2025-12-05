@@ -1,8 +1,10 @@
+'use client';
+
 import { BiEnvelope, BiMap, BiPhone } from 'react-icons/bi';
 import Link from 'next/link';
 
 import BenefitCard from '@app/components/Join/BenefitCard';
-import MembershipForm from '../components/Join/MembershipForm';
+import MembershipForm from '@app/components/Join/MembershipForm';
 
 export default function Join() {
   return (
