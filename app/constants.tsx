@@ -172,3 +172,5 @@ export const DEFAULTS = {
     },
   },
 };
+
+export const DEFAULT_TARGET_EMAIL = 'luinyalia@gmail.com';
