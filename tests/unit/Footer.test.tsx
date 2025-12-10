@@ -76,7 +76,6 @@ describe('Footer', () => {
 
     expect(screen.getByText('Our Members')).toBeInTheDocument();
     expect(screen.getByText('Calendar')).toBeInTheDocument();
-    expect(screen.getByText('News')).toBeInTheDocument();
     expect(screen.getByText('About Us')).toBeInTheDocument();
     expect(screen.getByText('Community Resources')).toBeInTheDocument();
   });
@@ -130,9 +129,6 @@ describe('Footer', () => {
       link.textContent?.includes('Calendar'),
     );
     expect(calendarLink).toHaveAttribute('href', '/calendar');
-
-    const newsLink = links.find((link) => link.textContent?.includes('News'));
-    expect(newsLink).toHaveAttribute('href', '/news');
 
     const aboutLink = links.find((link) =>
       link.textContent?.includes('About Us'),

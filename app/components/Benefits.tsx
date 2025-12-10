@@ -47,7 +47,7 @@ const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
           <h1 className="mb-5 text-2xl font-bold md:mb-6">
             Benefits of Chamber Membership
           </h1>
-          <p className="text-md">
+          <p className="text-base">
             Strategic support for local entrepreneurs and business owners
           </p>
         </div>

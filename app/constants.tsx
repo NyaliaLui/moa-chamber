@@ -55,7 +55,6 @@ export const NAVBAR_ITEMS = [
   { href: '/', label: 'Home' },
   { href: '/directory', label: 'Our Members' },
   { href: '/calendar', label: 'Calendar' },
-  { href: '/news', label: 'News' },
   { href: '/resources', label: 'Community Resources' },
   { href: '/about', label: 'About Us' },
 ];
@@ -74,6 +73,14 @@ export const DEFAULTS = {
     hero: {
       image: DEFAULT_WIX_IMAGE,
     },
+    highlight: {
+      image: DEFAULT_WIX_IMAGE,
+      heading: 'The Daily Grind',
+      description:
+        'Welcome to our newest chamber member! The Daily Grind brings artisanal coffee roasting expertise to our community, offering premium locally-roasted beans and a warm gathering space for coffee enthusiasts.',
+      website: undefined,
+      socialMediaHandles: [],
+    },
     benefit: {
       heading: 'Sample Heading',
       description: 'Sample description',
@@ -90,43 +97,9 @@ export const DEFAULTS = {
     cta: {
       image: DEFAULT_WIX_IMAGE,
     },
-    news: {
-      heading: 'Sample News Heading',
-      subHeading: 'Sample news description',
-      authorName: 'Sample Author',
-      publishDate: 'Jan 1, 2024',
-      readTime: '5 min read',
-      image: DEFAULT_WIX_IMAGE,
-      authorImage: DEFAULT_WIX_IMAGE,
-      slug: 'sample',
-    },
   },
   calendar: {
     calendarSrc: '',
-  },
-  news: {
-    image: DEFAULT_WIX_IMAGE,
-    heading: 'Sample News Heading',
-    subHeading: 'Sample news description',
-    slug: 'sample-news',
-    readTimeM: 5,
-    article: {
-      _id: '1234567890',
-      image: DEFAULT_WIX_IMAGE,
-      heading: 'Sample News Heading',
-      description: 'Sample news description',
-      slug: 'sample-news',
-      readTimeM: 5,
-      readTime: 5,
-      publishDate: 'Jan 1, 2024',
-      longDescription:
-        'This is a sample long description for the news article. It contains detailed information about the topic.',
-      caption: 'Sample image caption',
-      authorName: 'Sample Author',
-      authorRole: 'Sample Role',
-      authorImage: DEFAULT_WIX_IMAGE,
-      gallery: [],
-    },
   },
   project: {
     _id: '1234567890',
