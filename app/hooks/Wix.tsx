@@ -35,6 +35,14 @@ export interface NewsArticle {
   gallery?: WixImage[];
 }
 
+export interface Highlight {
+  image: WixImage;
+  heading: string;
+  description: string;
+  website?: string;
+  socialMediaHandles?: string[];
+}
+
 export interface Project {
   _id: string;
   slug: string;
@@ -122,6 +130,19 @@ export function makeTestimonial(item: items.WixDataItem): Testimonial {
     image: item.image
       ? makeWixImage(item.image)
       : DEFAULTS.home.testimonial.image,
+  };
+}
+
+export function makeHighlight(item: items.WixDataItem): Highlight {
+  return {
+    image: item.image
+      ? makeWixImage(item.image)
+      : DEFAULTS.home.highlight.image,
+    heading: item.heading || DEFAULTS.home.highlight.heading,
+    description: item.description || DEFAULTS.home.highlight.description,
+    website: item.website || DEFAULTS.home.highlight.website,
+    socialMediaHandles:
+      item.socialMediaHandles || DEFAULTS.home.highlight.socialMediaHandles,
   };
 }
 
@@ -621,6 +642,15 @@ export function useWixHero() {
     (rawData) =>
       rawData.image ? makeWixImage(rawData.image) : DEFAULTS.home.hero.image,
     'hero image',
+  );
+}
+
+export function useWixHighlight() {
+  return useWixSingleItem(
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_HIGHLIGHT!,
+    DEFAULTS.home.highlight,
+    makeHighlight,
+    'highlight',
   );
 }
 

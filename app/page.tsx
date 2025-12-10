@@ -1,12 +1,14 @@
 'use client';
 
 import Hero from '@app/components/Hero';
+import ChamberHighlight from '@app/components/ChamberHighlight';
 import NewsCarousel from '@app/components/NewsCarousel';
 import Benefits from '@app/components/Benefits';
 import Testimonials from '@app/components/Testimonials';
 import CTA from '@app/components/CTA';
 import {
   useWixHero,
+  useWixHighlight,
   useWixNewsCarousel,
   useWixBenefits,
   useWixTestimonials,
@@ -21,6 +23,11 @@ export default function Home() {
     isLoading: heroLoading,
     error: heroError,
   } = useWixHero();
+  const {
+    data: highlightData,
+    isLoading: highlightLoading,
+    error: highlightError,
+  } = useWixHighlight();
   const {
     data: newsCarouselData,
     isLoading: newsLoading,
@@ -38,8 +45,17 @@ export default function Home() {
   } = useWixTestimonials();
 
   const isLoading =
-    heroLoading || newsLoading || benefitsLoading || testimonialsLoading;
-  const error = heroError || newsError || benefitsError || testimonialsError;
+    heroLoading ||
+    highlightLoading ||
+    newsLoading ||
+    benefitsLoading ||
+    testimonialsLoading;
+  const error =
+    heroError ||
+    highlightError ||
+    newsError ||
+    benefitsError ||
+    testimonialsError;
 
   if (isLoading) {
     return <LoadingState />;
@@ -49,13 +65,20 @@ export default function Home() {
     return <ErrorState error={error} />;
   }
 
-  if (!heroImage || !newsCarouselData || !benefitsData || !testimonialsData) {
+  if (
+    !heroImage ||
+    !highlightData ||
+    !newsCarouselData ||
+    !benefitsData ||
+    !testimonialsData
+  ) {
     return <ErrorState error={new Error('home page data is undefined')} />;
   }
 
   return (
     <div className="mx-auto relative sm:px-20 py-2.5">
       <Hero image={heroImage} />
+      <ChamberHighlight highlightData={highlightData} />
       <NewsCarousel newsArticles={newsCarouselData} />
       <Benefits benefitsData={benefitsData} />
       <Testimonials testimonialsData={testimonialsData} />

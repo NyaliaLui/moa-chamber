@@ -74,6 +74,14 @@ export const DEFAULTS = {
     hero: {
       image: DEFAULT_WIX_IMAGE,
     },
+    highlight: {
+      image: DEFAULT_WIX_IMAGE,
+      heading: 'The Daily Grind',
+      description:
+        'Welcome to our newest chamber member! The Daily Grind brings artisanal coffee roasting expertise to our community, offering premium locally-roasted beans and a warm gathering space for coffee enthusiasts.',
+      website: undefined,
+      socialMediaHandles: [],
+    },
     benefit: {
       heading: 'Sample Heading',
       description: 'Sample description',
