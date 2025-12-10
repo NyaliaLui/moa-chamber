@@ -58,29 +58,57 @@ test.describe('Home Page', () => {
     });
   });
 
-  test.describe('News Carousel Section', () => {
-    test('should display news carousel navigation arrows', async ({ page }) => {
-      const arrows = page.getByTestId(testIds.HOME_PAGE.NEWS_CAROUSEL_ARROWS);
-      await expect(arrows).toBeVisible();
+  test.describe('Chamber Highlight Section', () => {
+    test('should display "New member highlight" heading', async ({ page }) => {
+      const heading = page.getByRole('heading', {
+        name: /New member highlight/i,
+      });
+      await expect(heading).toBeVisible();
     });
 
-    test('should display news carousel dots', async ({ page }) => {
-      const dots = page.getByTestId(testIds.HOME_PAGE.NEWS_CAROUSEL_DOTS);
-      const count = await dots.count();
+    test('should display highlighted business name', async ({ page }) => {
+      const businessHeading = page.getByRole('heading', { level: 2 }).first();
+      await expect(businessHeading).toBeVisible();
+    });
 
+    test('should display business description', async ({ page }) => {
+      // Look for any paragraph text after the "New member highlight" heading
+      const description = page.locator('p').first();
+      await expect(description).toBeVisible();
+    });
+
+    test('should display business image', async ({ page }) => {
+      // The image should have the business name as alt text
+      const images = page.locator('img');
+      const count = await images.count();
       expect(count).toBeGreaterThan(0);
+    });
 
-      // Check that each dot is visible
-      for (let i = 0; i < count; i++) {
-        await expect(dots.nth(i)).toBeVisible();
+    test('should display "Visit Website" link when website is provided', async ({
+      page,
+    }) => {
+      const websiteLink = page.getByRole('link', { name: /Visit Website/i });
+      // Use soft assertion since website might be optional
+      if ((await websiteLink.count()) > 0) {
+        await expect(websiteLink.first()).toBeVisible();
+        await expect(websiteLink.first()).toHaveAttribute('target', '_blank');
       }
     });
 
-    test('should display news card with author', async ({ page }) => {
-      const author = page
-        .getByTestId(testIds.HOME_PAGE.NEWS_CAROUSEL_CARD_AUTHOR)
-        .first();
-      await expect(author).toBeVisible();
+    test('should display social media icons when provided', async ({
+      page,
+    }) => {
+      // Look for social media links by aria-label
+      const socialLinks = page.locator(
+        'a[aria-label="Facebook"], a[aria-label="Instagram"], a[aria-label="Twitter"], a[aria-label="LinkedIn"]',
+      );
+      const count = await socialLinks.count();
+      // Social media is optional, so just verify if present
+      if (count > 0) {
+        for (let i = 0; i < count; i++) {
+          await expect(socialLinks.nth(i)).toHaveAttribute('target', '_blank');
+        }
+      }
     });
   });
 
@@ -188,10 +216,10 @@ test.describe('Home Page', () => {
       const heroImage = page.getByAltText(/Hero image/i);
       await expect(heroImage).toBeVisible();
 
-      const newsArrows = page.getByTestId(
-        testIds.HOME_PAGE.NEWS_CAROUSEL_ARROWS,
-      );
-      await expect(newsArrows).toBeVisible();
+      const highlightHeading = page.getByRole('heading', {
+        name: /New member highlight/i,
+      });
+      await expect(highlightHeading).toBeVisible();
     });
   });
 });

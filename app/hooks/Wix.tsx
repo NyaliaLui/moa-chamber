@@ -15,7 +15,6 @@ import type { TabContent } from '@app/components/Resources/CulturalLandmarks';
 import type { Business } from '@app/components/Resources/HistoricalBusinesses';
 import type { Benefit } from '@app/components/Benefits';
 import type { Testimonial } from '@app/components/Testimonials';
-import { NewsCarouselData } from '@app/components/NewsCarousel';
 import type { NewsCardProps } from '@app/components/News/NewsCard';
 import type { MemberCardProps } from '@app/components/Directory/MemberCard';
 import type { StaffCardProps } from '@app/components/About/StaffCard';
@@ -70,7 +69,6 @@ export interface Collections {
   members: Project[];
   newsCards: NewsCardProps[];
   newsArticles: NewsArticle[];
-  newsCarouselData: NewsCarouselData[];
   cultureResources: TabContent[];
   businessResources: Business[];
   benefitsData: Benefit[];
@@ -143,24 +141,6 @@ export function makeHighlight(item: items.WixDataItem): Highlight {
     website: item.website || DEFAULTS.home.highlight.website,
     socialMediaHandles:
       item.socialMediaHandles || DEFAULTS.home.highlight.socialMediaHandles,
-  };
-}
-
-export function makeNewsCarouselData(
-  item: items.WixDataItem,
-): NewsCarouselData {
-  return {
-    id: item._id,
-    heading: item?.heading || DEFAULTS.home.news.heading,
-    subHeading: item?.subHeading || DEFAULTS.home.news.subHeading,
-    authorName: item?.authorName || DEFAULTS.home.news.authorName,
-    publishDate: item?.publishDate || DEFAULTS.home.news.publishDate,
-    readTime: item?.readTime || DEFAULTS.home.news.readTime,
-    image: item.image ? makeWixImage(item.image) : DEFAULTS.home.news.image,
-    authorImage: item.authorImage
-      ? makeWixImage(item.authorImage)
-      : DEFAULTS.home.news.authorImage,
-    href: `/news/${item.slug}`,
   };
 }
 
@@ -400,14 +380,6 @@ export function useWixNewsCards() {
   );
 }
 
-export function useWixNewsCarousel() {
-  return useWixCollection(
-    process.env.NEXT_PUBLIC_WIX_COLLECTION_NEWS!,
-    makeNewsCarouselData,
-    'news carousel',
-  );
-}
-
 export function useWixCultureResources() {
   return useWixCollection(
     process.env.NEXT_PUBLIC_WIX_COLLECTION_CULTURE_RESOURCES!,
@@ -438,115 +410,6 @@ export function useWixTestimonials() {
     makeTestimonial,
     'testimonials',
   );
-}
-
-export function useWixCollections() {
-  const { data: team, isLoading: teamLoading, error: teamError } = useWixTeam();
-  const {
-    data: boardMembers,
-    isLoading: boardLoading,
-    error: boardError,
-  } = useWixBoardMembers();
-  const {
-    data: members,
-    isLoading: membersLoading,
-    error: membersError,
-  } = useWixMembers();
-  const {
-    data: memberCards,
-    isLoading: memberCardsLoading,
-    error: memberCardsError,
-  } = useWixMemberCards();
-  const {
-    data: newsArticles,
-    isLoading: newsLoading,
-    error: newsError,
-  } = useWixNews();
-  const {
-    data: newsCards,
-    isLoading: newsCardsLoading,
-    error: newsCardsError,
-  } = useWixNewsCards();
-  const {
-    data: newsCarouselData,
-    isLoading: newsCarouselLoading,
-    error: newsCarouselError,
-  } = useWixNewsCarousel();
-  const {
-    data: cultureResources,
-    isLoading: cultureLoading,
-    error: cultureError,
-  } = useWixCultureResources();
-  const {
-    data: businessResources,
-    isLoading: businessLoading,
-    error: businessError,
-  } = useWixBusinessResources();
-  const {
-    data: benefitsData,
-    isLoading: benefitsLoading,
-    error: benefitsError,
-  } = useWixBenefits();
-  const {
-    data: testimonialsData,
-    isLoading: testimonialsLoading,
-    error: testimonialsError,
-  } = useWixTestimonials();
-
-  const isLoading =
-    teamLoading ||
-    boardLoading ||
-    membersLoading ||
-    memberCardsLoading ||
-    newsLoading ||
-    newsCardsLoading ||
-    newsCarouselLoading ||
-    cultureLoading ||
-    businessLoading ||
-    benefitsLoading ||
-    testimonialsLoading;
-
-  const error =
-    teamError ||
-    boardError ||
-    membersError ||
-    memberCardsError ||
-    newsError ||
-    newsCardsError ||
-    newsCarouselError ||
-    cultureError ||
-    businessError ||
-    benefitsError ||
-    testimonialsError;
-
-  const collections: Collections | null =
-    team &&
-    boardMembers &&
-    members &&
-    memberCards &&
-    newsArticles &&
-    newsCards &&
-    newsCarouselData &&
-    cultureResources &&
-    businessResources &&
-    benefitsData &&
-    testimonialsData
-      ? {
-          team,
-          boardMembers,
-          memberCards,
-          members,
-          newsCards,
-          newsArticles,
-          newsCarouselData,
-          cultureResources,
-          businessResources,
-          benefitsData,
-          testimonialsData,
-        }
-      : null;
-
-  return { collections, isLoading, error };
 }
 
 // Generic hook for fetching a single item from a Wix collection

@@ -2,14 +2,12 @@
 
 import Hero from '@app/components/Hero';
 import ChamberHighlight from '@app/components/ChamberHighlight';
-import NewsCarousel from '@app/components/NewsCarousel';
 import Benefits from '@app/components/Benefits';
 import Testimonials from '@app/components/Testimonials';
 import CTA from '@app/components/CTA';
 import {
   useWixHero,
   useWixHighlight,
-  useWixNewsCarousel,
   useWixBenefits,
   useWixTestimonials,
 } from '@app/hooks/Wix';
@@ -29,11 +27,6 @@ export default function Home() {
     error: highlightError,
   } = useWixHighlight();
   const {
-    data: newsCarouselData,
-    isLoading: newsLoading,
-    error: newsError,
-  } = useWixNewsCarousel();
-  const {
     data: benefitsData,
     isLoading: benefitsLoading,
     error: benefitsError,
@@ -45,17 +38,9 @@ export default function Home() {
   } = useWixTestimonials();
 
   const isLoading =
-    heroLoading ||
-    highlightLoading ||
-    newsLoading ||
-    benefitsLoading ||
-    testimonialsLoading;
+    heroLoading || highlightLoading || benefitsLoading || testimonialsLoading;
   const error =
-    heroError ||
-    highlightError ||
-    newsError ||
-    benefitsError ||
-    testimonialsError;
+    heroError || highlightError || benefitsError || testimonialsError;
 
   if (isLoading) {
     return <LoadingState />;
@@ -65,13 +50,7 @@ export default function Home() {
     return <ErrorState error={error} />;
   }
 
-  if (
-    !heroImage ||
-    !highlightData ||
-    !newsCarouselData ||
-    !benefitsData ||
-    !testimonialsData
-  ) {
+  if (!heroImage || !highlightData || !benefitsData || !testimonialsData) {
     return <ErrorState error={new Error('home page data is undefined')} />;
   }
 
@@ -79,7 +58,6 @@ export default function Home() {
     <div className="mx-auto relative sm:px-20 py-2.5">
       <Hero image={heroImage} />
       <ChamberHighlight highlightData={highlightData} />
-      <NewsCarousel newsArticles={newsCarouselData} />
       <Benefits benefitsData={benefitsData} />
       <Testimonials testimonialsData={testimonialsData} />
       <CTA />

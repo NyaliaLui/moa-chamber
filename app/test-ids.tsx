@@ -6,9 +6,6 @@ const ids = {
   HOME_PAGE: {
     HIGHLIGHTS: 'home.section.highlights',
     OUR_INITIATIVES_CTA: 'home.initiatives.cta',
-    NEWS_CAROUSEL_CARD_AUTHOR: 'home.news.card.author',
-    NEWS_CAROUSEL_ARROWS: 'home.news.indicators',
-    NEWS_CAROUSEL_DOTS: 'home.news.dots',
   },
   PROJECTS_PAGE: {
     HEADER: 'projects-page.header',
