@@ -20,18 +20,6 @@ const ids = {
     CONTAINER: 'team-page.container',
     TEAM_MEMBERS: 'team-page.team-members',
   },
-  NEWS_PAGE: {
-    HEADER: 'news-page.header',
-    NEWS_LIST: 'news-page.news-list',
-    NEWS_ITEM_CONTAINER: 'news-page.news-item.container',
-    NEWS_ITEM_CTA: 'news-page.news-item.cta',
-  },
-  NEWS_DETAILS_PAGE: {
-    CONTAINER: 'news-details-page.container',
-    AUTHOR_SECTION: 'news-details-page.author-section',
-    AUTHOR_NAME: 'news-details-page.author-name',
-    AUTHOR_ROLE: 'news-details-page.author-role',
-  },
   RESOURCES: {
     CULTURE_BOX: 'culture-box',
     CONTAINER: 'community-resources-demo',

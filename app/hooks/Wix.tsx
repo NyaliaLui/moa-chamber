@@ -15,24 +15,9 @@ import type { TabContent } from '@app/components/Resources/CulturalLandmarks';
 import type { Business } from '@app/components/Resources/HistoricalBusinesses';
 import type { Benefit } from '@app/components/Benefits';
 import type { Testimonial } from '@app/components/Testimonials';
-import type { NewsCardProps } from '@app/components/News/NewsCard';
 import type { MemberCardProps } from '@app/components/Directory/MemberCard';
 import type { StaffCardProps } from '@app/components/About/StaffCard';
 import type { BoardMemberCardProps } from '@app/components/About/BoardMemberCard';
-
-export interface NewsArticle {
-  slug: string;
-  readTime: number;
-  heading: string;
-  image: WixImage;
-  publishDate: string;
-  longDescription: string;
-  caption: string;
-  authorImage: WixImage;
-  authorName: string;
-  authorRole: string;
-  gallery?: WixImage[];
-}
 
 export interface Highlight {
   image: WixImage;
@@ -67,8 +52,6 @@ export interface Collections {
   boardMembers: BoardMemberCardProps[];
   memberCards: MemberCardProps[];
   members: Project[];
-  newsCards: NewsCardProps[];
-  newsArticles: NewsArticle[];
   cultureResources: TabContent[];
   businessResources: Business[];
   benefitsData: Benefit[];
@@ -141,37 +124,6 @@ export function makeHighlight(item: items.WixDataItem): Highlight {
     website: item.website || DEFAULTS.home.highlight.website,
     socialMediaHandles:
       item.socialMediaHandles || DEFAULTS.home.highlight.socialMediaHandles,
-  };
-}
-
-export function makeNewsCard(item: items.WixDataItem): NewsCardProps {
-  return {
-    image: item.image ? makeWixImage(item.image) : DEFAULTS.home.news.image,
-    heading: item.heading || DEFAULTS.home.news.heading,
-    description: item.description || DEFAULTS.home.news.subHeading,
-    slug: item.slug || DEFAULTS.home.news.slug,
-    readTimeM: item.readTime || DEFAULTS.home.news.readTime,
-  };
-}
-
-export function makeNewsArticle(item: items.WixDataItem): NewsArticle {
-  return {
-    slug: item.slug || DEFAULTS.news.article.slug,
-    readTime: item.readTime || DEFAULTS.news.article.readTime,
-    heading: item.heading || DEFAULTS.news.article.heading,
-    image: item.image ? makeWixImage(item.image) : DEFAULTS.news.article.image,
-    publishDate: item.publishDate || DEFAULTS.news.article.publishDate,
-    longDescription:
-      item.longDescription || DEFAULTS.news.article.longDescription,
-    caption: item.caption || DEFAULTS.news.article.caption,
-    authorImage: item.authorImage
-      ? makeWixImage(item.authorImage)
-      : DEFAULTS.news.article.authorImage,
-    authorName: item.authorName || DEFAULTS.news.article.authorName,
-    authorRole: item.authorRole || DEFAULTS.news.article.authorRole,
-    gallery: item.gallery
-      ? item.gallery.map((obj: any) => makeWixImage(obj.src))
-      : DEFAULTS.news.article.gallery,
   };
 }
 
@@ -361,22 +313,6 @@ export function useWixMemberCards() {
     process.env.NEXT_PUBLIC_WIX_COLLECTION_MEMBERS!,
     makeMemberCard,
     'member cards',
-  );
-}
-
-export function useWixNews() {
-  return useWixCollection(
-    process.env.NEXT_PUBLIC_WIX_COLLECTION_NEWS!,
-    makeNewsArticle,
-    'news',
-  );
-}
-
-export function useWixNewsCards() {
-  return useWixCollection(
-    process.env.NEXT_PUBLIC_WIX_COLLECTION_NEWS!,
-    makeNewsCard,
-    'news cards',
   );
 }
 
