@@ -26,8 +26,8 @@ const StaffCard = ({
   twitter,
 }: StaffCardProps) => {
   return (
-    <div className="flex flex-col text-center">
-      <div className="rb-5 mb-5 flex w-full items-center justify-center md:mb-6">
+    <div className="flex flex-col text-center border border-gray-300 rounded-lg bg-gray-100">
+      <div className="rb-5 mb-5 flex w-full items-center justify-center md:mb-6 rounded-t-lg overflow-hidden">
         <Image
           src={image.url}
           alt={role}
@@ -36,19 +36,29 @@ const StaffCard = ({
           height={image.height}
         />
       </div>
-      <div className="mb-3 md:mb-4">
-        <h5 className="text-md font-semibold md:text-lg">{name}</h5>
-        <h6 className="text-sm md:text-md">{role}</h6>
-        <h6 className="text-sm md:text-md">{email}</h6>
-      </div>
-      <p className="text-sm md:text-md">{bio}</p>
-      <div className="mt-6 grid grid-flow-col grid-cols-[max-content] gap-3.5 self-center">
-        <Link href={`${SOCIAL_MEDIA_URLS.linkedIn}${linkedIn}/`}>
-          <BiLogoLinkedinSquare className="size-6" />
-        </Link>
-        <Link href={`${SOCIAL_MEDIA_URLS.twitter}${twitter}`}>
-          <FaXTwitter className="size-6 p-0.5" />
-        </Link>
+      <div className="p-4">
+        <div className="mb-3 md:mb-4">
+          <h5 className="text-base font-semibold md:text-lg text-black">
+            {name}
+          </h5>
+          <h6 className="text-sm md:text-base text-black">{role}</h6>
+          <h6 className="text-sm md:text-base text-black">{email}</h6>
+        </div>
+        <p className="text-sm md:text-base text-black">{bio}</p>
+        <div className="mt-6 flex justify-center gap-5 items-center">
+          <Link
+            href={`${SOCIAL_MEDIA_URLS.linkedIn}${linkedIn}/`}
+            className="text-black hover:text-gray-800 transition-colors"
+          >
+            <BiLogoLinkedinSquare className="size-6" />
+          </Link>
+          <Link
+            href={`${SOCIAL_MEDIA_URLS.twitter}${twitter}`}
+            className="text-black hover:text-gray-800 transition-colors"
+          >
+            <FaXTwitter className="size-6 p-0.5" />
+          </Link>
+        </div>
       </div>
     </div>
   );
