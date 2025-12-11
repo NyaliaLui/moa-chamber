@@ -61,7 +61,7 @@ export default function ChamberHighlight({
               href={highlightData.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex text-sm lg:text-base items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors w-fit"
+              className="flex text-sm lg:text-base items-center gap-2 text-gray-600 hover:text-black transition-colors w-fit"
             >
               <span>Visit Website</span>
               <FaExternalLinkAlt className="w-3 h-3 lg:w-4 lg:h-4" />
@@ -77,7 +77,7 @@ export default function ChamberHighlight({
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-blue-600 transition-colors"
+                    className="text-gray-600 hover:text-black transition-colors"
                     aria-label={getSocialLabel(url)}
                   >
                     {getSocialIcon(url)}

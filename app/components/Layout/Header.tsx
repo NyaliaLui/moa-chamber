@@ -1,15 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { Button } from 'flowbite-react';
 
 import { NAVBAR_ITEMS, PAYPAL_URL } from '@app/constants';
 import { Logo } from '@app/components/Logo/Logo';
 import testIds from '@app/test-ids';
 
-const Header = () => {
+function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev);
@@ -19,19 +22,27 @@ const Header = () => {
     setIsMenuOpen(false);
   }, []);
 
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   return (
     <header
-      className="w-full my-6 px-2 sm:px-8"
+      className={`w-full py-6 px-2 sm:px-8 z-50 ${isHomePage ? 'absolute top-0 left-0 right-0' : 'bg-[#0e2647]'}`}
       data-testid={testIds.LAYOUT.HEADER}
     >
       <div className="flex items-center justify-between sm:px-14 h-header">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 z-50"
-          onClick={closeMenu}
-        >
-          <Logo />
+        <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
+          <Logo enableLightOutline={true} />
         </Link>
 
         {/* Desktop Navigation - md and up */}
@@ -42,7 +53,7 @@ const Header = () => {
               <li key={href}>
                 <Link
                   href={href}
-                  className="text-sm lg:text-[15px] leading-[22px] transition-colors"
+                  className="text-sm lg:text-[15px] leading-[22px] transition-colors text-white hover:text-gray-200"
                 >
                   {label}
                 </Link>
@@ -60,7 +71,7 @@ const Header = () => {
               as="a"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white!"
+              className="text-white border-white hover:text-black! hover:bg-white"
             >
               Pay Fees
             </Button>
@@ -93,7 +104,7 @@ const Header = () => {
             ).map((className, index) => (
               <span
                 key={index}
-                className={`block h-[2px] w-5 bg-black transform transition duration-500 ease-in-out ${className}`}
+                className={`block h-0.5 w-5 bg-white transform transition duration-500 ease-in-out ${className}`}
               />
             ))}
           </div>
@@ -105,7 +116,7 @@ const Header = () => {
             isMenuOpen
               ? 'max-md:w-full max-md:opacity-100'
               : 'max-md:w-0 max-md:opacity-0'
-          } md:hidden transition-all duration-500 ease-in-out overflow-hidden absolute animate-sideways-once h-screen bg-white pt-24 z-40 top-0 right-0`}
+          } md:hidden transition-all duration-500 ease-in-out overflow-hidden fixed animate-sideways-once h-screen bg-[#0e2647] pt-24 z-40 top-0 right-0`}
         >
           <ul className="flex flex-col items-center gap-10">
             {/* Page Links */}
@@ -113,12 +124,12 @@ const Header = () => {
               <li key={href} className="relative">
                 <Link
                   href={href}
-                  className="text-sm leading-[22px] transition-colors"
+                  className="text-sm leading-[22px] transition-colors text-white hover:text-gray-200"
                   onClick={closeMenu}
                 >
                   {label}
                 </Link>
-                <span className="absolute -bottom-5 border-b-2 w-48 left-[calc(50%-theme(space.24))]" />
+                <span className="absolute -bottom-5 border-b border-white w-48 left-[calc(50%-theme(space.24))]" />
               </li>
             ))}
 
@@ -133,7 +144,7 @@ const Header = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
-                className="hover:text-white!"
+                className="text-white border-white hover:text-black! hover:bg-white"
               >
                 Pay Fees
               </Button>
@@ -155,6 +166,6 @@ const Header = () => {
       </div>
     </header>
   );
-};
+}
 
 export default Header;
