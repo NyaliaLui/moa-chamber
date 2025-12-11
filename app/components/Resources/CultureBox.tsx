@@ -26,7 +26,7 @@ const CultureBox = ({
 }: CultureBoxProps) => {
   return (
     <div
-      className="grid auto-cols-fr grid-cols-1 border-b border-l border-r border-gray-300 bg-gray-300 lg:grid-cols-2"
+      className="grid auto-cols-fr grid-cols-1 border-b border-l border-r rounded-b-lg bg-gray-300 border-gray-300 lg:grid-cols-2 text-black"
       data-testid={testIds.RESOURCES.CULTURE_BOX}
     >
       <div className="flex flex-col justify-center items-start p-8 md:p-12">
@@ -35,7 +35,11 @@ const CultureBox = ({
         </h2>
         <p className="mb-6 md:mb-8 text-base md:text-lg">{description}</p>
         <div className="w-full flex justify-center md:justify-start">
-          <Button size="lg" color="dark" outline href={ctaLink}>
+          <Button
+            size="lg"
+            href={ctaLink}
+            className="bg-black text-white hover:bg-gray-800"
+          >
             {ctaLabel}
           </Button>
         </div>
@@ -43,7 +47,7 @@ const CultureBox = ({
       <div className="flex items-center justify-center md:px-8 md:py-8">
         <Image
           src={image.url}
-          className="w-full object-cover md:object-contain aspect-video"
+          className="w-full object-cover aspect-video rounded-lg"
           alt={imageAlt}
           width={image.width}
           height={image.height}

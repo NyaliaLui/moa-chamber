@@ -41,7 +41,7 @@ export default function Resources() {
   return (
     <>
       <section
-        className="container px-[5%] mt-16"
+        className="container px-[5%] py-16 bg-[#1a56db] text-white"
         data-testid={testIds.RESOURCES.CONTAINER}
       >
         <div
