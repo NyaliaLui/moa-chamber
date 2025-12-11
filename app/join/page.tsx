@@ -8,7 +8,7 @@ import MembershipForm from '@app/components/Join/MembershipForm';
 
 export default function Join() {
   return (
-    <section className="px-[5%] mt-16">
+    <section className="px-[5%] py-16">
       <div className="container">
         <div className="flex flex-col items-start">
           <div className="mx-auto mb-6 max-w-lg md:mb-9 lg:mb-10">

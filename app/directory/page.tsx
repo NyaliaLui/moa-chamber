@@ -39,8 +39,8 @@ export default function Directory() {
   };
 
   return (
-    <section className="px-[5%]">
-      <div className="container">
+    <>
+      <section className="container px-[5%]">
         <div className="mb-6 md:mb-9 lg:mb-10">
           <div className="mx-auto max-w-lg text-center">
             <h1
@@ -79,8 +79,8 @@ export default function Directory() {
             </button>
           </div>
         )}
-      </div>
+      </section>
       <CTA />
-    </section>
+    </>
   );
 }
