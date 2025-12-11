@@ -59,7 +59,9 @@ export default function Home() {
       <Hero image={heroImage} />
       <div className="sm:px-20 py-2.5">
         <ChamberHighlight highlightData={highlightData} />
-        <Benefits benefitsData={benefitsData} />
+      </div>
+      <Benefits benefitsData={benefitsData} />
+      <div className="sm:px-20 py-2.5">
         <Testimonials testimonialsData={testimonialsData} />
         <CTA />
       </div>
