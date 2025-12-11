@@ -57,9 +57,7 @@ export default function Home() {
   return (
     <div className="mx-auto relative">
       <Hero image={heroImage} />
-      <div className="sm:px-20 py-2.5">
-        <ChamberHighlight highlightData={highlightData} />
-      </div>
+      <ChamberHighlight highlightData={highlightData} />
       <Benefits benefitsData={benefitsData} />
       <Testimonials testimonialsData={testimonialsData} />
       <CTA />
