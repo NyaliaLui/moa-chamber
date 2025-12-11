@@ -44,59 +44,63 @@ export default function ChamberHighlight({
   highlightData: Highlight;
 }) {
   return (
-    <section className="container px-4 mt-16">
-      <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8">
-        New member highlight
-      </h3>
-      <div className="p-1 lg:p-0 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        {/* Left column - 2/3 of the space */}
-        <div className="flex flex-col gap-4">
-          <h2 className="text-2xl lg:text-4xl font-bold">
-            {highlightData.heading}
-          </h2>
-          <p className="text-sm lg:text-base">{highlightData.description}</p>
+    <section className="w-full py-16 bg-[#1a56db]">
+      <div className="container px-[5%] mx-auto">
+        <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 text-white">
+          New member highlight
+        </h3>
+        <div className="p-1 lg:p-0 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left column - 2/3 of the space */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl lg:text-4xl font-bold text-white">
+              {highlightData.heading}
+            </h2>
+            <p className="text-sm lg:text-base text-white">
+              {highlightData.description}
+            </p>
 
-          {highlightData.website && (
-            <Link
-              href={highlightData.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex text-sm lg:text-base items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors w-fit"
-            >
-              <span>Visit Website</span>
-              <FaExternalLinkAlt className="w-3 h-3 lg:w-4 lg:h-4" />
-            </Link>
-          )}
-
-          {highlightData.socialMediaHandles &&
-            highlightData.socialMediaHandles.length > 0 && (
-              <div className="flex gap-4">
-                {highlightData.socialMediaHandles.map((url, index) => (
-                  <Link
-                    key={index}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-blue-600 transition-colors"
-                    aria-label={getSocialLabel(url)}
-                  >
-                    {getSocialIcon(url)}
-                  </Link>
-                ))}
-              </div>
+            {highlightData.website && (
+              <Link
+                href={highlightData.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex text-sm lg:text-base items-center gap-2 text-white hover:text-gray-400 transition-colors w-fit"
+              >
+                <span>Visit Website</span>
+                <FaExternalLinkAlt className="w-3 h-3 lg:w-4 lg:h-4" />
+              </Link>
             )}
-        </div>
 
-        {/* Right column - 1/3 of the space */}
-        <div className="">
-          <div className="relative w-full">
-            <Image
-              src={highlightData.image.url}
-              alt={highlightData.heading}
-              width={highlightData.image.width}
-              height={highlightData.image.height}
-              className="object-cover rounded-lg"
-            />
+            {highlightData.socialMediaHandles &&
+              highlightData.socialMediaHandles.length > 0 && (
+                <div className="flex gap-4">
+                  {highlightData.socialMediaHandles.map((url, index) => (
+                    <Link
+                      key={index}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white hover:text-gray-400 transition-colors"
+                      aria-label={getSocialLabel(url)}
+                    >
+                      {getSocialIcon(url)}
+                    </Link>
+                  ))}
+                </div>
+              )}
+          </div>
+
+          {/* Right column - 1/3 of the space */}
+          <div className="">
+            <div className="relative w-full">
+              <Image
+                src={highlightData.image.url}
+                alt={highlightData.heading}
+                width={highlightData.image.width}
+                height={highlightData.image.height}
+                className="object-cover rounded-lg"
+              />
+            </div>
           </div>
         </div>
       </div>

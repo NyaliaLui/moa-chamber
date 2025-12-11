@@ -387,7 +387,7 @@ describe('MembershipForm', () => {
       await userEvent.click(submitButton);
 
       await waitFor(() => {
-        const svg = document.querySelector('svg.text-green-600');
+        const svg = document.querySelector('svg.text-green-400');
         expect(svg).toBeInTheDocument();
       });
     });

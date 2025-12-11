@@ -39,8 +39,11 @@ export default function Resources() {
   }
 
   return (
-    <section className="px-[5%] mt-16">
-      <div className="container" data-testid={testIds.RESOURCES.CONTAINER}>
+    <>
+      <section
+        className="container px-[5%] py-16 bg-[#1a56db] text-white"
+        data-testid={testIds.RESOURCES.CONTAINER}
+      >
         <div
           className="flex flex-col items-start"
           data-testid={testIds.RESOURCES.HEADING}
@@ -74,8 +77,8 @@ export default function Resources() {
           </div>
           <HistoricalBusinesses businessesData={businessResources} />
         </div>
-      </div>
+      </section>
       <CTA />
-    </section>
+    </>
   );
 }

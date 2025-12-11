@@ -17,13 +17,14 @@ export interface Benefit {
 
 const BenefitCard = ({ benefit }: { benefit: Benefit }) => {
   return (
-    <div className="flex flex-col border bg-gray-100 border-gray-300">
+    <div className="flex flex-col border bg-gray-100 border-gray-300 rounded-lg overflow-hidden">
       <div className="flex w-full flex-col items-center justify-center self-start">
         <Image
           src={benefit.image.url}
           alt={`Benefits ${benefit.label} img`}
           width={benefit.image.width}
           height={benefit.image.height}
+          className="w-full"
         />
       </div>
       <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
@@ -41,13 +42,13 @@ const BenefitCard = ({ benefit }: { benefit: Benefit }) => {
 
 const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
   return (
-    <section className="px-[5%] mt-16">
-      <div className="container">
+    <section className="w-full py-16 bg-[#0e2647]">
+      <div className="container px-[5%] mx-auto">
         <div className="mx-auto mb-6 w-full max-w-lg text-center md:mb-9 lg:mb-10">
-          <h1 className="mb-5 text-2xl font-bold md:mb-6">
+          <h1 className="mb-5 text-2xl font-bold md:mb-6 text-white">
             Benefits of Chamber Membership
           </h1>
-          <p className="text-base">
+          <p className="text-base text-white">
             Strategic support for local entrepreneurs and business owners
           </p>
         </div>
@@ -56,17 +57,17 @@ const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
             <BenefitCard key={benefit.id} benefit={benefit} />
           ))}
         </div>
-      </div>
-      <div className="my-4 flex justify-center items-center gap-4 md:mt-8">
-        <Button
-          color="dark"
-          size="lg"
-          outline
-          className="text-black! hover:text-white!"
-          data-testid={testIds.BENEFITS.JOIN_BTN}
-        >
-          Join the chamber
-        </Button>
+        <div className="my-4 flex justify-center items-center gap-4 md:mt-8">
+          <Button
+            color="dark"
+            size="lg"
+            outline
+            className="text-white! border-white hover:bg-white hover:text-black!"
+            data-testid={testIds.BENEFITS.JOIN_BTN}
+          >
+            Join the chamber
+          </Button>
+        </div>
       </div>
     </section>
   );

@@ -15,10 +15,12 @@ export interface WixImage {
 }
 
 export const LOGO_IMAGE = {
-  light: '/images/MOA-Logo-2.svg',
-  dark: '/images/MOA-Logo-2-Dark.svg',
-  width: 72,
-  height: 72,
+  outline: {
+    light: '/images/MOA-Logo-Light-Outline.png',
+    dark: '/images/MOA-Logo-Dark-Outline.png',
+  },
+  width: 96,
+  height: 96,
 };
 
 export const SVG_ICONS = {
@@ -147,3 +149,5 @@ export const DEFAULTS = {
 };
 
 export const DEFAULT_TARGET_EMAIL = 'luinyalia@gmail.com';
+
+export const DEFAULT_TESTIMONIAL_STARS = 5;

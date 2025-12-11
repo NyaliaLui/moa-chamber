@@ -22,8 +22,8 @@ const BusinessCard = ({
 }: BusinessCardProps) => {
   return (
     <div
-      className={`flex flex-col items-start p-6 ${
-        isSelected ? 'bg-gray-300 border-l-2 border-l-gray-400' : 'bg-white'
+      className={`flex flex-col items-start p-6 text-white ${
+        isSelected ? 'border-l-2 border-l-gray-300' : ''
       }`}
       data-testid={name}
     >
@@ -33,7 +33,7 @@ const BusinessCard = ({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-blue-600 hover:text-blue-800 underline"
+        className="text-sm hover:text-gray-200"
       >
         {stripHttps(href)}
       </Link>

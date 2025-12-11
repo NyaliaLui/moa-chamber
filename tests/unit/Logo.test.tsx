@@ -6,31 +6,31 @@ import { LOGO_IMAGE } from '@app/constants';
 
 describe('Logo', () => {
   it('renders the logo component', () => {
-    render(<Logo />);
+    render(<Logo enableLightOutline={true} />);
 
     const logo = screen.getByAltText('MOA Chamber Logo');
     expect(logo).toBeInTheDocument();
   });
 
   it('renders image with correct alt text', () => {
-    render(<Logo />);
+    render(<Logo enableLightOutline={true} />);
 
     const logo = screen.getByAltText('MOA Chamber Logo');
     expect(logo).toHaveAttribute('alt', 'MOA Chamber Logo');
   });
 
   it('renders image with correct src', () => {
-    render(<Logo />);
+    render(<Logo enableLightOutline={true} />);
 
     const logo = screen.getByAltText('MOA Chamber Logo');
     expect(logo).toHaveAttribute(
       'src',
-      expect.stringContaining(LOGO_IMAGE.light),
+      expect.stringContaining(LOGO_IMAGE.outline.light.replaceAll('/', '%2F')),
     );
   });
 
   it('renders image with correct dimensions', () => {
-    render(<Logo />);
+    render(<Logo enableLightOutline={true} />);
 
     const logo = screen.getByAltText('MOA Chamber Logo');
     expect(logo).toHaveAttribute('width', `${LOGO_IMAGE.width}`);
@@ -38,7 +38,7 @@ describe('Logo', () => {
   });
 
   it('image is visible', () => {
-    render(<Logo />);
+    render(<Logo enableLightOutline={true} />);
 
     const logo = screen.getByAltText('MOA Chamber Logo');
     expect(logo).toBeVisible();

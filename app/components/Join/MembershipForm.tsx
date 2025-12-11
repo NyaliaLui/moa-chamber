@@ -32,7 +32,7 @@ export default function MembershipForm() {
       <div className="mx-auto max-w-lg py-20 text-center">
         <div className="mb-8">
           <svg
-            className="mx-auto size-16 text-green-600"
+            className="mx-auto size-16 text-green-400"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -46,15 +46,15 @@ export default function MembershipForm() {
             />
           </svg>
         </div>
-        <h2 className="mb-5 text-2xl md:text-3xl font-bold">
+        <h2 className="mb-5 text-2xl md:text-3xl font-bold text-white">
           Application Submitted Successfully!
         </h2>
-        <p className="text-base md:text-lg text-gray-700 mb-6">
+        <p className="text-base md:text-lg text-white mb-6">
           Thank you for your interest in joining the Meriden/Ozawkie Area
           Chamber of Commerce. We have received your membership application and
           will be in touch with you shortly.
         </p>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-white">
           You should receive a confirmation email at the address you provided.
         </p>
       </div>
@@ -64,10 +64,10 @@ export default function MembershipForm() {
   return (
     <div className="container mx-auto max-w-lg py-20">
       <div className="mx-auto mb-8 w-full text-center md:mb-10 lg:mb-12">
-        <h2 className="rb-5 mb-5 text-lg md:text-3xl font-bold md:mb-6">
+        <h2 className="rb-5 mb-5 text-lg md:text-3xl font-bold md:mb-6 text-white">
           Join us
         </h2>
-        <p className="text-base md:text-lg">
+        <p className="text-base md:text-lg text-white">
           Complete your chamber membership application
         </p>
       </div>
@@ -78,9 +78,9 @@ export default function MembershipForm() {
         <div className="items-center mb-2">
           <Label
             htmlFor="business"
-            className="block text-lg font-medium text-gray-900 dark:text-gray-900 mb-2"
+            className="block text-lg font-medium text-white mb-2"
           >
-            Business name <span className="text-red-600">*</span>
+            Business name <span className="text-red-400">*</span>
           </Label>
           <TextInput
             type="text"
@@ -93,9 +93,9 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="contact"
-            className="block text-lg font-medium text-gray-900 dark:text-gray-900 mb-2"
+            className="block text-lg font-medium text-white mb-2"
           >
-            Contact name <span className="text-red-600">*</span>
+            Contact name <span className="text-red-400">*</span>
           </Label>
           <TextInput
             type="text"
@@ -106,8 +106,8 @@ export default function MembershipForm() {
           />
         </div>
         <div>
-          <Label className="block text-lg font-medium text-gray-900 dark:text-gray-900 mb-2">
-            Contact&apos;s role <span className="text-red-600">*</span>
+          <Label className="block text-lg font-medium text-white mb-2">
+            Contact&apos;s role <span className="text-red-400">*</span>
           </Label>
           <div className="flex gap-4">
             <div className="flex items-center gap-2">
@@ -117,11 +117,12 @@ export default function MembershipForm() {
                 value="owner"
                 defaultChecked
                 required
+                color="dark"
                 disabled={isSubmitting}
               />
               <Label
                 htmlFor="owner"
-                className="font-normal cursor-pointer dark:text-gray-900"
+                className="font-normal cursor-pointer text-white"
               >
                 Owner
               </Label>
@@ -131,11 +132,12 @@ export default function MembershipForm() {
                 id="manager"
                 name="contactrole"
                 value="manager"
+                color="dark"
                 disabled={isSubmitting}
               />
               <Label
                 htmlFor="manager"
-                className="font-normal cursor-pointer dark:text-gray-900"
+                className="font-normal cursor-pointer text-white"
               >
                 Manager
               </Label>
@@ -145,9 +147,9 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="address"
-            className="block text-lg font-medium text-gray-900 dark:text-gray-900 mb-2"
+            className="block text-lg font-medium text-white mb-2"
           >
-            Business address <span className="text-red-600">*</span>
+            Business address <span className="text-red-400">*</span>
           </Label>
           <TextInput
             type="text"
@@ -161,7 +163,7 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="phone"
-            className="block text-lg font-medium text-gray-900 dark:text-gray-900 mb-2"
+            className="block text-lg font-medium text-white mb-2"
           >
             Phone number
           </Label>
@@ -176,7 +178,7 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="email"
-            className="block text-lg font-medium text-gray-900 dark:text-gray-900 mb-2"
+            className="block text-lg font-medium text-white mb-2"
           >
             Email
           </Label>
@@ -191,19 +193,26 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="website"
-            className="block text-lg font-medium text-gray-900 dark:text-gray-900 mb-2"
+            className="block text-lg font-medium text-white mb-2"
           >
             Website
           </Label>
           <TextInput
-            type="url"
+            type="text"
             id="website"
             name="website"
             placeholder="sample.com"
+            pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$"
+            title="Enter a valid website URL (e.g., sample.com or https://sample.com)"
             disabled={isSubmitting}
           />
         </div>
-        <Button type="submit" title="Submit" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          title="Submit"
+          disabled={isSubmitting}
+          className="bg-black text-white hover:bg-gray-800 font-semibold"
+        >
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>

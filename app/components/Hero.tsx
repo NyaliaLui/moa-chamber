@@ -7,44 +7,54 @@ import { WixImage } from '@app/constants';
 
 const Hero = ({ image }: { image: WixImage }) => {
   return (
-    <>
-      <div className="px-[5%] container">
-        <div className="grid auto-cols-fr grid-cols-1 border lg:grid-cols-2 bg-gray-100 border-gray-300">
-          <div className="flex text-2xl flex-col justify-center p-8 md:p-12">
-            <h1 className="mb-5 font-bold md:mb-6">
-              Empowering businesses in Meriden and Ozawkie
-            </h1>
-            <p className="text-xlg">
-              We connect local entrepreneurs and support economic growth. Join
-              our community and unlock opportunities for your business.
-            </p>
-            <div className="mt-6 flex flex-col gap-4 md:mt-8 md:flex-row md:items-center">
-              <Button size="lg" className="text-white!" href="/join">
-                Join Us
-              </Button>
-              <Button
-                color="dark"
-                size="lg"
-                outline
-                className="hover:text-white!"
-                href="/about"
-              >
-                Who we are
-              </Button>
-            </div>
-          </div>
-          <div className="flex items-center justify-center">
-            <Image
-              src={image.url}
-              className="w-full object-cover"
-              alt="Hero image"
-              width={image.width}
-              height={image.height}
-            />
+    <div className="relative w-full h-dvh">
+      {/* Background Image - Full Width */}
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          src={image.url}
+          className="w-full h-full object-cover"
+          alt="Hero image"
+          width={image.width}
+          height={image.height}
+          priority
+        />
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+
+      {/* Content - Centered */}
+      <div className="relative h-full flex items-center justify-center px-4 sm:px-8 pt-5 lg:pt-0">
+        <div className="text-center max-w-4xl mx-auto">
+          <h1 className="mb-6 md:mb-8 font-bold text-4xl md:text-5xl lg:text-6xl text-white">
+            Empowering businesses in Meriden and Ozawkie
+          </h1>
+          <p className="text-xl md:text-2xl lg:text-3xl text-white mb-8 md:mb-10">
+            We connect local entrepreneurs and support economic growth. Join our
+            community and unlock opportunities for your business.
+          </p>
+
+          {/* Buttons - Row with Even Spacing */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center sm:gap-6">
+            <Button
+              size="lg"
+              className="text-white! w-full sm:w-auto"
+              href="/join"
+            >
+              Join Us
+            </Button>
+            <Button
+              color="dark"
+              size="lg"
+              outline
+              className="text-white border-white hover:text-black! hover:bg-white w-full sm:w-auto"
+              href="/about"
+            >
+              Who we are
+            </Button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

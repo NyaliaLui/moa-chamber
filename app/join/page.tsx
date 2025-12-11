@@ -7,16 +7,39 @@ import BenefitCard from '@app/components/Join/BenefitCard';
 import MembershipForm from '@app/components/Join/MembershipForm';
 
 export default function Join() {
+  const contactInfo = [
+    {
+      icon: BiEnvelope,
+      title: 'Email',
+      value: 'meridenozawkieareachamber@gmail.com',
+      isLink: true,
+      href: 'mailto:meridenozawkieareachamber@gmail.com',
+    },
+    {
+      icon: BiPhone,
+      title: 'Phone',
+      value: '(785) 817-5979',
+      isLink: false,
+    },
+    {
+      icon: BiMap,
+      title: 'Office',
+      value: '3675 74th St, Meriden, KS 66512',
+      isLink: true,
+      href: 'https://maps.app.goo.gl/8A8siHDuCAgQYXvP9',
+    },
+  ];
+
   return (
-    <section className="px-[5%] mt-16">
-      <div className="container">
+    <section className="w-full py-16 bg-[#1a56db]">
+      <div className="container px-[5%] mx-auto">
         <div className="flex flex-col items-start">
           <div className="mx-auto mb-6 max-w-lg md:mb-9 lg:mb-10">
             <div>
-              <h2 className="mb-5 text-center text-xl md:text-3xl font-bold md:mb-6">
+              <h2 className="mb-5 text-center text-xl md:text-3xl font-bold md:mb-6 text-white">
                 Grow your business
               </h2>
-              <p className="text-center text-base md:text-lg">
+              <p className="text-center text-base md:text-lg text-white">
                 Join the Meriden/Ozawkie Area Chamber of Commerce and unlock
                 powerful opportunities for local business success
               </p>
@@ -47,50 +70,44 @@ export default function Join() {
         </div>
       </div>
       <MembershipForm />
-      <div className="container">
+      <div>
         <div className="rb-12 mx-auto mb-12 flex max-w-lg flex-col justify-center text-center md:mb-18 lg:mb-20">
-          <h2 className="rb-5 mb-5 text-lg md:text-3xl font-bold md:mb-6">
+          <h2 className="rb-5 mb-5 text-lg md:text-3xl font-bold md:mb-6 text-white">
             Questions?
           </h2>
-          <p className="text-base md:text-lg">
+          <p className="text-base md:text-lg text-white">
             We are here to answer your membership questions
           </p>
         </div>
         <div className="grid auto-cols-fr grid-cols-1 items-center gap-x-12 gap-y-12 md:grid-cols-3 md:gap-y-16">
-          <div className="flex flex-col items-center justify-start text-center">
-            <div className="mb-5 lg:mb-6">
-              <BiEnvelope className="size-12" />
-            </div>
-            <h3 className="mb-3 text-lg font-bold leading-[1.4] md:text-xl lg:mb-4">
-              Email
-            </h3>
-            <Link
-              href="mailto:meridenozawkieareachamber@gmail.com"
-              className="text-sm md:text-base"
-            >
-              meridenozawkieareachamber@gmail.com
-            </Link>
-          </div>
-          <div className="flex flex-col items-center justify-start text-center">
-            <div className="mb-5 lg:mb-6">
-              <BiPhone className="size-12" />
-            </div>
-            <h3 className="mb-3 text-lg font-bold leading-[1.4] md:text-xl lg:mb-4">
-              Phone
-            </h3>
-            <p>(785) 817-5979</p>
-          </div>
-          <div className="flex flex-col items-center justify-start text-center">
-            <div className="mb-5 lg:mb-6">
-              <BiMap className="size-12" />
-            </div>
-            <h3 className="mb-3 text-lg font-bold leading-[1.4] md:text-xl lg:mb-4">
-              Office
-            </h3>
-            <Link href="https://maps.app.goo.gl/8A8siHDuCAgQYXvP9">
-              3675 74th St, Meriden, KS 66512
-            </Link>
-          </div>
+          {contactInfo.map((contact, index) => {
+            const Icon = contact.icon;
+            return (
+              <div
+                key={index}
+                className="flex flex-col items-center justify-start text-center"
+              >
+                <div className="mb-5 lg:mb-6">
+                  <Icon className="size-12 text-white" />
+                </div>
+                <h3 className="mb-3 text-lg font-bold leading-[1.4] md:text-xl lg:mb-4 text-white">
+                  {contact.title}
+                </h3>
+                {contact.isLink ? (
+                  <Link
+                    href={contact.href!}
+                    className="text-sm md:text-base text-white hover:text-gray-200 transition-colors"
+                  >
+                    {contact.value}
+                  </Link>
+                ) : (
+                  <p className="text-sm md:text-base text-white">
+                    {contact.value}
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
