@@ -149,3 +149,5 @@ export const DEFAULTS = {
 };
 
 export const DEFAULT_TARGET_EMAIL = 'luinyalia@gmail.com';
+
+export const DEFAULT_TESTIMONIAL_STARS = 5;
