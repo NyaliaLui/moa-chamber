@@ -22,10 +22,12 @@ export default function Calendar() {
 
   return (
     <>
-      <section className="px-[5%] mt-16">
+      <section className="px-[5%] py-16 bg-[#1a56db]">
         <div className="container mx-auto max-w-lg text-center">
-          <h1 className="mb-5 text-2xl font-bold md:mb-6">Chamber Calendar</h1>
-          <p className="text-lg">
+          <h1 className="mb-5 text-2xl font-bold md:mb-6 text-white">
+            Chamber Calendar
+          </h1>
+          <p className="text-lg text-white">
             Discover opportunities that drive business growth and community
             engagement.
           </p>
