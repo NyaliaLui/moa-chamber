@@ -1,6 +1,7 @@
 import './globals.css';
 import Footer from '@app/components/Layout/Footer';
 import Header from '@app/components/Layout/Header';
+import { ICO_IMAGE } from '@app/constants';
 
 /**
  * Using force dynamic so changes in business assets (e.g. services) are immediately reflected.
@@ -16,13 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>MOA Chamber</title>
+        <title>Promoting economic growth and a progressive community</title>
         <meta
           name="description"
-          content="Promoting economic growth and a professive community"
+          content="Promoting economic growth and a progressive community"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="https://www.wix.com/favicon.ico" />
+        <link rel="icon" href={ICO_IMAGE.outline.light} />
       </head>
       <body>
         {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
