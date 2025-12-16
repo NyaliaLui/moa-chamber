@@ -23,6 +23,15 @@ export const LOGO_IMAGE = {
   height: 96,
 };
 
+export const ICO_IMAGE = {
+  outline: {
+    light: '/images/MOA-Logo-Light-Outline.ico',
+    dark: '/images/MOA-Logo-Dark-Outline.ico',
+  },
+  width: 32,
+  height: 32,
+};
+
 export const SVG_ICONS = {
   megaphone: { id: '1', url: '/images/megaphone.svg', width: 16, height: 16 },
   personPlus: {
