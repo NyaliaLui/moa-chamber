@@ -29,11 +29,11 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
           <>
             <Header />
-            <main className="min-h-[600px]">{children}</main>
+            <main className="min-h-150">{children}</main>
             <Footer />
           </>
         ) : (
-          <div className="min-h-[600px] max-w-5xl mx-auto p-5">
+          <div className="min-h-150 max-w-5xl mx-auto p-5">
             Page not available. Please add an environment variable called
             NEXT_PUBLIC_WIX_CLIENT_ID, containing the client ID, to your
             deployment provider.
