@@ -116,7 +116,7 @@ function Header() {
             isMenuOpen
               ? 'max-lg:w-10/12 max-lg:opacity-100'
               : 'max-lg:w-0 max-lg:opacity-0'
-          } lg:hidden transition-all duration-500 ease-in-out overflow-hidden fixed animate-sideways-once h-screen bg-[#0e2647] pt-24 z-40 top-0 right-0`}
+          } lg:hidden transition-all duration-500 ease-in-out overflow-scroll fixed animate-sideways-once h-screen bg-[#0e2647] pt-24 z-40 top-0 right-0`}
         >
           <ul className="flex flex-col items-center gap-10">
             {/* Page Links */}
