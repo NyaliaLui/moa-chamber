@@ -34,9 +34,7 @@ export default function RootLayout({
           </>
         ) : (
           <div className="min-h-150 max-w-5xl mx-auto p-5">
-            Page not available. Please add an environment variable called
-            NEXT_PUBLIC_WIX_CLIENT_ID, containing the client ID, to your
-            deployment provider.
+            Page not available. There was a problem connecting to Wix.
           </div>
         )}
       </body>
