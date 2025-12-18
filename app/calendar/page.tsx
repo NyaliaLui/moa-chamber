@@ -3,7 +3,6 @@
 import CTA from '@app/components/CTA';
 import { useWixCalendar } from '@app/hooks/Wix';
 import LoadingState from '@app/components/LoadingState';
-import ErrorState from '@app/components/ErrorState';
 
 export default function Calendar() {
   const { data: calendar, isLoading, error } = useWixCalendar();
@@ -13,11 +12,11 @@ export default function Calendar() {
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    throw error;
   }
 
   if (!calendar) {
-    return <ErrorState error={new Error('calendar is undefined')} />;
+    throw new Error('calendar is undefined');
   }
 
   return (

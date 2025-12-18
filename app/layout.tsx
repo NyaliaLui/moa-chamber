@@ -33,9 +33,16 @@ export default function RootLayout({
             <Footer />
           </>
         ) : (
-          <div className="min-h-150 max-w-5xl mx-auto p-5">
-            Page not available. There was a problem connecting to Wix.
-          </div>
+          <section className="w-full h-dvh flex items-center justify-center bg-[#1a56db]">
+            <div className="container mx-auto text-center">
+              <h1 className="text-4xl font-bold text-white mb-4">
+                Something went wrong
+              </h1>
+              <p className="text-lg text-white mb-6">
+                There was a problem connecting to Wix
+              </p>
+            </div>
+          </section>
         )}
       </body>
     </html>

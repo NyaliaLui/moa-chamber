@@ -13,7 +13,6 @@ import {
 } from '@app/hooks/Wix';
 
 import LoadingState from '@app/components/LoadingState';
-import ErrorState from '@app/components/ErrorState';
 
 export default function Home() {
   const {
@@ -47,11 +46,11 @@ export default function Home() {
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    throw error;
   }
 
   if (!heroImage || !highlightData || !benefitsData || !testimonialsData) {
-    return <ErrorState error={new Error('home page data is undefined')} />;
+    throw new Error('home page data is undefined');
   }
 
   return (

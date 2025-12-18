@@ -8,7 +8,6 @@ import testIds from '@app/test-ids';
 import { useWixMembers } from '@app/hooks/Wix';
 import { DEFAULTS } from '@app/constants';
 import LoadingState from '@app/components/LoadingState';
-import ErrorState from '@app/components/ErrorState';
 
 export default function Member({ params }: any) {
   const { data: members, isLoading, error } = useWixMembers();
@@ -19,11 +18,11 @@ export default function Member({ params }: any) {
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    throw error;
   }
 
   if (!members) {
-    return <ErrorState error={new Error('members are undefined')} />;
+    throw new Error('members are undefined');
   }
 
   let member = members.filter((item) => item.slug === slug).pop();
