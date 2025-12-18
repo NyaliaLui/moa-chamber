@@ -44,7 +44,7 @@ export default function CTA() {
             outline
             data-testid={testIds.CTA.APPLY_BTN}
             href="/join"
-            className="text-white! border-white hover:bg-white hover:text-black!"
+            className="text-white! hover:text-black! border-white! hover:border-white! hover:bg-white shadow-none!"
           >
             Apply now
           </Button>

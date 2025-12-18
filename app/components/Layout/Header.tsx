@@ -71,7 +71,7 @@ function Header() {
               as="a"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white border-white hover:text-black! hover:bg-white"
+              className="text-white! hover:text-black! border-white! hover:border-white! hover:bg-white shadow-none!"
             >
               Pay Fees
             </Button>
@@ -144,7 +144,7 @@ function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
-                className="text-white border-white hover:text-black! hover:bg-white"
+                className="text-white! hover:text-black! border-white! hover:border-white! hover:bg-white shadow-none!"
               >
                 Pay Fees
               </Button>

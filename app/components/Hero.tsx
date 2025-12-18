@@ -46,7 +46,7 @@ const Hero = ({ image }: { image: WixImage }) => {
               color="dark"
               size="lg"
               outline
-              className="text-white border-white hover:text-black! hover:bg-white w-full sm:w-auto"
+              className="text-white! hover:text-black! border-white! hover:border-white! hover:bg-white shadow-none! w-full sm:w-auto"
               href="/about"
             >
               Who we are
