@@ -9,7 +9,6 @@ import {
 } from '@app/hooks/Wix';
 import testIds from '@app/test-ids';
 import LoadingState from '@app/components/LoadingState';
-import ErrorState from '@app/components/ErrorState';
 
 export default function Resources() {
   const {
@@ -31,11 +30,11 @@ export default function Resources() {
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    throw error;
   }
 
   if (!cultureResources || !businessResources) {
-    return <ErrorState error={new Error('resources are undefined')} />;
+    throw new Error('resources are undefined');
   }
 
   return (

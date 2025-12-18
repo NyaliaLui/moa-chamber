@@ -7,7 +7,6 @@ import { useWixCta } from '@app/hooks/Wix';
 import testIds from '@app/test-ids';
 
 import LoadingState from '@app/components/LoadingState';
-import ErrorState from '@app/components/ErrorState';
 
 export default function CTA() {
   const { data: ctaImage, isLoading, error } = useWixCta();
@@ -17,11 +16,11 @@ export default function CTA() {
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    throw error;
   }
 
   if (!ctaImage) {
-    return <ErrorState error={new Error('CTA image is undefined')} />;
+    throw new Error('CTA image is undefined');
   }
 
   return (

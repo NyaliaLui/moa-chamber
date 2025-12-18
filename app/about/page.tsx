@@ -6,7 +6,6 @@ import CTA from '@app/components/CTA';
 import testIds from '@app/test-ids';
 import { useWixTeam, useWixBoardMembers } from '@app/hooks/Wix';
 import LoadingState from '@app/components/LoadingState';
-import ErrorState from '@app/components/ErrorState';
 
 export default function About() {
   const { data: team, isLoading: teamLoading, error: teamError } = useWixTeam();
@@ -24,11 +23,11 @@ export default function About() {
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    throw error;
   }
 
   if (!team || !boardMembers) {
-    return <ErrorState error={new Error('collections are undefined')} />;
+    throw new Error('collections are undefined');
   }
 
   return (

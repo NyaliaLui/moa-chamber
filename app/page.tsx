@@ -13,7 +13,6 @@ import {
 } from '@app/hooks/Wix';
 
 import LoadingState from '@app/components/LoadingState';
-import ErrorState from '@app/components/ErrorState';
 
 export default function Home() {
   const {

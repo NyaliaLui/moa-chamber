@@ -8,7 +8,6 @@ import CTA from '@app/components/CTA';
 import MemberCard from '@app/components/Directory/MemberCard';
 import { useWixMemberCards } from '@app/hooks/Wix';
 import LoadingState from '@app/components/LoadingState';
-import ErrorState from '@app/components/ErrorState';
 
 const MEMBERS_PER_PAGE = 6;
 
@@ -21,16 +20,11 @@ export default function Directory() {
   }
 
   if (error) {
-    return <ErrorState error={error} className="px-[5%]" />;
+    throw error;
   }
 
   if (!memberCards) {
-    return (
-      <ErrorState
-        error={new Error('member cards are undefined')}
-        className="px-[5%]"
-      />
-    );
+    throw new Error('member cards are undefined');
   }
 
   const displayedMembers = memberCards.slice(0, displayCount);
