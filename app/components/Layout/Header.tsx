@@ -53,7 +53,7 @@ function Header() {
               <li key={href}>
                 <Link
                   href={href}
-                  className="text-sm lg:text-[15px] leading-5.5 transition-colors text-white hover:text-gray-200"
+                  className="text-xs xl:text-base leading-5.5 transition-colors text-white hover:text-gray-200"
                 >
                   {label}
                 </Link>
