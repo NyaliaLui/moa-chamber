@@ -62,7 +62,7 @@ const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
             color="dark"
             size="lg"
             outline
-            className="text-white! border-white hover:bg-white hover:text-black!"
+            className="text-white! hover:text-black! border-white! hover:border-white! hover:bg-white shadow-none!"
             data-testid={testIds.BENEFITS.JOIN_BTN}
           >
             Join the chamber

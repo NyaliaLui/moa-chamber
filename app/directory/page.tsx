@@ -73,7 +73,7 @@ export default function Directory() {
                 size="lg"
                 outline
                 onClick={handleLoadMore}
-                className="text-white border-white hover:text-black! hover:bg-white"
+                className="text-white! hover:text-black! border-white! hover:border-white! hover:bg-white shadow-none!"
               >
                 Load more
               </Button>
