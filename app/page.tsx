@@ -47,11 +47,11 @@ export default function Home() {
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    throw error;
   }
 
   if (!heroImage || !highlightData || !benefitsData || !testimonialsData) {
-    return <ErrorState error={new Error('home page data is undefined')} />;
+    throw new Error('home page data is undefined');
   }
 
   return (
