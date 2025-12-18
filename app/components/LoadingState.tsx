@@ -1,21 +1,18 @@
 import React from 'react';
 import testIds from '@app/test-ids';
 
-interface LoadingStateProps {
-  className?: string;
-}
-
-export default function LoadingState({
-  className = 'px-[5%] mt-16',
-}: LoadingStateProps) {
+export default function LoadingState() {
   return (
     <section
-      className={className}
+      className="w-full h-dvh flex items-center justify-center bg-[#1a56db]"
       data-testid={testIds.LOADING_STATE.CONTAINER}
     >
       <div className="container mx-auto text-center">
-        <p className="text-lg" data-testid={testIds.LOADING_STATE.TEXT}>
-          Loading...
+        <p
+          className="text-lg text-white mb-6"
+          data-testid={testIds.LOADING_STATE.TEXT}
+        >
+          Loading ...
         </p>
       </div>
     </section>
