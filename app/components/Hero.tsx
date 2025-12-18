@@ -23,12 +23,12 @@ const Hero = ({ image }: { image: WixImage }) => {
       </div>
 
       {/* Content - Centered */}
-      <div className="relative h-full flex items-center justify-center px-4 sm:px-8 pt-5 lg:pt-0">
+      <div className="relative h-full flex items-center justify-center px-4 sm:px-8 pt-5 max-lg:landscape:pt-20 max-lg:landscape:pb-2 lg:pt-0">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="mb-6 md:mb-8 font-bold text-4xl md:text-5xl lg:text-6xl text-white">
+          <h1 className="mb-6 lg:mb-8 font-bold text-4xl lg:text-5xl xl:text-6xl text-white">
             Empowering businesses in Meriden and Ozawkie
           </h1>
-          <p className="text-xl md:text-2xl lg:text-3xl text-white mb-8 md:mb-10">
+          <p className="text-xl lg:text-2xl xl:text-3xl text-white mb-8 lg:mb-10">
             We connect local entrepreneurs and support economic growth. Join our
             community and unlock opportunities for your business.
           </p>

@@ -45,15 +45,15 @@ function Header() {
           <Logo enableLightOutline={true} />
         </Link>
 
-        {/* Desktop Navigation - md and up */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8 flex-1 justify-between ml-8">
+        {/* Desktop Navigation - lg and up */}
+        <nav className="hidden lg:flex items-center gap-6 lg:gap-8 flex-1 justify-between ml-8">
           {/* Page Links */}
           <ul className="flex items-center gap-4 lg:gap-6">
             {NAVBAR_ITEMS.map(({ href, label }) => (
               <li key={href}>
                 <Link
                   href={href}
-                  className="text-sm lg:text-[15px] leading-[22px] transition-colors text-white hover:text-gray-200"
+                  className="text-xs xl:text-base leading-5.5 transition-colors text-white hover:text-gray-200"
                 >
                   {label}
                 </Link>
@@ -89,7 +89,7 @@ function Header() {
 
         {/* Mobile Hamburger Button */}
         <button
-          className="md:hidden relative z-50 p-3"
+          className="lg:hidden relative z-50 p-3"
           onClick={toggleMenu}
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
@@ -114,9 +114,9 @@ function Header() {
         <nav
           className={`${
             isMenuOpen
-              ? 'max-md:w-full max-md:opacity-100'
-              : 'max-md:w-0 max-md:opacity-0'
-          } md:hidden transition-all duration-500 ease-in-out overflow-hidden fixed animate-sideways-once h-screen bg-[#0e2647] pt-24 z-40 top-0 right-0`}
+              ? 'max-lg:w-10/12 max-lg:opacity-100'
+              : 'max-lg:w-0 max-lg:opacity-0'
+          } lg:hidden transition-all duration-500 ease-in-out overflow-scroll fixed animate-sideways-once h-screen bg-[#0e2647] pt-24 z-40 top-0 right-0`}
         >
           <ul className="flex flex-col items-center gap-10">
             {/* Page Links */}
@@ -124,7 +124,7 @@ function Header() {
               <li key={href} className="relative">
                 <Link
                   href={href}
-                  className="text-sm leading-[22px] transition-colors text-white hover:text-gray-200"
+                  className="text-sm leading-5.5 transition-colors text-white hover:text-gray-200"
                   onClick={closeMenu}
                 >
                   {label}
