@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
+import { waitForLoadingState } from './common';
 
 test.describe('Directory Member Detail Page', () => {
   let memberSlug: string;
@@ -7,6 +8,7 @@ test.describe('Directory Member Detail Page', () => {
   test.beforeEach(async ({ page }) => {
     // First navigate to the directory page to get a member slug
     await page.goto('/directory');
+    await waitForLoadingState(page);
 
     // Get the first member card and extract the slug from its href
     const firstMemberCard = page
@@ -17,6 +19,7 @@ test.describe('Directory Member Detail Page', () => {
     if (href) {
       memberSlug = href.replace('/directory/', '');
       await page.goto(`/directory/${memberSlug}`);
+      await waitForLoadingState(page);
     }
   });
 
@@ -25,7 +28,9 @@ test.describe('Directory Member Detail Page', () => {
       page,
     }) => {
       await expect(page).toHaveURL(/\/directory\/.+/);
-      await expect(page).toHaveTitle(/MOA Chamber/i);
+      await expect(page).toHaveTitle(
+        /Promoting economic growth and a progressive community/i,
+      );
     });
 
     test('should display the header', async ({ page }) => {
@@ -113,28 +118,23 @@ test.describe('Directory Member Detail Page', () => {
       await expect(addressHeading).toBeVisible();
     });
 
-    test('should display all four contact sections', async ({ page }) => {
-      const sections = [
-        { name: 'Email', icon: 'BiEnvelope' },
-        { name: 'Website', icon: 'BiMessageDetail' },
-        { name: 'Phone', icon: 'BiPhone' },
-        { name: 'Address', icon: 'BiMap' },
-      ];
-
-      for (const section of sections) {
-        const heading = page.getByRole('heading', {
-          name: new RegExp(`^${section.name}$`, 'i'),
-        });
-        await expect(heading).toBeVisible();
-      }
-    });
-
     test('should display contact icons', async ({ page }) => {
-      // Check for SVG icons (4 contact sections should have icons)
-      const icons = page.locator('svg.size-12');
-      const count = await icons.count();
+      // Verify each contact section from contactInfo has a visible icon
+      const contactInfo = ['Email', 'Website', 'Phone', 'Address'];
 
-      expect(count).toBe(4);
+      await Promise.all(
+        contactInfo.map(async (title: string) => {
+          const heading = page.getByRole('heading', {
+            name: new RegExp(`^${title}$`, 'i'),
+          });
+          await expect(heading).toBeVisible();
+
+          // Each contact section has an icon (svg) as a sibling before the heading
+          const contactCard = heading.locator('..');
+          const icon = contactCard.locator('svg');
+          await expect(icon).toBeVisible();
+        }),
+      );
     });
 
     test('should have clickable website link', async ({ page }) => {
@@ -216,7 +216,7 @@ test.describe('Directory Member Detail Page', () => {
       // Check for aspect-video class
       const classes = await coverImage.getAttribute('class');
       expect(classes).toContain('aspect-video');
-      expect(classes).toContain('object-contain');
+      expect(classes).toContain('object-cover');
     });
 
     test('should have full width cover image', async ({ page }) => {

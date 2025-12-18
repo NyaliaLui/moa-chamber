@@ -20,6 +20,9 @@ const ids = {
     CONTAINER: 'team-page.container',
     TEAM_MEMBERS: 'team-page.team-members',
   },
+  CALENDAR: {
+    CONTAINER: 'calendar.container',
+  },
   RESOURCES: {
     CULTURE_BOX: 'culture-box',
     CONTAINER: 'community-resources-demo',
@@ -32,6 +35,9 @@ const ids = {
   },
   BENEFITS: {
     JOIN_BTN: 'benefits-join-btn',
+  },
+  TESTIMONIALS: {
+    CARD: 'testimonials.card',
   },
   LOADING_STATE: {
     CONTAINER: 'loading-state.container',

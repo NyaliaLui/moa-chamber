@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { BiSolidStar } from 'react-icons/bi';
 import { WixImage, DEFAULT_TESTIMONIAL_STARS } from '@app/constants';
+import testIds from '@app/test-ids';
 
 export interface Testimonial {
   id: string;
@@ -16,7 +17,10 @@ export interface Testimonial {
 
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   return (
-    <div className="flex w-full flex-col items-start justify-between border border-white/60 rounded-lg p-6 md:p-8">
+    <div
+      className="flex w-full flex-col items-start justify-between border border-white/60 rounded-lg p-6 md:p-8"
+      data-testid={testIds.TESTIMONIALS.CARD}
+    >
       <div className="rb-5 mb-5 md:mb-6">
         <div className="mb-5 flex md:mb-6">
           {Array.from({ length: DEFAULT_TESTIMONIAL_STARS }, (_, index) => (

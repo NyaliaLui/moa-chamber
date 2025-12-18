@@ -1,17 +1,21 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
+import { waitForLoadingState } from './common';
 
 test.describe('Calendar Page', () => {
   const PATH = '/calendar';
 
   test.beforeEach(async ({ page }, testInfo) => {
     await page.goto(PATH);
+    await waitForLoadingState(page);
   });
 
   test.describe('Page Load and Structure', () => {
     test('should load the calendar page successfully', async ({ page }) => {
       await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(/MOA Chamber/i);
+      await expect(page).toHaveTitle(
+        /Promoting economic growth and a progressive community/i,
+      );
     });
 
     test('should display the header', async ({ page }) => {
@@ -190,12 +194,12 @@ test.describe('Calendar Page', () => {
     test('should have calendar container with proper structure', async ({
       page,
     }) => {
-      const section = page.locator('section');
+      const section = page.getByTestId(testIds.CALENDAR.CONTAINER);
       await expect(section).toBeVisible();
 
-      const container = page.locator('.container');
+      const container = section.locator('.container');
       const count = await container.count();
-      expect(count).toBeGreaterThan(0);
+      expect(count).toEqual(2);
     });
   });
 

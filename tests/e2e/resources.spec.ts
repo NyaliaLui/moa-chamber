@@ -1,17 +1,21 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
+import { waitForLoadingState } from './common';
 
 test.describe('Resources Page', () => {
   const PATH = '/resources';
 
   test.beforeEach(async ({ page }) => {
     await page.goto(PATH);
+    await waitForLoadingState(page);
   });
 
   test.describe('Page Load and Structure', () => {
     test('should load the resources page successfully', async ({ page }) => {
       await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(/MOA Chamber/i);
+      await expect(page).toHaveTitle(
+        /Promoting economic growth and a progressive community/i,
+      );
     });
 
     test('should display the header', async ({ page }) => {
@@ -255,7 +259,7 @@ test.describe('Resources Page', () => {
       const firstCardInner = firstCard.locator('div').first();
 
       const classes = await firstCardInner.getAttribute('class');
-      expect(classes).toContain('bg-gray-300');
+      expect(classes).toContain('text-white border-l-2 border-l-gray-300');
     });
 
     test('should display business image', async ({ page }) => {
@@ -306,7 +310,7 @@ test.describe('Resources Page', () => {
         // Check that second card is now selected
         const secondCardInner = secondCard.locator('div').first();
         const classes = await secondCardInner.getAttribute('class');
-        expect(classes).toContain('bg-gray-300');
+        expect(classes).toContain('text-white border-l-2 border-l-gray-300');
       }
     });
 

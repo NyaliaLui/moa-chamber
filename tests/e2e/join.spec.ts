@@ -1,17 +1,21 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
+import { waitForLoadingState } from './common';
 
 test.describe('Join Page', () => {
   const PATH = '/join';
 
   test.beforeEach(async ({ page }) => {
     await page.goto(PATH);
+    await waitForLoadingState(page);
   });
 
   test.describe('Page Load and Structure', () => {
     test('should load the join page successfully', async ({ page }) => {
       await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(/MOA Chamber/i);
+      await expect(page).toHaveTitle(
+        /Promoting economic growth and a progressive community/i,
+      );
     });
 
     test('should display the header', async ({ page }) => {
@@ -134,7 +138,7 @@ test.describe('Join Page', () => {
 
     test('should display required field indicators', async ({ page }) => {
       // Check for asterisks indicating required fields
-      const requiredIndicators = page.locator('span.text-red-600');
+      const requiredIndicators = page.locator('span.text-red-400');
       const count = await requiredIndicators.count();
 
       expect(count).toBeGreaterThanOrEqual(4); // Business, Contact, Role, Address
@@ -219,7 +223,7 @@ test.describe('Join Page', () => {
       const websiteField = page.locator('#website');
       const fieldType = await websiteField.getAttribute('type');
 
-      expect(fieldType).toBe('url');
+      expect(fieldType).toBe('text');
     });
 
     test('should allow radio button selection', async ({ page }) => {

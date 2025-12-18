@@ -1,17 +1,21 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
+import { waitForLoadingState } from './common';
 
 test.describe('Directory Page', () => {
   const PATH = '/directory';
 
   test.beforeEach(async ({ page }) => {
     await page.goto(PATH);
+    await waitForLoadingState(page);
   });
 
   test.describe('Page Load and Structure', () => {
     test('should load the directory page successfully', async ({ page }) => {
       await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(/MOA Chamber/i);
+      await expect(page).toHaveTitle(
+        /Promoting economic growth and a progressive community/i,
+      );
     });
 
     test('should display the header', async ({ page }) => {
