@@ -16,7 +16,7 @@ export default function Directory() {
   const [displayCount, setDisplayCount] = useState(MEMBERS_PER_PAGE);
 
   if (isLoading) {
-    return <LoadingState className="px-[5%]" />;
+    return <LoadingState />;
   }
 
   if (error) {

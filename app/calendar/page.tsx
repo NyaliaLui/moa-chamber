@@ -3,6 +3,7 @@
 import CTA from '@app/components/CTA';
 import { useWixCalendar } from '@app/hooks/Wix';
 import LoadingState from '@app/components/LoadingState';
+import testIds from '@app/test-ids';
 
 export default function Calendar() {
   const { data: calendar, isLoading, error } = useWixCalendar();
@@ -21,7 +22,10 @@ export default function Calendar() {
 
   return (
     <>
-      <section className="px-[5%] py-16 bg-[#1a56db]">
+      <section
+        className="px-[5%] py-16 bg-[#1a56db]"
+        data-testid={testIds.CALENDAR.CONTAINER}
+      >
         <div className="container mx-auto max-w-lg text-center">
           <h1 className="mb-5 text-2xl font-bold md:mb-6 text-white">
             Chamber Calendar

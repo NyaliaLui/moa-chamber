@@ -13,24 +13,16 @@ describe('LoadingState', () => {
 
     expect(container).toBeInTheDocument();
     expect(loadingText).toBeInTheDocument();
-    expect(loadingText).toHaveTextContent('Loading...');
+    expect(loadingText).toHaveTextContent('Loading ...');
   });
 
   it('renders with default className', () => {
     render(<LoadingState />);
 
     const container = screen.getByTestId(testIds.LOADING_STATE.CONTAINER);
-    expect(container).toHaveClass('px-[5%]');
-    expect(container).toHaveClass('mt-16');
-  });
-
-  it('renders with custom className', () => {
-    render(<LoadingState className="custom-class" />);
-
-    const container = screen.getByTestId(testIds.LOADING_STATE.CONTAINER);
-    expect(container).toHaveClass('custom-class');
-    expect(container).not.toHaveClass('px-[5%]');
-    expect(container).not.toHaveClass('mt-16');
+    expect(container).toHaveClass(
+      'w-full h-dvh flex items-center justify-center bg-[#1a56db]',
+    );
   });
 
   it('renders loading text with correct styling', () => {
@@ -38,12 +30,5 @@ describe('LoadingState', () => {
 
     const loadingText = screen.getByTestId(testIds.LOADING_STATE.TEXT);
     expect(loadingText).toHaveClass('text-lg');
-  });
-
-  it('renders loading text content correctly', () => {
-    render(<LoadingState />);
-
-    const loadingText = screen.getByTestId(testIds.LOADING_STATE.TEXT);
-    expect(loadingText).toHaveTextContent('Loading...');
   });
 });

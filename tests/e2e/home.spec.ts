@@ -1,17 +1,21 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
+import { waitForLoadingState } from './common';
 
 test.describe('Home Page', () => {
   const PATH = '/';
 
   test.beforeEach(async ({ page }) => {
     await page.goto(PATH);
+    await waitForLoadingState(page);
   });
 
   test.describe('Page Load and Structure', () => {
     test('should load the home page successfully', async ({ page }) => {
       await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(/MOA Chamber/i);
+      await expect(page).toHaveTitle(
+        /Promoting economic growth and a progressive community/i,
+      );
     });
 
     test('should display the header', async ({ page }) => {
@@ -129,11 +133,11 @@ test.describe('Home Page', () => {
   });
 
   test.describe('Testimonials Section', () => {
-    test('should display testimonials section', async ({ page }) => {
-      // Check that page has loaded multiple sections
-      const sections = page.locator('section');
-      const count = await sections.count();
-      expect(count).toBeGreaterThan(0);
+    test('should display testimonials cards', async ({ page }) => {
+      // Check that page has loaded multiple cards
+      const cards = page.getByTestId(testIds.TESTIMONIALS.CARD);
+      const count = await cards.count();
+      expect(count).toEqual(3);
     });
   });
 
