@@ -29,16 +29,16 @@ const CultureBox = ({
       className="grid auto-cols-fr grid-cols-1 border-b border-l border-r rounded-b-lg bg-gray-300 border-gray-300 lg:grid-cols-2 text-black"
       data-testid={testIds.RESOURCES.CULTURE_BOX}
     >
-      <div className="flex flex-col justify-center items-start p-8 md:p-12">
-        <h2 className="mb-3 md:mb-6 text-xl md:text-2xl font-bold">
+      <div className="flex flex-col justify-center items-start p-5 md:p-12">
+        <h2 className="mb-3 md:mb-6 text-lg lg:text-xl md:text-2xl font-bold">
           {heading}
         </h2>
-        <p className="mb-6 md:mb-8 text-base md:text-lg">{description}</p>
+        <p className="mb-6 md:mb-8 text-sm md:text-base">{description}</p>
         <div className="w-full flex justify-center md:justify-start">
           <Button
             size="lg"
             href={ctaLink}
-            className="bg-black text-white hover:bg-gray-800"
+            className="bg-black text-white hover:bg-gray-800 text-sm lg:text-base"
           >
             {ctaLabel}
           </Button>

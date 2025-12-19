@@ -51,7 +51,7 @@ export default function Resources() {
             <h2 className="mb-5 text-center text-3xl font-bold md:mb-6">
               Discover community treasures
             </h2>
-            <p className="text-center md:text-md">
+            <p className="text-center lg:text-base">
               Explore the hidden gems and landmarks that tell the story of
               Meriden and Ozawkie. Each location offers a unique glimpse into
               our community&apos;s spirit.
