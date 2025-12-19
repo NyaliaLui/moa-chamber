@@ -62,7 +62,7 @@ export default function MembershipForm() {
   }
 
   return (
-    <div className="container mx-auto max-w-lg py-20">
+    <div className="container mx-auto max-w-lg px-[5%] py-20 md:px-0">
       <div className="mx-auto mb-8 w-full text-center md:mb-10 lg:mb-12">
         <h2 className="rb-5 mb-5 text-lg md:text-3xl font-bold md:mb-6 text-white">
           Join us
