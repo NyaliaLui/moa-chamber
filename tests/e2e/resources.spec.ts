@@ -219,7 +219,7 @@ test.describe('Resources Page', () => {
 
       // Each card should have a name (h3)
       for (let i = 0; i < count; i++) {
-        const nameElement = businessCards.nth(i).locator('h3');
+        const nameElement = businessCards.nth(i).locator('h3').first();
         await expect(nameElement).toBeVisible();
       }
     });
@@ -245,7 +245,7 @@ test.describe('Resources Page', () => {
 
       // Each card should have a website link
       for (let i = 0; i < count; i++) {
-        const link = businessCards.nth(i).locator('a');
+        const link = businessCards.nth(i).locator('a').first();
         await expect(link).toBeVisible();
 
         const href = await link.getAttribute('href');
@@ -256,10 +256,10 @@ test.describe('Resources Page', () => {
     test('should have first business selected by default', async ({ page }) => {
       const businessCards = page.locator('.cursor-pointer');
       const firstCard = businessCards.first();
-      const firstCardInner = firstCard.locator('div').first();
+      // Find the BusinessCard component with selected styling (border-l-2)
+      const selectedCard = firstCard.locator('.border-l-2.border-l-gray-300');
 
-      const classes = await firstCardInner.getAttribute('class');
-      expect(classes).toContain('text-white border-l-2 border-l-gray-300');
+      await expect(selectedCard.first()).toBeVisible();
     });
 
     test('should display business image', async ({ page }) => {
@@ -307,17 +307,18 @@ test.describe('Resources Page', () => {
         // Wait for state to update
         await page.waitForTimeout(500);
 
-        // Check that second card is now selected
-        const secondCardInner = secondCard.locator('div').first();
-        const classes = await secondCardInner.getAttribute('class');
-        expect(classes).toContain('text-white border-l-2 border-l-gray-300');
+        // Check that second card is now selected (has border-l-2 styling)
+        const selectedCard = secondCard.locator(
+          '.border-l-2.border-l-gray-300',
+        );
+        await expect(selectedCard.first()).toBeVisible();
       }
     });
 
     test('should have website links that open in new tab', async ({ page }) => {
       const businessCards = page.locator('.cursor-pointer');
       const firstCard = businessCards.first();
-      const link = firstCard.locator('a');
+      const link = firstCard.locator('a').first();
 
       const target = await link.getAttribute('target');
       const rel = await link.getAttribute('rel');
@@ -340,7 +341,7 @@ test.describe('Resources Page', () => {
       const firstCard = businessCards.first();
 
       const classes = await firstCard.getAttribute('class');
-      expect(classes).toContain('hover:scale-105');
+      expect(classes).toContain('lg:hover:scale-105');
     });
   });
 

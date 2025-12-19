@@ -29,19 +29,14 @@ const mockBusinessesData: Business[] = [
 ];
 
 describe('HistoricalBusinesses', () => {
-  it('renders the HistoricalBusinesses component', () => {
-    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
-
-    mockBusinessesData.forEach((business: Business) => {
-      expect(screen.getByTestId(business.name)).toBeInTheDocument();
-    });
-  });
-
   it('renders all business cards', () => {
     render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
     mockBusinessesData.forEach((business: Business) => {
-      const card = screen.getByTestId(business.name);
-      expect(card).toBeInTheDocument();
+      const cards = screen.getAllByTestId(business.name);
+      expect(cards).toHaveLength(2);
+      cards.forEach((card: HTMLElement) => {
+        expect(card).toBeInTheDocument();
+      });
     });
   });
 
@@ -60,7 +55,11 @@ describe('HistoricalBusinesses', () => {
     render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
 
     mockBusinessesData.forEach((business: Business) => {
-      expect(screen.getByText(business.description)).toBeInTheDocument();
+      const cards = screen.getAllByText(business.description);
+      expect(cards).toHaveLength(2);
+      cards.forEach((card: HTMLElement) => {
+        expect(card).toBeInTheDocument();
+      });
     });
   });
 
@@ -68,9 +67,12 @@ describe('HistoricalBusinesses', () => {
     render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
 
     mockBusinessesData.forEach((business: Business) => {
-      const card = screen.getByTestId(business.name);
-      const link = card.querySelector('a');
-      expect(link).toHaveAttribute('href', business.website);
+      const cards = screen.getAllByTestId(business.name);
+      expect(cards).toHaveLength(2);
+      cards.forEach((card: HTMLElement) => {
+        const link = card.querySelector('a');
+        expect(link).toHaveAttribute('href', business.website);
+      });
     });
   });
 

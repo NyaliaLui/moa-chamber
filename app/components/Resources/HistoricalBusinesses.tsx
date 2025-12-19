@@ -38,14 +38,44 @@ const HistoricalBusinesses = ({
           <div
             key={index}
             onClick={() => setSelectedBusiness(business)}
-            className="cursor-pointer hover:scale-105"
+            className="cursor-pointer lg:hover:scale-105"
           >
-            <BusinessCard
-              name={business.name}
-              description={business.description}
-              href={business.website}
-              isSelected={selectedBusiness === business}
-            />
+            <div className="hidden lg:block">
+              <BusinessCard
+                name={business.name}
+                description={business.description}
+                href={business.website}
+                isSelected={selectedBusiness === business}
+              />
+            </div>
+            <div className="lg:hidden overflow-hidden">
+              <div
+                className={`grid transition-all duration-300 ease-in-out ${
+                  selectedBusiness === business
+                    ? 'grid-rows-[1fr] opacity-100'
+                    : 'grid-rows-[0fr] opacity-0'
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <BusinessCard
+                    name={business.name}
+                    description={business.description}
+                    href={business.website}
+                    isSelected={true}
+                  />
+                </div>
+              </div>
+              <div
+                className={`flex items-center gap-3 py-2 transition-all duration-300 ease-in-out ${
+                  selectedBusiness === business
+                    ? 'h-0 opacity-0 py-0'
+                    : 'h-auto opacity-100'
+                }`}
+              >
+                <span className="text-white text-xl font-light">+</span>
+                <div className="flex-1 h-[1.5px] bg-gray-300" />
+              </div>
+            </div>
           </div>
         ))}
       </div>

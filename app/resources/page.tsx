@@ -48,10 +48,10 @@ export default function Resources() {
           data-testid={testIds.RESOURCES.HEADING}
         >
           <div className="mx-auto mb-6 max-w-lg md:mb-9 lg:mb-10">
-            <h2 className="mb-5 text-center text-3xl font-bold md:mb-6">
+            <h2 className="mb-5 text-center text-lg lg:text-3xl font-bold md:mb-6">
               Discover community treasures
             </h2>
-            <p className="text-center md:text-md">
+            <p className="text-center text-sm lg:text-base">
               Explore the hidden gems and landmarks that tell the story of
               Meriden and Ozawkie. Each location offers a unique glimpse into
               our community&apos;s spirit.
@@ -66,10 +66,10 @@ export default function Resources() {
             className="mb-12 max-w-lg text-left md:mb-18 lg:mb-20"
             data-testid={testIds.RESOURCES.BUSINESSES_HEADING}
           >
-            <h1 className="rb-5 mb-5 text-3xl font-bold md:mb-6">
+            <h1 className="rb-5 mb-5 text-lg lg:text-3xl font-bold md:mb-6">
               Influencial businesses and organizations
             </h1>
-            <p className="md:text-md">
+            <p className="text-sm lg:text-base">
               Discover the establishments with a history of supporting our
               community.
             </p>
