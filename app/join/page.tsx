@@ -45,7 +45,7 @@ export default function Join() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 items-start gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-4">
+          <div className="grid grid-cols-1 items-start mx-auto gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-4">
             <BenefitCard
               key="join-benefit-1"
               message="Promote your business through Chamber activities"
@@ -79,7 +79,7 @@ export default function Join() {
             We are here to answer your membership questions
           </p>
         </div>
-        <div className="grid auto-cols-fr grid-cols-1 items-center gap-x-12 gap-y-12 md:grid-cols-3 md:gap-y-16">
+        <div className="grid auto-cols-fr grid-cols-1 items-center gap-x-12 gap-y-12 xl:grid-cols-3 xl:gap-y-16">
           {contactInfo.map((contact, index) => {
             const Icon = contact.icon;
             return (
