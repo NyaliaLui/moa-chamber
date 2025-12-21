@@ -548,6 +548,135 @@ describe('MembershipForm', () => {
     });
   });
 
+  describe('Pattern Validation', () => {
+    it('business name field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const businessField = screen.getByLabelText(/business name/i);
+      expect(businessField).toHaveAttribute('pattern');
+    });
+
+    it('business name field rejects invalid characters', () => {
+      render(<MembershipForm />);
+      const businessField = screen.getByLabelText(
+        /business name/i,
+      ) as HTMLInputElement;
+      const pattern = new RegExp(businessField.pattern);
+
+      // Valid inputs should pass
+      expect(pattern.test('Acme Corp')).toBe(true);
+      expect(pattern.test("Joe's Diner")).toBe(true);
+      expect(pattern.test('ABC & Co.')).toBe(true);
+      expect(pattern.test('Business #1')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('Business@Name')).toBe(false);
+      expect(pattern.test('Test!Corp')).toBe(false);
+      expect(pattern.test('Company$Inc')).toBe(false);
+      expect(pattern.test('Name<Script>')).toBe(false);
+    });
+
+    it('contact name field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const contactField = screen.getByLabelText(/contact name/i);
+      expect(contactField).toHaveAttribute('pattern');
+    });
+
+    it('contact name field rejects invalid characters', () => {
+      render(<MembershipForm />);
+      const contactField = screen.getByLabelText(
+        /contact name/i,
+      ) as HTMLInputElement;
+      const pattern = new RegExp(contactField.pattern);
+
+      // Valid inputs should pass
+      expect(pattern.test('John Doe')).toBe(true);
+      expect(pattern.test("Mary O'Brien")).toBe(true);
+      expect(pattern.test('Anna-Marie Smith')).toBe(true);
+      expect(pattern.test('Dr. Jane')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('John123')).toBe(false);
+      expect(pattern.test('Name@Email')).toBe(false);
+      expect(pattern.test('Test!')).toBe(false);
+      expect(pattern.test('User#1')).toBe(false);
+    });
+
+    it('address field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const addressField = screen.getByLabelText(/business address/i);
+      expect(addressField).toHaveAttribute('pattern');
+    });
+
+    it('address field rejects invalid characters', () => {
+      render(<MembershipForm />);
+      const addressField = screen.getByLabelText(
+        /business address/i,
+      ) as HTMLInputElement;
+      const pattern = new RegExp(addressField.pattern);
+
+      // Valid inputs should pass
+      expect(pattern.test('123 Main St.')).toBe(true);
+      expect(pattern.test('456 Oak Ave, Suite #5')).toBe(true);
+      expect(pattern.test('789 Pine Rd. Apt 2/B')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('123 Main St@')).toBe(false);
+      expect(pattern.test('Address!')).toBe(false);
+      expect(pattern.test('Test$Address')).toBe(false);
+      expect(pattern.test('<script>alert</script>')).toBe(false);
+    });
+
+    it('website field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const websiteField = screen.getByLabelText(/website/i);
+      expect(websiteField).toHaveAttribute('pattern');
+    });
+
+    it('website field rejects invalid URLs', () => {
+      render(<MembershipForm />);
+      const websiteField = screen.getByLabelText(/website/i) as HTMLInputElement;
+      const pattern = new RegExp(websiteField.pattern);
+
+      // Valid inputs should pass
+      expect(pattern.test('example.com')).toBe(true);
+      expect(pattern.test('https://example.com')).toBe(true);
+      expect(pattern.test('http://sub.example.org/path')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('not a url')).toBe(false);
+      expect(pattern.test('example')).toBe(false);
+      expect(pattern.test('ftp://example.com')).toBe(false);
+    });
+
+    it('referral field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const referralField = screen.getByLabelText(
+        /who can we thank for referring you/i,
+      );
+      expect(referralField).toHaveAttribute('pattern');
+    });
+
+    it('referral field rejects invalid characters', () => {
+      render(<MembershipForm />);
+      const referralField = screen.getByLabelText(
+        /who can we thank for referring you/i,
+      ) as HTMLInputElement;
+      const pattern = new RegExp(referralField.pattern);
+
+      // Valid inputs should pass (including empty string)
+      expect(pattern.test('')).toBe(true);
+      expect(pattern.test('Jane Doe')).toBe(true);
+      expect(pattern.test("Patrick O'Malley")).toBe(true);
+      expect(pattern.test('Mary-Jane Watson')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('John123')).toBe(false);
+      expect(pattern.test('Name@Email')).toBe(false);
+      expect(pattern.test('Test!')).toBe(false);
+      expect(pattern.test('User#1')).toBe(false);
+    });
+  });
+
   describe('Accessibility', () => {
     it('has proper form structure with form element', () => {
       const { container } = render(<MembershipForm />);

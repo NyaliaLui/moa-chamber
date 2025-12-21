@@ -89,6 +89,8 @@ export default function MembershipForm() {
             required
             disabled={isSubmitting}
             className="text-base lg:text-lg"
+            pattern="^[\w\s\-\.\,\&\'\#]+$"
+            title="Enter a valid business name (letters, numbers, spaces, and common punctuation)"
           />
         </div>
         <div className="items-center">
@@ -105,6 +107,8 @@ export default function MembershipForm() {
             required
             disabled={isSubmitting}
             className="text-base lg:text-lg"
+            pattern="^[a-zA-Z\s\-\'\.]+$"
+            title="Enter a valid name (letters, spaces, hyphens, and apostrophes)"
           />
         </div>
         <div>
@@ -161,6 +165,8 @@ export default function MembershipForm() {
             required
             disabled={isSubmitting}
             className="text-base lg:text-lg"
+            pattern="^[\w\s\-\.\,\#\/]+$"
+            title="Enter a valid address (letters, numbers, spaces, and common punctuation)"
           />
         </div>
         <div className="items-center">
@@ -177,6 +183,7 @@ export default function MembershipForm() {
             placeholder="(555) 555-5555"
             disabled={isSubmitting}
             className="text-base lg:text-lg"
+            title="Enter a valid phone number (e.g., (555) 555-5555)"
           />
         </div>
         <div className="items-center">
@@ -193,6 +200,7 @@ export default function MembershipForm() {
             placeholder="name@sample.com"
             disabled={isSubmitting}
             className="text-base lg:text-lg"
+            title="Enter a valid email address (e.g., name@sample.com)"
           />
         </div>
         <div className="items-center">
@@ -278,6 +286,8 @@ export default function MembershipForm() {
             placeholder="Jane Doe"
             disabled={isSubmitting}
             className="text-base lg:text-lg"
+            pattern="^[a-zA-Z\s\-\'\.]*$"
+            title="Enter a valid name (letters, spaces, hyphens, and apostrophes)"
           />
         </div>
         <div className="items-center">
