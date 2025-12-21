@@ -35,6 +35,7 @@ describe('MembershipForm', () => {
       expect(screen.getByLabelText(/business name/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/contact name/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/business address/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/number of employees/i)).toBeInTheDocument();
     });
 
     it('renders optional form fields', () => {
@@ -43,19 +44,25 @@ describe('MembershipForm', () => {
       expect(screen.getByLabelText(/phone number/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/^email$/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/website/i)).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/who can we thank for referring you/i),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/activity fund donation/i),
+      ).toBeInTheDocument();
     });
 
     it('renders contact role radio buttons', () => {
       render(<MembershipForm />);
 
-      expect(screen.getByLabelText(/owner/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/manager/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/^owner$/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/^manager$/i)).toBeInTheDocument();
     });
 
     it('has owner radio button checked by default', () => {
       render(<MembershipForm />);
 
-      const ownerRadio = screen.getByLabelText(/owner/i) as HTMLInputElement;
+      const ownerRadio = screen.getByLabelText(/^owner$/i) as HTMLInputElement;
       expect(ownerRadio.checked).toBe(true);
     });
 
@@ -104,8 +111,15 @@ describe('MembershipForm', () => {
     it('has required attribute on contact role', () => {
       render(<MembershipForm />);
 
-      const ownerRadio = screen.getByLabelText(/owner/i);
+      const ownerRadio = screen.getByLabelText(/^owner$/i);
       expect(ownerRadio).toBeRequired();
+    });
+
+    it('has required attribute on number of employees field', () => {
+      render(<MembershipForm />);
+
+      const employeesField = screen.getByLabelText(/number of employees/i);
+      expect(employeesField).toBeRequired();
     });
   });
 
@@ -124,6 +138,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main St',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '3');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -159,6 +174,15 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/website/i),
         'https://example.com',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '5');
+      await userEvent.type(
+        screen.getByLabelText(/who can we thank for referring you/i),
+        'Bob Smith',
+      );
+      await userEvent.type(
+        screen.getByLabelText(/activity fund donation/i),
+        '50',
+      );
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -172,6 +196,9 @@ describe('MembershipForm', () => {
         expect(formData.get('phone')).toBe('555-1234');
         expect(formData.get('email')).toBe('test@example.com');
         expect(formData.get('website')).toBe('https://example.com');
+        expect(formData.get('employees')).toBe('5');
+        expect(formData.get('referral')).toBe('Bob Smith');
+        expect(formData.get('donation')).toBe('50');
       });
     });
 
@@ -186,7 +213,8 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '789 Pine',
       );
-      await userEvent.click(screen.getByLabelText(/manager/i));
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '2');
+      await userEvent.click(screen.getByLabelText(/^manager$/i));
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -209,6 +237,7 @@ describe('MembershipForm', () => {
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/business address/i), 'Test');
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -229,6 +258,7 @@ describe('MembershipForm', () => {
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/business address/i), 'Test');
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -239,8 +269,13 @@ describe('MembershipForm', () => {
       expect(screen.getByLabelText(/phone number/i)).toBeDisabled();
       expect(screen.getByLabelText(/^email$/i)).toBeDisabled();
       expect(screen.getByLabelText(/website/i)).toBeDisabled();
-      expect(screen.getByLabelText(/owner/i)).toBeDisabled();
-      expect(screen.getByLabelText(/manager/i)).toBeDisabled();
+      expect(screen.getByLabelText(/number of employees/i)).toBeDisabled();
+      expect(
+        screen.getByLabelText(/who can we thank for referring you/i),
+      ).toBeDisabled();
+      expect(screen.getByLabelText(/activity fund donation/i)).toBeDisabled();
+      expect(screen.getByLabelText(/^owner$/i)).toBeDisabled();
+      expect(screen.getByLabelText(/^manager$/i)).toBeDisabled();
       expect(
         screen.getByRole('button', { name: /submitting/i }),
       ).toBeDisabled();
@@ -256,6 +291,7 @@ describe('MembershipForm', () => {
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/business address/i), 'Test');
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -281,6 +317,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -306,6 +343,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -332,6 +370,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -357,6 +396,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -382,6 +422,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -410,6 +451,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -437,6 +479,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -466,6 +509,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -488,6 +532,7 @@ describe('MembershipForm', () => {
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/business address/i), 'Test');
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -525,6 +570,13 @@ describe('MembershipForm', () => {
       expect(screen.getByLabelText(/phone number/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/^email$/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/website/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/number of employees/i)).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/who can we thank for referring you/i),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/activity fund donation/i),
+      ).toBeInTheDocument();
     });
 
     it('submit button has proper type attribute', () => {

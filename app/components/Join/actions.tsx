@@ -12,6 +12,18 @@ export async function submitMembershipForm(formData: FormData): Promise<void> {
   const phone = formData.get('phone') as string;
   const email = formData.get('email') as string;
   const website = formData.get('website') as string;
+  const employees = formData.get('employees') as string;
+  const referral = formData.get('referral') as string;
+  const donation = formData.get('donation') as string;
+
+  // Calculate monthly dues based on employee count
+  const employeeCount = parseInt(employees, 10);
+  let monthlyDues = '$30';
+  if (employeeCount >= 6) {
+    monthlyDues = '$90';
+  } else if (employeeCount >= 2) {
+    monthlyDues = '$60';
+  }
 
   // Construct email body
   const emailBody = `
@@ -24,6 +36,10 @@ Business Address: ${address}
 Phone Number: ${phone || 'Not provided'}
 Email: ${email || 'Not provided'}
 Website: ${website || 'Not provided'}
+Number of Employees: ${employees}
+Monthly Dues: ${monthlyDues}
+Referred By: ${referral || 'Not provided'}
+Activity Fund Donation: ${donation ? `$${donation}` : 'None'}
   `.trim();
 
   const { error } = await resend.emails.send({
