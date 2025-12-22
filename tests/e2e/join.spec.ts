@@ -109,6 +109,10 @@ test.describe('Join Page', () => {
       // Business address field
       const addressField = page.locator('#address');
       await expect(addressField).toBeVisible();
+
+      // Number of employees field
+      const employeesField = page.locator('#employees');
+      await expect(employeesField).toBeVisible();
     });
 
     test('should display all optional form fields', async ({ page }) => {
@@ -123,6 +127,14 @@ test.describe('Join Page', () => {
       // Website field
       const websiteField = page.locator('#website');
       await expect(websiteField).toBeVisible();
+
+      // Referral field
+      const referralField = page.locator('#referral');
+      await expect(referralField).toBeVisible();
+
+      // Donation field
+      const donationField = page.locator('#donation');
+      await expect(donationField).toBeVisible();
     });
 
     test('should display contact role radio buttons', async ({ page }) => {
@@ -141,7 +153,7 @@ test.describe('Join Page', () => {
       const requiredIndicators = page.locator('span.text-red-400');
       const count = await requiredIndicators.count();
 
-      expect(count).toBeGreaterThanOrEqual(4); // Business, Contact, Role, Address
+      expect(count).toBeGreaterThanOrEqual(5); // Business, Contact, Role, Address, Employees
     });
 
     test('should display submit button', async ({ page }) => {
@@ -205,6 +217,13 @@ test.describe('Join Page', () => {
       expect(isRequired).not.toBeNull();
     });
 
+    test('should require number of employees', async ({ page }) => {
+      const employeesField = page.locator('#employees');
+      const isRequired = await employeesField.getAttribute('required');
+
+      expect(isRequired).not.toBeNull();
+    });
+
     test('should validate email field type', async ({ page }) => {
       const emailField = page.locator('#email');
       const fieldType = await emailField.getAttribute('type');
@@ -248,6 +267,9 @@ test.describe('Join Page', () => {
       await page.locator('#phone').fill('(785) 555-1234');
       await page.locator('#email').fill('test@example.com');
       await page.locator('#website').fill('https://example.com');
+      await page.locator('#employees').fill('3');
+      await page.locator('#referral').fill('Jane Smith');
+      await page.locator('#donation').fill('25.00');
 
       // Verify values are filled
       await expect(page.locator('#business')).toHaveValue('Test Business');
@@ -258,6 +280,9 @@ test.describe('Join Page', () => {
       await expect(page.locator('#phone')).toHaveValue('(785) 555-1234');
       await expect(page.locator('#email')).toHaveValue('test@example.com');
       await expect(page.locator('#website')).toHaveValue('https://example.com');
+      await expect(page.locator('#employees')).toHaveValue('3');
+      await expect(page.locator('#referral')).toHaveValue('Jane Smith');
+      await expect(page.locator('#donation')).toHaveValue('25.00');
     });
 
     test('should disable form fields while submitting', async ({ page }) => {
@@ -265,6 +290,7 @@ test.describe('Join Page', () => {
       await page.locator('#business').fill('Test Business');
       await page.locator('#contact').fill('John Doe');
       await page.locator('#address').fill('123 Test St, Meriden, KS 66512');
+      await page.locator('#employees').fill('2');
 
       // Mock the form submission to take longer
       await page.route('**/api/**', async (route) => {

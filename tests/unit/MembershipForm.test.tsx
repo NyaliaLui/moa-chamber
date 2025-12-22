@@ -35,6 +35,7 @@ describe('MembershipForm', () => {
       expect(screen.getByLabelText(/business name/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/contact name/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/business address/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/number of employees/i)).toBeInTheDocument();
     });
 
     it('renders optional form fields', () => {
@@ -43,19 +44,25 @@ describe('MembershipForm', () => {
       expect(screen.getByLabelText(/phone number/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/^email$/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/website/i)).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/who can we thank for referring you/i),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/activity fund donation/i),
+      ).toBeInTheDocument();
     });
 
     it('renders contact role radio buttons', () => {
       render(<MembershipForm />);
 
-      expect(screen.getByLabelText(/owner/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/manager/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/^owner$/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/^manager$/i)).toBeInTheDocument();
     });
 
     it('has owner radio button checked by default', () => {
       render(<MembershipForm />);
 
-      const ownerRadio = screen.getByLabelText(/owner/i) as HTMLInputElement;
+      const ownerRadio = screen.getByLabelText(/^owner$/i) as HTMLInputElement;
       expect(ownerRadio.checked).toBe(true);
     });
 
@@ -104,8 +111,15 @@ describe('MembershipForm', () => {
     it('has required attribute on contact role', () => {
       render(<MembershipForm />);
 
-      const ownerRadio = screen.getByLabelText(/owner/i);
+      const ownerRadio = screen.getByLabelText(/^owner$/i);
       expect(ownerRadio).toBeRequired();
+    });
+
+    it('has required attribute on number of employees field', () => {
+      render(<MembershipForm />);
+
+      const employeesField = screen.getByLabelText(/number of employees/i);
+      expect(employeesField).toBeRequired();
     });
   });
 
@@ -124,6 +138,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main St',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '3');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -159,6 +174,15 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/website/i),
         'https://example.com',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '5');
+      await userEvent.type(
+        screen.getByLabelText(/who can we thank for referring you/i),
+        'Bob Smith',
+      );
+      await userEvent.type(
+        screen.getByLabelText(/activity fund donation/i),
+        '50',
+      );
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -172,6 +196,9 @@ describe('MembershipForm', () => {
         expect(formData.get('phone')).toBe('555-1234');
         expect(formData.get('email')).toBe('test@example.com');
         expect(formData.get('website')).toBe('https://example.com');
+        expect(formData.get('employees')).toBe('5');
+        expect(formData.get('referral')).toBe('Bob Smith');
+        expect(formData.get('donation')).toBe('50');
       });
     });
 
@@ -186,7 +213,8 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '789 Pine',
       );
-      await userEvent.click(screen.getByLabelText(/manager/i));
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '2');
+      await userEvent.click(screen.getByLabelText(/^manager$/i));
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -209,6 +237,7 @@ describe('MembershipForm', () => {
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/business address/i), 'Test');
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -229,6 +258,7 @@ describe('MembershipForm', () => {
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/business address/i), 'Test');
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -239,8 +269,13 @@ describe('MembershipForm', () => {
       expect(screen.getByLabelText(/phone number/i)).toBeDisabled();
       expect(screen.getByLabelText(/^email$/i)).toBeDisabled();
       expect(screen.getByLabelText(/website/i)).toBeDisabled();
-      expect(screen.getByLabelText(/owner/i)).toBeDisabled();
-      expect(screen.getByLabelText(/manager/i)).toBeDisabled();
+      expect(screen.getByLabelText(/number of employees/i)).toBeDisabled();
+      expect(
+        screen.getByLabelText(/who can we thank for referring you/i),
+      ).toBeDisabled();
+      expect(screen.getByLabelText(/activity fund donation/i)).toBeDisabled();
+      expect(screen.getByLabelText(/^owner$/i)).toBeDisabled();
+      expect(screen.getByLabelText(/^manager$/i)).toBeDisabled();
       expect(
         screen.getByRole('button', { name: /submitting/i }),
       ).toBeDisabled();
@@ -256,6 +291,7 @@ describe('MembershipForm', () => {
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/business address/i), 'Test');
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -281,6 +317,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -306,6 +343,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -332,6 +370,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -357,6 +396,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -382,6 +422,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -410,6 +451,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -437,6 +479,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -466,6 +509,7 @@ describe('MembershipForm', () => {
         screen.getByLabelText(/business address/i),
         '123 Main',
       );
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -488,6 +532,7 @@ describe('MembershipForm', () => {
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/business address/i), 'Test');
+      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
 
       const submitButton = screen.getByRole('button', { name: /submit/i });
       await userEvent.click(submitButton);
@@ -500,6 +545,135 @@ describe('MembershipForm', () => {
       });
 
       consoleErrorSpy.mockRestore();
+    });
+  });
+
+  describe('Pattern Validation', () => {
+    it('business name field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const businessField = screen.getByLabelText(/business name/i);
+      expect(businessField).toHaveAttribute('pattern');
+    });
+
+    it('business name field rejects invalid characters', () => {
+      render(<MembershipForm />);
+      const businessField = screen.getByLabelText(
+        /business name/i,
+      ) as HTMLInputElement;
+      const pattern = new RegExp(businessField.pattern);
+
+      // Valid inputs should pass
+      expect(pattern.test('Acme Corp')).toBe(true);
+      expect(pattern.test("Joe's Diner")).toBe(true);
+      expect(pattern.test('ABC & Co.')).toBe(true);
+      expect(pattern.test('Business #1')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('Business@Name')).toBe(false);
+      expect(pattern.test('Test!Corp')).toBe(false);
+      expect(pattern.test('Company$Inc')).toBe(false);
+      expect(pattern.test('Name<Script>')).toBe(false);
+    });
+
+    it('contact name field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const contactField = screen.getByLabelText(/contact name/i);
+      expect(contactField).toHaveAttribute('pattern');
+    });
+
+    it('contact name field rejects invalid characters', () => {
+      render(<MembershipForm />);
+      const contactField = screen.getByLabelText(
+        /contact name/i,
+      ) as HTMLInputElement;
+      const pattern = new RegExp(contactField.pattern);
+
+      // Valid inputs should pass
+      expect(pattern.test('John Doe')).toBe(true);
+      expect(pattern.test("Mary O'Brien")).toBe(true);
+      expect(pattern.test('Anna-Marie Smith')).toBe(true);
+      expect(pattern.test('Dr. Jane')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('John123')).toBe(false);
+      expect(pattern.test('Name@Email')).toBe(false);
+      expect(pattern.test('Test!')).toBe(false);
+      expect(pattern.test('User#1')).toBe(false);
+    });
+
+    it('address field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const addressField = screen.getByLabelText(/business address/i);
+      expect(addressField).toHaveAttribute('pattern');
+    });
+
+    it('address field rejects invalid characters', () => {
+      render(<MembershipForm />);
+      const addressField = screen.getByLabelText(
+        /business address/i,
+      ) as HTMLInputElement;
+      const pattern = new RegExp(addressField.pattern);
+
+      // Valid inputs should pass
+      expect(pattern.test('123 Main St.')).toBe(true);
+      expect(pattern.test('456 Oak Ave, Suite #5')).toBe(true);
+      expect(pattern.test('789 Pine Rd. Apt 2/B')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('123 Main St@')).toBe(false);
+      expect(pattern.test('Address!')).toBe(false);
+      expect(pattern.test('Test$Address')).toBe(false);
+      expect(pattern.test('<script>alert</script>')).toBe(false);
+    });
+
+    it('website field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const websiteField = screen.getByLabelText(/website/i);
+      expect(websiteField).toHaveAttribute('pattern');
+    });
+
+    it('website field rejects invalid URLs', () => {
+      render(<MembershipForm />);
+      const websiteField = screen.getByLabelText(/website/i) as HTMLInputElement;
+      const pattern = new RegExp(websiteField.pattern);
+
+      // Valid inputs should pass
+      expect(pattern.test('example.com')).toBe(true);
+      expect(pattern.test('https://example.com')).toBe(true);
+      expect(pattern.test('http://sub.example.org/path')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('not a url')).toBe(false);
+      expect(pattern.test('example')).toBe(false);
+      expect(pattern.test('ftp://example.com')).toBe(false);
+    });
+
+    it('referral field has pattern attribute', () => {
+      render(<MembershipForm />);
+      const referralField = screen.getByLabelText(
+        /who can we thank for referring you/i,
+      );
+      expect(referralField).toHaveAttribute('pattern');
+    });
+
+    it('referral field rejects invalid characters', () => {
+      render(<MembershipForm />);
+      const referralField = screen.getByLabelText(
+        /who can we thank for referring you/i,
+      ) as HTMLInputElement;
+      const pattern = new RegExp(referralField.pattern);
+
+      // Valid inputs should pass (including empty string)
+      expect(pattern.test('')).toBe(true);
+      expect(pattern.test('Jane Doe')).toBe(true);
+      expect(pattern.test("Patrick O'Malley")).toBe(true);
+      expect(pattern.test('Mary-Jane Watson')).toBe(true);
+
+      // Invalid inputs should fail
+      expect(pattern.test('John123')).toBe(false);
+      expect(pattern.test('Name@Email')).toBe(false);
+      expect(pattern.test('Test!')).toBe(false);
+      expect(pattern.test('User#1')).toBe(false);
     });
   });
 
@@ -525,6 +699,13 @@ describe('MembershipForm', () => {
       expect(screen.getByLabelText(/phone number/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/^email$/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/website/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/number of employees/i)).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/who can we thank for referring you/i),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/activity fund donation/i),
+      ).toBeInTheDocument();
     });
 
     it('submit button has proper type attribute', () => {
