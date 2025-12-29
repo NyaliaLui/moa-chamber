@@ -634,7 +634,9 @@ describe('MembershipForm', () => {
 
     it('website field rejects invalid URLs', () => {
       render(<MembershipForm />);
-      const websiteField = screen.getByLabelText(/website/i) as HTMLInputElement;
+      const websiteField = screen.getByLabelText(
+        /website/i,
+      ) as HTMLInputElement;
       const pattern = new RegExp(websiteField.pattern);
 
       // Valid inputs should pass
