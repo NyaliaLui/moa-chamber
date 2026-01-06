@@ -14,8 +14,8 @@
     "gen:snapshots": "npx playwright test --update-snapshots"
   },
   "dependencies": {
-    "@wix/data": "^1.0.362",
-    "@wix/sdk": "^1.20.0",
+    "@wix/data": "^1.0.370",
+    "@wix/sdk": "^1.21.2",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.12.15",
     "next": "^15.5.9",
