@@ -27,6 +27,11 @@ export interface Highlight {
   socialMediaHandles?: string[];
 }
 
+export interface Home {
+  heroImage: WixImage;
+  highlightData: Highlight;
+}
+
 export interface Project {
   _id: string;
   slug: string;
@@ -116,14 +121,25 @@ export function makeTestimonial(item: items.WixDataItem): Testimonial {
 
 export function makeHighlight(item: items.WixDataItem): Highlight {
   return {
-    image: item.image
-      ? makeWixImage(item.image)
+    image: item.highlightImage
+      ? makeWixImage(item.highlightImage)
       : DEFAULTS.home.highlight.image,
-    heading: item.heading || DEFAULTS.home.highlight.heading,
-    description: item.description || DEFAULTS.home.highlight.description,
-    website: item.website || DEFAULTS.home.highlight.website,
+    heading: item.highlightHeading || DEFAULTS.home.highlight.heading,
+    description:
+      item.highlightDescription || DEFAULTS.home.highlight.description,
+    website: item.highlightWebsite || DEFAULTS.home.highlight.website,
     socialMediaHandles:
-      item.socialMediaHandles || DEFAULTS.home.highlight.socialMediaHandles,
+      item.highlightSocialMediaHandles ||
+      DEFAULTS.home.highlight.socialMediaHandles,
+  };
+}
+
+export function makeHome(item: items.WixDataItem): Home {
+  return {
+    heroImage: item.heroImage
+      ? makeWixImage(item.heroImage)
+      : DEFAULTS.home.hero.image,
+    highlightData: makeHighlight(item),
   };
 }
 
@@ -434,29 +450,21 @@ export function useWixCalendar() {
   );
 }
 
-export function useWixHero() {
+export function useWixHome() {
   return useWixSingleItem(
-    process.env.NEXT_PUBLIC_WIX_COLLECTION_HERO!,
-    DEFAULTS.home.hero,
-    (rawData) =>
-      rawData.image ? makeWixImage(rawData.image) : DEFAULTS.home.hero.image,
-    'hero image',
-  );
-}
-
-export function useWixHighlight() {
-  return useWixSingleItem(
-    process.env.NEXT_PUBLIC_WIX_COLLECTION_HIGHLIGHT!,
-    DEFAULTS.home.highlight,
-    makeHighlight,
-    'highlight',
+    process.env.NEXT_PUBLIC_WIX_COLLECTION_HOME!,
+    {
+      heroImage: DEFAULTS.home.hero.image,
+      highlightData: DEFAULTS.home.highlight,
+    },
+    makeHome,
+    'home',
   );
 }
 
 export interface SingleItemCollections {
   ctaImage: WixImage;
   calendar: string;
-  heroImage: WixImage;
 }
 
 export function useSingleItemCollections() {
@@ -470,21 +478,15 @@ export function useSingleItemCollections() {
     isLoading: calendarLoading,
     error: calendarError,
   } = useWixCalendar();
-  const {
-    data: heroImage,
-    isLoading: heroLoading,
-    error: heroError,
-  } = useWixHero();
 
-  const isLoading = ctaLoading || calendarLoading || heroLoading;
-  const error = ctaError || calendarError || heroError;
+  const isLoading = ctaLoading || calendarLoading;
+  const error = ctaError || calendarError;
 
   const singleItemCollections: SingleItemCollections | null =
-    ctaImage && calendar && heroImage
+    ctaImage && calendar
       ? {
           ctaImage,
           calendar,
-          heroImage,
         }
       : null;
 
