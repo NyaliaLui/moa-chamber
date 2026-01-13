@@ -6,6 +6,7 @@ import CTA from '@app/components/CTA';
 import testIds from '@app/test-ids';
 import { useWixTeam, useWixBoardMembers } from '@app/hooks/Wix';
 import LoadingState from '@app/components/LoadingState';
+import { HRTrimmed } from 'flowbite-react';
 
 export default function About() {
   const { data: team, isLoading: teamLoading, error: teamError } = useWixTeam();
@@ -46,8 +47,9 @@ export default function About() {
               and a progressive community image.
             </p>
           </div>
-          <div>
-            <div className="mx-auto mb-12 max-w-lg text-center md:mb-18 lg:mb-20">
+          <HRTrimmed className="my-8 h-px bg-white" />
+          <div className="mt-16">
+            <div className="mx-auto mb-12 text-center md:mb-18 lg:mb-20">
               <h1 className="rb-5 mb-5 text-3xl font-bold md:mb-6 text-white">
                 Staff
               </h1>
@@ -72,12 +74,12 @@ export default function About() {
             <div className="mx-auto mt-14 w-full max-w-md text-center md:mt-20 lg:mt-24" />
           </div>
           <div>
-            <div className="mb-6 max-w-lg md:mb-9 lg:mb-10">
+            <div className="mb-6 md:mb-9 lg:mb-10">
               <h2 className="mb-5 text-3xl font-bold md:mb-6 text-white">
                 Board of Directors
               </h2>
               <p className="text-base md:text-lg text-white">
-                Business leaders who understand the pulse of our local economy
+                Community leaders who understand the pulse of our local economy
               </p>
             </div>
             <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-4">

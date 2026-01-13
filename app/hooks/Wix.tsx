@@ -180,9 +180,10 @@ export function makeStaffCard(item: items.WixDataItem): StaffCardProps {
 export function makeBoardMemberCard(
   item: items.WixDataItem,
 ): BoardMemberCardProps {
+  console.log(`${item.boardRole}`);
   return {
     name: item.name || DEFAULTS.team.boardMember.name,
-    role: item.role || DEFAULTS.team.boardMember.role,
+    role: item.boardRole || DEFAULTS.team.boardMember.role,
     employer: item.employer || DEFAULTS.team.boardMember.employer,
   };
 }
@@ -241,6 +242,7 @@ function useWixCollection<T>(
   collectionId: string,
   mapper: (item: items.WixDataItem) => T,
   collectionName: string,
+  orderByOrderNumber = false,
 ) {
   const {
     wixClient,
@@ -265,9 +267,11 @@ function useWixCollection<T>(
     async function fetchCollection(client: WixClientWithItems) {
       try {
         setIsLoading(true);
-        const { items: fetchedItems } = await client.items
-          .query(collectionId)
-          .find();
+        let query = client.items.query(collectionId);
+        if (orderByOrderNumber) {
+          query = query.ascending('orderNumber');
+        }
+        const { items: fetchedItems } = await query.find();
 
         if (isMounted) {
           setData(fetchedItems.map(mapper));
@@ -304,6 +308,7 @@ export function useWixTeam() {
     process.env.NEXT_PUBLIC_WIX_COLLECTION_TEAM!,
     makeStaffCard,
     'team',
+    true,
   );
 }
 
@@ -312,6 +317,7 @@ export function useWixBoardMembers() {
     process.env.NEXT_PUBLIC_WIX_COLLECTION_BOARD_MEMBERS!,
     makeBoardMemberCard,
     'board members',
+    true,
   );
 }
 

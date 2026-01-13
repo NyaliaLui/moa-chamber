@@ -173,7 +173,7 @@ test.describe('About Page', () => {
 
     test('should display board section description', async ({ page }) => {
       const description = page.getByText(
-        /Business leaders who understand the pulse of our local economy/i,
+        /Community leaders who understand the pulse of our local economy/i,
       );
       await expect(description).toBeVisible();
     });
