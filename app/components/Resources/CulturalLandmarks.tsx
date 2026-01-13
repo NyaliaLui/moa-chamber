@@ -6,7 +6,6 @@ import { WixImage } from '@app/constants';
 
 export interface TabContent {
   id: string;
-  name: string;
   heading: string;
   description: string;
   ctaLink: string;
@@ -44,7 +43,7 @@ const CulturalLandmarks = ({ tabsData }: CulturalLandmarksProps) => {
             } ${index === tabsData.length - 1 ? 'lg:rounded-tr-lg' : ''}`}
             data-testid={`culture-tab-${tab.id}`}
           >
-            {tab.name}
+            {tab.heading}
           </button>
         ))}
       </div>
@@ -54,7 +53,7 @@ const CulturalLandmarks = ({ tabsData }: CulturalLandmarksProps) => {
         ctaLink={activeContent.ctaLink}
         ctaLabel={activeContent.ctaLabel}
         image={activeContent.image}
-        imageAlt={activeContent.name}
+        imageAlt={activeContent.heading}
       />
     </>
   );

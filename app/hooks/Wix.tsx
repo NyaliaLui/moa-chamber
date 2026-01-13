@@ -74,7 +74,6 @@ export function makeWixImage(src: string): WixImage {
 export function makeTabContent(item: items.WixDataItem): TabContent {
   return {
     id: item._id,
-    name: item.name || DEFAULTS.resources.culture.name,
     heading: item.heading || DEFAULTS.resources.culture.heading,
     description: item.description || DEFAULTS.resources.culture.description,
     ctaLink: item.ctaLink || DEFAULTS.resources.culture.ctaLink,

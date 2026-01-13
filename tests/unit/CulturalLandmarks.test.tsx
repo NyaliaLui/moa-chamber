@@ -9,7 +9,6 @@ import { DEFAULT_WIX_IMAGE } from '@app/constants';
 const mockTabsData: TabContent[] = [
   {
     id: 'culture-1',
-    name: 'Culture Tab 1',
     heading: 'Culture Heading 1',
     description: 'Culture description 1',
     ctaLink: '/culture-1',
@@ -18,7 +17,6 @@ const mockTabsData: TabContent[] = [
   },
   {
     id: 'culture-2',
-    name: 'Culture Tab 2',
     heading: 'Culture Heading 2',
     description: 'Culture description 2',
     ctaLink: '/culture-2',
@@ -27,7 +25,6 @@ const mockTabsData: TabContent[] = [
   },
   {
     id: 'culture-3',
-    name: 'Culture Tab 3',
     heading: 'Culture Heading 3',
     description: 'Culture description 3',
     ctaLink: '/culture-3',
@@ -40,9 +37,10 @@ describe('CulturalLandmarks', () => {
   it('renders the CulturalLandmarks component', () => {
     render(<CulturalLandmarks tabsData={mockTabsData} />);
 
-    expect(screen.getByText('Culture Tab 1')).toBeInTheDocument();
-    expect(screen.getByText('Culture Tab 2')).toBeInTheDocument();
-    expect(screen.getByText('Culture Tab 3')).toBeInTheDocument();
+    // Headings appear in both tab buttons and CultureBox, so use getAllByText
+    expect(screen.getAllByText('Culture Heading 1').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Culture Heading 2').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Culture Heading 3').length).toBeGreaterThan(0);
   });
 
   it('renders all tab buttons', () => {
@@ -64,8 +62,9 @@ describe('CulturalLandmarks', () => {
     expect(cultureBox).toBeInTheDocument();
 
     // Check that it contains the first tab's content
-    expect(screen.getByText('Culture Heading 1')).toBeInTheDocument();
-    expect(screen.getByAltText('Culture Tab 1')).toBeInTheDocument();
+    // Heading appears in both tab button and CultureBox h2
+    expect(screen.getAllByText('Culture Heading 1').length).toBe(2);
+    expect(screen.getByAltText('Culture Heading 1')).toBeInTheDocument();
     expect(screen.getByText('Culture description 1')).toBeInTheDocument();
     expect(screen.getByText('Learn More 1')).toBeInTheDocument();
   });
