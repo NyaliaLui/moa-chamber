@@ -14,16 +14,16 @@
     "gen:snapshots": "npx playwright test --update-snapshots"
   },
   "dependencies": {
-    "@wix/data": "^1.0.370",
+    "@wix/data": "^1.0.376",
     "@wix/sdk": "^1.21.2",
     "flowbite": "^3.1.2",
-    "flowbite-react": "^0.12.15",
+    "flowbite-react": "^0.12.16",
     "next": "^15.5.9",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
     "react-player": "^3.4.0",
-    "resend": "^6.6.0"
+    "resend": "^6.7.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
@@ -33,8 +33,8 @@
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.10.4",
-    "@types/react": "^19.2.7",
+    "@types/node": "^24.10.8",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.23",
     "eslint": "^9.39.2",

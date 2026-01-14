@@ -125,7 +125,6 @@ export const DEFAULTS = {
   },
   resources: {
     culture: {
-      name: 'Sample Landmark',
       heading: 'Sample heading',
       description: 'Sample description',
       ctaLink: '',

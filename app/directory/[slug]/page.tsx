@@ -73,11 +73,13 @@ export default function Member({ params }: any) {
           />
         </div>
         <div className="mx-auto max-w-lg">
-          <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-6xl text-white">
+          <h1 className="mb-5 text-3xl font-bold md:mb-6 md:text-6xl text-white text-center">
             {member.title}
           </h1>
           <div className="prose prose-invert">
-            <p className="text-white">{member.longDescription}</p>
+            <p className="text-white text-left text-base">
+              {member.longDescription}
+            </p>
           </div>
         </div>
         <div className="py-16 md:py-24 lg:py-28 grid auto-cols-fr gap-x-8 gap-y-12 sm:gap-x-8 md:grid-cols-2 md:gap-y-16 lg:grid-cols-4">
@@ -91,7 +93,7 @@ export default function Member({ params }: any) {
                 <div className="mb-5 sm:mb-6">
                   <Icon className="size-12 text-white" />
                 </div>
-                <h3 className="mb-3 text-2xl font-bold leading-[1.4] sm:mb-4 md:text-3xl lg:mb-4 lg:text-4xl text-white">
+                <h3 className="mb-3 text-xl font-bold leading-[1.4] sm:mb-4 md:text-4xl lg:mb-4 text-white">
                   {contact.title}
                 </h3>
                 {contact.isLink ? (

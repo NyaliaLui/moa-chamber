@@ -234,7 +234,7 @@ test.describe('Directory Member Detail Page', () => {
       await expect(title).toBeVisible();
 
       const classes = await title.getAttribute('class');
-      expect(classes).toContain('text-5xl');
+      expect(classes).toContain('text-3xl');
       expect(classes).toContain('font-bold');
     });
 
@@ -246,7 +246,7 @@ test.describe('Directory Member Detail Page', () => {
     test('should have proper heading sizes for contact sections', async ({
       page,
     }) => {
-      const contactHeadings = page.locator('h3.text-2xl');
+      const contactHeadings = page.locator('h3.text-xl');
       const count = await contactHeadings.count();
 
       expect(count).toBe(4);
