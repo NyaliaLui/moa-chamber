@@ -180,7 +180,6 @@ export function makeStaffCard(item: items.WixDataItem): StaffCardProps {
 export function makeBoardMemberCard(
   item: items.WixDataItem,
 ): BoardMemberCardProps {
-  console.log(`${item.boardRole}`);
   return {
     name: item.name || DEFAULTS.team.boardMember.name,
     role: item.boardRole || DEFAULTS.team.boardMember.role,

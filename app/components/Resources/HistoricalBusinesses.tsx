@@ -82,7 +82,7 @@ const HistoricalBusinesses = ({
       <div className="flex items-center justify-center lg:col-span-2">
         <Image
           src={selectedBusiness.image.url}
-          className="w-full h-full object-center rounded-lg aspect-square md:aspect-video"
+          className="w-full h-full object-center rounded-lg aspect-video"
           alt={selectedBusiness.name}
           width={selectedBusiness.image.width}
           height={selectedBusiness.image.height}

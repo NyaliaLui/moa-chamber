@@ -89,7 +89,7 @@ describe('HistoricalBusinesses', () => {
       `${mockBusinessesData[0].image.height}`,
     );
     expect(image).toHaveClass(
-      'w-full h-full object-center rounded-lg aspect-square md:aspect-video',
+      'w-full h-full object-center rounded-lg aspect-video',
     );
   });
 
