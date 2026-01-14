@@ -25,7 +25,7 @@ const MemberCard = ({ media, name, address, slug }: MemberCardProps) => {
         <Image
           src={media.url}
           alt={name}
-          className="size-full object-cover"
+          className="size-full object-center aspect-video"
           width={media.width}
           height={media.height}
         />
