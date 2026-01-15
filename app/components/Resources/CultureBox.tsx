@@ -26,25 +26,25 @@ const CultureBox = ({
 }: CultureBoxProps) => {
   return (
     <div
-      className="grid auto-cols-fr grid-cols-1 border-b border-l border-r rounded-b-lg bg-gray-300 border-gray-300 lg:grid-cols-2 text-black"
+      className="grid auto-cols-fr grid-cols-1 border-b border-l border-r rounded-b-lg bg-gray-300 border-gray-300 xl:grid-cols-2 text-black"
       data-testid={testIds.RESOURCES.CULTURE_BOX}
     >
-      <div className="flex flex-col justify-center items-start p-5 md:p-12">
-        <h2 className="mb-3 md:mb-6 text-lg lg:text-xl md:text-2xl font-bold">
+      <div className="flex flex-col justify-center items-start p-5 lg:p-12">
+        <h2 className="mb-3 lg:mb-6 text-lg xl:text-xl lg:text-2xl font-bold">
           {heading}
         </h2>
-        <p className="mb-6 md:mb-8 text-sm md:text-base">{description}</p>
-        <div className="w-full flex justify-center md:justify-start">
+        <p className="mb-6 lg:mb-8 text-sm lg:text-base">{description}</p>
+        <div className="w-full flex justify-center lg:justify-start">
           <Button
             size="lg"
             href={ctaLink}
-            className="bg-black text-white hover:bg-gray-800 text-sm lg:text-base"
+            className="bg-black text-white hover:bg-gray-800 text-sm xl:text-base"
           >
             {ctaLabel}
           </Button>
         </div>
       </div>
-      <div className="flex items-center justify-center md:px-8 md:py-8">
+      <div className="flex items-center justify-center lg:px-8 lg:py-8">
         <Image
           src={image.url}
           className="w-full object-cover aspect-video rounded-lg"

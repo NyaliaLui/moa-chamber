@@ -46,10 +46,10 @@ export default function MembershipForm() {
             />
           </svg>
         </div>
-        <h2 className="mb-5 text-2xl md:text-3xl font-bold text-white">
+        <h2 className="mb-5 text-2xl lg:text-3xl font-bold text-white">
           Application Submitted Successfully!
         </h2>
-        <p className="text-base md:text-lg text-white mb-6">
+        <p className="text-base lg:text-lg text-white mb-6">
           Thank you for your interest in joining the Meriden/Ozawkie Area
           Chamber of Commerce. We have received your membership application and
           will be in touch with you shortly.
@@ -62,12 +62,12 @@ export default function MembershipForm() {
   }
 
   return (
-    <div className="container mx-auto max-w-lg px-[5%] py-20 md:px-0">
-      <div className="mx-auto mb-8 w-full text-center md:mb-10 lg:mb-12">
-        <h2 className="rb-5 mb-5 text-lg md:text-3xl font-bold md:mb-6 text-white">
+    <div className="container mx-auto max-w-lg px-[5%] py-20 lg:px-0">
+      <div className="mx-auto mb-8 w-full text-center lg:mb-10 xl:mb-12">
+        <h2 className="rb-5 mb-5 text-lg lg:text-3xl font-bold lg:mb-6 text-white">
           Join us
         </h2>
-        <p className="text-base md:text-lg text-white">
+        <p className="text-base lg:text-lg text-white">
           Complete your chamber membership application
         </p>
       </div>
@@ -78,7 +78,7 @@ export default function MembershipForm() {
         <div className="items-center mb-2">
           <Label
             htmlFor="business"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Business name <span className="text-red-400">*</span>
           </Label>
@@ -88,7 +88,7 @@ export default function MembershipForm() {
             name="business"
             required
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
             pattern="^[\w\s\-\.\,\&\'\#]+$"
             title="Enter a valid business name (letters, numbers, spaces, and common punctuation)"
           />
@@ -96,7 +96,7 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="contact"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Contact name <span className="text-red-400">*</span>
           </Label>
@@ -106,13 +106,13 @@ export default function MembershipForm() {
             name="contact"
             required
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
             pattern="^[a-zA-Z\s\-\'\.]+$"
             title="Enter a valid name (letters, spaces, hyphens, and apostrophes)"
           />
         </div>
         <div>
-          <Label className="block text-base lg:text-lg font-medium text-white mb-2">
+          <Label className="block text-base xl:text-lg font-medium text-white mb-2">
             Contact&apos;s role <span className="text-red-400">*</span>
           </Label>
           <div className="flex gap-4">
@@ -153,7 +153,7 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="address"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Business address <span className="text-red-400">*</span>
           </Label>
@@ -164,7 +164,7 @@ export default function MembershipForm() {
             placeholder="555 SW Yellowbrick Rd. Meriden, KS. Zip 66512"
             required
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
             pattern="^[\w\s\-\.\,\#\/]+$"
             title="Enter a valid address (letters, numbers, spaces, and common punctuation)"
           />
@@ -172,7 +172,7 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="phone"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Phone number
           </Label>
@@ -182,14 +182,14 @@ export default function MembershipForm() {
             name="phone"
             placeholder="(555) 555-5555"
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
             title="Enter a valid phone number (e.g., (555) 555-5555)"
           />
         </div>
         <div className="items-center">
           <Label
             htmlFor="email"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Email
           </Label>
@@ -199,14 +199,14 @@ export default function MembershipForm() {
             name="email"
             placeholder="name@sample.com"
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
             title="Enter a valid email address (e.g., name@sample.com)"
           />
         </div>
         <div className="items-center">
           <Label
             htmlFor="website"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Website
           </Label>
@@ -218,11 +218,11 @@ export default function MembershipForm() {
             pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$"
             title="Enter a valid website URL (e.g., sample.com or https://sample.com)"
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
           />
         </div>
         <div className="items-center">
-          <Label className="block text-base lg:text-lg font-medium text-white mb-4">
+          <Label className="block text-base xl:text-lg font-medium text-white mb-4">
             Monthly Dues
           </Label>
           <table className="w-full text-left">
@@ -255,7 +255,7 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="employees"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Number of employees <span className="text-red-400">*</span>
             <br />
@@ -269,13 +269,13 @@ export default function MembershipForm() {
             placeholder="1"
             required
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
           />
         </div>
         <div className="items-center">
           <Label
             htmlFor="referral"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Who can we thank for referring you?
           </Label>
@@ -285,7 +285,7 @@ export default function MembershipForm() {
             name="referral"
             placeholder="Jane Doe"
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
             pattern="^[a-zA-Z\s\-\'\.]*$"
             title="Enter a valid name (letters, spaces, hyphens, and apostrophes)"
           />
@@ -293,7 +293,7 @@ export default function MembershipForm() {
         <div className="items-center">
           <Label
             htmlFor="donation"
-            className="block text-base lg:text-lg font-medium text-white mb-2"
+            className="block text-base xl:text-lg font-medium text-white mb-2"
           >
             Activity Fund Donation
           </Label>
@@ -305,7 +305,7 @@ export default function MembershipForm() {
             step="0.01"
             placeholder="0.00"
             disabled={isSubmitting}
-            className="text-base lg:text-lg"
+            className="text-base xl:text-lg"
           />
         </div>
         <Button

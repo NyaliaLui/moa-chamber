@@ -27,7 +27,7 @@ const StaffCard = ({
 }: StaffCardProps) => {
   return (
     <div className="flex flex-col text-center border border-gray-300 rounded-lg bg-gray-100">
-      <div className="rb-5 mb-5 flex w-full items-center justify-center md:mb-6 rounded-t-lg overflow-hidden">
+      <div className="rb-5 mb-5 flex w-full items-center justify-center lg:mb-6 rounded-t-lg overflow-hidden">
         <Image
           src={image.url}
           alt={role}
@@ -37,14 +37,14 @@ const StaffCard = ({
         />
       </div>
       <div className="p-4">
-        <div className="mb-3 md:mb-4">
-          <h5 className="text-base font-semibold md:text-lg text-black">
+        <div className="mb-3 lg:mb-4">
+          <h5 className="text-base font-semibold lg:text-lg text-black">
             {name}
           </h5>
-          <h6 className="text-sm md:text-base text-black">{role}</h6>
-          <h6 className="text-sm md:text-base text-black">{email}</h6>
+          <h6 className="text-sm lg:text-base text-black">{role}</h6>
+          <h6 className="text-sm lg:text-base text-black">{email}</h6>
         </div>
-        <p className="text-sm md:text-base text-black">{bio}</p>
+        <p className="text-sm lg:text-base text-black">{bio}</p>
         <div className="mt-6 flex justify-center gap-5 items-center">
           <Link
             href={`${SOCIAL_MEDIA_URLS.linkedIn}${linkedIn}/`}

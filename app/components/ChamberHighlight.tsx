@@ -15,7 +15,7 @@ import { Highlight } from '@app/hooks/Wix';
 
 const getSocialIcon = (url: string) => {
   const lowerUrl = url.toLowerCase();
-  const className = 'w-4 h-4 lg:w-6 lg:h-6';
+  const className = 'w-4 h-4 xl:w-6 xl:h-6';
   if (lowerUrl.includes('facebook.com')) {
     return <FaFacebook className={className} />;
   } else if (lowerUrl.includes('instagram.com')) {
@@ -46,16 +46,16 @@ export default function ChamberHighlight({
   return (
     <section className="w-full py-16 bg-[#1a56db]">
       <div className="container px-[5%] mx-auto">
-        <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 text-white">
+        <h3 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-center mb-8 text-white">
           New member highlight
         </h3>
-        <div className="p-1 lg:p-0 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div className="p-1 xl:p-0 grid grid-cols-1 xl:grid-cols-2 gap-8 items-center">
           {/* Left column - 2/3 of the space */}
           <div className="flex flex-col gap-4">
-            <h2 className="text-2xl lg:text-4xl font-bold text-white">
+            <h2 className="text-2xl xl:text-4xl font-bold text-white">
               {highlightData.heading}
             </h2>
-            <p className="text-sm lg:text-base text-white">
+            <p className="text-sm xl:text-base text-white">
               {highlightData.description}
             </p>
 
@@ -64,10 +64,10 @@ export default function ChamberHighlight({
                 href={highlightData.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex text-sm lg:text-base items-center gap-2 text-white hover:text-gray-400 transition-colors w-fit"
+                className="flex text-sm xl:text-base items-center gap-2 text-white hover:text-gray-400 transition-colors w-fit"
               >
                 <span>Visit Website</span>
-                <FaExternalLinkAlt className="w-3 h-3 lg:w-4 lg:h-4" />
+                <FaExternalLinkAlt className="w-3 h-3 xl:w-4 xl:h-4" />
               </Link>
             )}
 

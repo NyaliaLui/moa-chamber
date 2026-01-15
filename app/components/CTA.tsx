@@ -25,14 +25,14 @@ export default function CTA() {
 
   return (
     <section
-      className="w-full text-center text-white bg-cover bg-center bg-no-repeat py-12 md:py-18 relative"
+      className="w-full text-center text-white bg-cover bg-center bg-no-repeat py-12 lg:py-18 relative"
       style={{
         backgroundImage: `url(${ctaImage.url})`,
       }}
     >
       <div className="absolute inset-0 bg-black/60" />
       <div className="relative z-10 container px-[5%] mx-auto">
-        <h1 className="mb-2 text-2xl font-bold md:mb-3">Join the Chamber</h1>
+        <h1 className="mb-2 text-2xl font-bold lg:mb-3">Join the Chamber</h1>
         <p className="text-md">
           Unlock opportunities for your business and connect with local
           entrepreneurs.

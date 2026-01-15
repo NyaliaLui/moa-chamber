@@ -27,10 +27,10 @@ const BenefitCard = ({ benefit }: { benefit: Benefit }) => {
           className="w-full"
         />
       </div>
-      <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
+      <div className="flex flex-1 flex-col justify-center p-6 lg:p-8">
         <div>
           <p className="mb-2 font-semibold">{benefit.label}</p>
-          <h2 className="mb-3 text-xl font-bold md:mb-4 md:leading-[1.3]">
+          <h2 className="mb-3 text-xl font-bold lg:mb-4 lg:leading-[1.3]">
             {benefit.heading}
           </h2>
           <p>{benefit.description}</p>
@@ -44,20 +44,20 @@ const Benefits = ({ benefitsData }: { benefitsData: Benefit[] }) => {
   return (
     <section className="w-full py-16 bg-[#0e2647]">
       <div className="container px-[5%] mx-auto">
-        <div className="mx-auto mb-6 w-full max-w-lg text-center md:mb-9 lg:mb-10">
-          <h1 className="mb-5 text-2xl font-bold md:mb-6 text-white">
+        <div className="mx-auto mb-6 w-full max-w-lg text-center lg:mb-9 xl:mb-10">
+          <h1 className="mb-5 text-2xl font-bold lg:mb-6 text-white">
             Benefits of Chamber Membership
           </h1>
           <p className="text-base text-white">
             Strategic support for local entrepreneurs and business owners
           </p>
         </div>
-        <div className="grid auto-cols-fr grid-cols-1 gap-6 md:gap-8 lg:grid-cols-3">
+        <div className="grid auto-cols-fr grid-cols-1 gap-6 lg:gap-8 xl:grid-cols-3">
           {benefitsData.map((benefit) => (
             <BenefitCard key={benefit.id} benefit={benefit} />
           ))}
         </div>
-        <div className="my-4 flex justify-center items-center gap-4 md:mt-8">
+        <div className="my-4 flex justify-center items-center gap-4 lg:mt-8">
           <Button
             color="dark"
             size="lg"
