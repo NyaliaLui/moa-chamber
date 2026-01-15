@@ -74,6 +74,6 @@ describe('MemberCard', () => {
     render(<MemberCard {...mockProps} />);
 
     const link = screen.getByRole('link');
-    expect(link).toHaveClass('text-center', 'font-semibold', 'md:text-md');
+    expect(link).toHaveClass('text-center', 'font-semibold', 'lg:text-md');
   });
 });
