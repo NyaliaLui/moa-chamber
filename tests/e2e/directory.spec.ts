@@ -200,8 +200,7 @@ test.describe('Directory Page', () => {
 
       // Check for responsive grid classes
       expect(classes).toContain('grid-cols-1'); // Mobile
-      expect(classes).toContain('lg:grid-cols-2'); // Tablet
-      expect(classes).toContain('xl:grid-cols-3'); // Desktop
+      expect(classes).toContain('lg:grid-cols-3'); // Tablet and Desktop
     });
   });
 

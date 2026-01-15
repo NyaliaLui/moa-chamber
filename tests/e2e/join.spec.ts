@@ -79,8 +79,7 @@ test.describe('Join Page', () => {
 
       // Check for responsive grid classes
       const classes = await benefitsGrid.first().getAttribute('class');
-      expect(classes).toContain('lg:grid-cols-2');
-      expect(classes).toContain('xl:grid-cols-4');
+      expect(classes).toContain('lg:grid-cols-4');
     });
   });
 

@@ -156,8 +156,7 @@ test.describe('Directory Member Detail Page', () => {
 
       // Check grid has proper responsive classes
       const classes = await contactGrid.getAttribute('class');
-      expect(classes).toContain('lg:grid-cols-2');
-      expect(classes).toContain('xl:grid-cols-4');
+      expect(classes).toContain('lg:grid-cols-4');
     });
 
     test('should display four contact cards', async ({ page }) => {
