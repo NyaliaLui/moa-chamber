@@ -190,40 +190,199 @@ test.describe('Home Page', () => {
   });
 
   test.describe('Responsive Design', () => {
-    test('should display correctly on mobile viewport', async ({ page }) => {
+    test('should display all components correctly on mobile viewport', async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: 375, height: 667 });
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Hero section
       const heroHeading = page.getByRole('heading', {
         name: /Empowering businesses in Meriden and Ozawkie/i,
       });
       await expect(heroHeading).toBeVisible();
-
-      const ctaHeading = page.getByRole('heading', {
-        name: /Join the Chamber/i,
-      });
-      await expect(ctaHeading).toBeVisible();
-    });
-
-    test('should display correctly on tablet viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 768, height: 1024 });
-
-      const joinButton = page.getByRole('link', { name: /Join Us/i }).first();
-      await expect(joinButton).toBeVisible();
-
-      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
-      await expect(applyButton).toBeVisible();
-    });
-
-    test('should display correctly on desktop viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 1920, height: 1080 });
-
+      const heroDescription = page.getByText(
+        /We connect local entrepreneurs and support economic growth/i,
+      );
+      await expect(heroDescription).toBeVisible();
+      const joinUsButton = page.getByRole('link', { name: /Join Us/i }).first();
+      await expect(joinUsButton).toBeVisible();
+      await expect(joinUsButton).toHaveAttribute('href', '/join');
+      const whoWeAreButton = page.getByRole('link', { name: /Who we are/i });
+      await expect(whoWeAreButton).toBeVisible();
+      await expect(whoWeAreButton).toHaveAttribute('href', '/about');
       const heroImage = page.getByAltText(/Hero image/i);
       await expect(heroImage).toBeVisible();
 
+      // Chamber Highlight section
       const highlightHeading = page.getByRole('heading', {
         name: /New member highlight/i,
       });
       await expect(highlightHeading).toBeVisible();
+      const businessHeading = page.getByRole('heading', { level: 2 }).first();
+      await expect(businessHeading).toBeVisible();
+      const businessDescription = page.locator('p').first();
+      await expect(businessDescription).toBeVisible();
+      const businessImages = page.locator('img');
+      const imageCount = await businessImages.count();
+      expect(imageCount).toBeGreaterThan(0);
+
+      // Benefits section
+      const benefitsJoinButton = page.getByTestId(testIds.BENEFITS.JOIN_BTN);
+      await expect(benefitsJoinButton).toBeVisible();
+
+      // Testimonials section
+      const testimonialCards = page.getByTestId(testIds.TESTIMONIALS.CARD);
+      const cardCount = await testimonialCards.count();
+      expect(cardCount).toEqual(3);
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
+    });
+
+    test('should display all components correctly on tablet viewport', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1024, height: 768 });
+
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Hero section
+      const heroHeading = page.getByRole('heading', {
+        name: /Empowering businesses in Meriden and Ozawkie/i,
+      });
+      await expect(heroHeading).toBeVisible();
+      const heroDescription = page.getByText(
+        /We connect local entrepreneurs and support economic growth/i,
+      );
+      await expect(heroDescription).toBeVisible();
+      const joinUsButton = page.getByRole('link', { name: /Join Us/i }).first();
+      await expect(joinUsButton).toBeVisible();
+      await expect(joinUsButton).toHaveAttribute('href', '/join');
+      const whoWeAreButton = page.getByRole('link', { name: /Who we are/i });
+      await expect(whoWeAreButton).toBeVisible();
+      await expect(whoWeAreButton).toHaveAttribute('href', '/about');
+      const heroImage = page.getByAltText(/Hero image/i);
+      await expect(heroImage).toBeVisible();
+
+      // Chamber Highlight section
+      const highlightHeading = page.getByRole('heading', {
+        name: /New member highlight/i,
+      });
+      await expect(highlightHeading).toBeVisible();
+      const businessHeading = page.getByRole('heading', { level: 2 }).first();
+      await expect(businessHeading).toBeVisible();
+      const businessDescription = page.locator('p').first();
+      await expect(businessDescription).toBeVisible();
+      const businessImages = page.locator('img');
+      const imageCount = await businessImages.count();
+      expect(imageCount).toBeGreaterThan(0);
+
+      // Benefits section
+      const benefitsJoinButton = page.getByTestId(testIds.BENEFITS.JOIN_BTN);
+      await expect(benefitsJoinButton).toBeVisible();
+
+      // Testimonials section
+      const testimonialCards = page.getByTestId(testIds.TESTIMONIALS.CARD);
+      const cardCount = await testimonialCards.count();
+      expect(cardCount).toEqual(3);
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
+    });
+
+    test('should display all components correctly on desktop viewport', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1920, height: 1080 });
+
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Hero section
+      const heroHeading = page.getByRole('heading', {
+        name: /Empowering businesses in Meriden and Ozawkie/i,
+      });
+      await expect(heroHeading).toBeVisible();
+      const heroDescription = page.getByText(
+        /We connect local entrepreneurs and support economic growth/i,
+      );
+      await expect(heroDescription).toBeVisible();
+      const joinUsButton = page.getByRole('link', { name: /Join Us/i }).first();
+      await expect(joinUsButton).toBeVisible();
+      await expect(joinUsButton).toHaveAttribute('href', '/join');
+      const whoWeAreButton = page.getByRole('link', { name: /Who we are/i });
+      await expect(whoWeAreButton).toBeVisible();
+      await expect(whoWeAreButton).toHaveAttribute('href', '/about');
+      const heroImage = page.getByAltText(/Hero image/i);
+      await expect(heroImage).toBeVisible();
+
+      // Chamber Highlight section
+      const highlightHeading = page.getByRole('heading', {
+        name: /New member highlight/i,
+      });
+      await expect(highlightHeading).toBeVisible();
+      const businessHeading = page.getByRole('heading', { level: 2 }).first();
+      await expect(businessHeading).toBeVisible();
+      const businessDescription = page.locator('p').first();
+      await expect(businessDescription).toBeVisible();
+      const businessImages = page.locator('img');
+      const imageCount = await businessImages.count();
+      expect(imageCount).toBeGreaterThan(0);
+
+      // Benefits section
+      const benefitsJoinButton = page.getByTestId(testIds.BENEFITS.JOIN_BTN);
+      await expect(benefitsJoinButton).toBeVisible();
+
+      // Testimonials section
+      const testimonialCards = page.getByTestId(testIds.TESTIMONIALS.CARD);
+      const cardCount = await testimonialCards.count();
+      expect(cardCount).toEqual(3);
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
   });
 });

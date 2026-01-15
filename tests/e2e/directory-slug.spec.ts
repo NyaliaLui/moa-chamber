@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
-import { waitForLoadingState } from './common';
+import { waitForLoadingState, VIEWPORTS } from './common';
 
 test.describe('Directory Member Detail Page', () => {
   let memberSlug: string;
@@ -156,8 +156,8 @@ test.describe('Directory Member Detail Page', () => {
 
       // Check grid has proper responsive classes
       const classes = await contactGrid.getAttribute('class');
-      expect(classes).toContain('md:grid-cols-2');
-      expect(classes).toContain('lg:grid-cols-4');
+      expect(classes).toContain('lg:grid-cols-2');
+      expect(classes).toContain('xl:grid-cols-4');
     });
 
     test('should display four contact cards', async ({ page }) => {
@@ -172,32 +172,159 @@ test.describe('Directory Member Detail Page', () => {
 
   test.describe('Responsive Design', () => {
     test('should display correctly on mobile viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 375, height: 667 });
+      await page.setViewportSize(VIEWPORTS.mobile);
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
+
+      // Member cover image with proper src attribute
+      const coverImage = page.getByRole('img', { name: 'Member' });
+      await expect(coverImage).toBeVisible();
+      const src = await coverImage.getAttribute('src');
+      expect(src).toBeTruthy();
+
+      // Member title (h1) with non-empty content
       const title = page.locator('h1').first();
       await expect(title).toBeVisible();
+      const titleText = await title.textContent();
+      expect(titleText).toBeTruthy();
+      expect(titleText!.trim().length).toBeGreaterThan(0);
 
+      // Member description in .prose section
+      const description = page.locator('.prose p').first();
+      await expect(description).toBeVisible();
+
+      // All four contact cards with headings and icons
       const emailHeading = page.getByRole('heading', { name: /^Email$/i });
+      const websiteHeading = page.getByRole('heading', { name: /^Website$/i });
+      const phoneHeading = page.getByRole('heading', { name: /^Phone$/i });
+      const addressHeading = page.getByRole('heading', { name: /^Address$/i });
       await expect(emailHeading).toBeVisible();
+      await expect(websiteHeading).toBeVisible();
+      await expect(phoneHeading).toBeVisible();
+      await expect(addressHeading).toBeVisible();
+
+      // Verify contact icons are visible
+      const contactInfo = ['Email', 'Website', 'Phone', 'Address'];
+      for (const info of contactInfo) {
+        const heading = page.getByRole('heading', {
+          name: new RegExp(`^${info}$`, 'i'),
+        });
+        const contactCard = heading.locator('..');
+        const icon = contactCard.locator('svg');
+        await expect(icon).toBeVisible();
+      }
+
+      // Contact grid layout
+      const contactGrid = page.locator('.grid.auto-cols-fr');
+      await expect(contactGrid).toBeVisible();
     });
 
     test('should display correctly on tablet viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 768, height: 1024 });
+      await page.setViewportSize(VIEWPORTS.tablet);
 
-      const title = page.locator('h1').first();
-      await expect(title).toBeVisible();
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
 
+      // Member cover image with proper src attribute
       const coverImage = page.getByRole('img', { name: 'Member' });
       await expect(coverImage).toBeVisible();
+      const src = await coverImage.getAttribute('src');
+      expect(src).toBeTruthy();
+
+      // Member title (h1) with non-empty content
+      const title = page.locator('h1').first();
+      await expect(title).toBeVisible();
+      const titleText = await title.textContent();
+      expect(titleText).toBeTruthy();
+      expect(titleText!.trim().length).toBeGreaterThan(0);
+
+      // Member description in .prose section
+      const description = page.locator('.prose p').first();
+      await expect(description).toBeVisible();
+
+      // All four contact cards with headings and icons
+      const emailHeading = page.getByRole('heading', { name: /^Email$/i });
+      const websiteHeading = page.getByRole('heading', { name: /^Website$/i });
+      const phoneHeading = page.getByRole('heading', { name: /^Phone$/i });
+      const addressHeading = page.getByRole('heading', { name: /^Address$/i });
+      await expect(emailHeading).toBeVisible();
+      await expect(websiteHeading).toBeVisible();
+      await expect(phoneHeading).toBeVisible();
+      await expect(addressHeading).toBeVisible();
+
+      // Verify contact icons are visible
+      const contactInfo = ['Email', 'Website', 'Phone', 'Address'];
+      for (const info of contactInfo) {
+        const heading = page.getByRole('heading', {
+          name: new RegExp(`^${info}$`, 'i'),
+        });
+        const contactCard = heading.locator('..');
+        const icon = contactCard.locator('svg');
+        await expect(icon).toBeVisible();
+      }
+
+      // Contact grid layout
+      const contactGrid = page.locator('.grid.auto-cols-fr');
+      await expect(contactGrid).toBeVisible();
     });
 
     test('should display correctly on desktop viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 1920, height: 1080 });
+      await page.setViewportSize(VIEWPORTS.desktop);
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
+
+      // Member cover image with proper src attribute
+      const coverImage = page.getByRole('img', { name: 'Member' });
+      await expect(coverImage).toBeVisible();
+      const src = await coverImage.getAttribute('src');
+      expect(src).toBeTruthy();
+
+      // Member title (h1) with non-empty content
       const title = page.locator('h1').first();
       await expect(title).toBeVisible();
+      const titleText = await title.textContent();
+      expect(titleText).toBeTruthy();
+      expect(titleText!.trim().length).toBeGreaterThan(0);
 
-      // Contact cards should be in 4-column grid on desktop
+      // Member description in .prose section
+      const description = page.locator('.prose p').first();
+      await expect(description).toBeVisible();
+
+      // All four contact cards with headings and icons
+      const emailHeading = page.getByRole('heading', { name: /^Email$/i });
+      const websiteHeading = page.getByRole('heading', { name: /^Website$/i });
+      const phoneHeading = page.getByRole('heading', { name: /^Phone$/i });
+      const addressHeading = page.getByRole('heading', { name: /^Address$/i });
+      await expect(emailHeading).toBeVisible();
+      await expect(websiteHeading).toBeVisible();
+      await expect(phoneHeading).toBeVisible();
+      await expect(addressHeading).toBeVisible();
+
+      // Verify contact icons are visible
+      const contactInfo = ['Email', 'Website', 'Phone', 'Address'];
+      for (const info of contactInfo) {
+        const heading = page.getByRole('heading', {
+          name: new RegExp(`^${info}$`, 'i'),
+        });
+        const contactCard = heading.locator('..');
+        const icon = contactCard.locator('svg');
+        await expect(icon).toBeVisible();
+      }
+
+      // Contact grid layout - should be in 4-column on desktop
+      const contactGrid = page.locator('.grid.auto-cols-fr');
+      await expect(contactGrid).toBeVisible();
       const contactCards = page.locator(
         '.flex.flex-col.items-center.justify-start.text-center',
       );

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
-import { waitForLoadingState } from './common';
+import { waitForLoadingState, VIEWPORTS } from './common';
 
 test.describe('Calendar Page', () => {
   const PATH = '/calendar';
@@ -115,61 +115,129 @@ test.describe('Calendar Page', () => {
 
   test.describe('Responsive Design', () => {
     test('should display correctly on mobile viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 375, height: 667 });
+      await page.setViewportSize(VIEWPORTS.mobile);
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
       const heading = page.getByRole('heading', {
         name: /Chamber Calendar/i,
       });
       await expect(heading).toBeVisible();
+      const description = page.getByText(
+        /Discover opportunities that drive business growth and community engagement/i,
+      );
+      await expect(description).toBeVisible();
 
+      // Calendar iframe with attributes
       const iframe = page.locator('iframe');
       await expect(iframe).toBeVisible();
+      await expect(iframe).toHaveAttribute('width', '100%');
+      await expect(iframe).toHaveAttribute('height', '600');
+      await expect(iframe).toHaveClass(/border-0/);
 
+      // CTA section
       const ctaHeading = page.getByRole('heading', {
         name: /Join the Chamber/i,
       });
       await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
 
     test('should display correctly on tablet viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 768, height: 1024 });
+      await page.setViewportSize(VIEWPORTS.tablet);
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
       const heading = page.getByRole('heading', {
         name: /Chamber Calendar/i,
       });
       await expect(heading).toBeVisible();
+      const description = page.getByText(
+        /Discover opportunities that drive business growth and community engagement/i,
+      );
+      await expect(description).toBeVisible();
 
+      // Calendar iframe with attributes
       const iframe = page.locator('iframe');
       await expect(iframe).toBeVisible();
+      await expect(iframe).toHaveAttribute('width', '100%');
+      await expect(iframe).toHaveAttribute('height', '600');
+      await expect(iframe).toHaveClass(/border-0/);
 
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
       const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
       await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
 
     test('should display correctly on desktop viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 1920, height: 1080 });
+      await page.setViewportSize(VIEWPORTS.desktop);
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
       const heading = page.getByRole('heading', {
         name: /Chamber Calendar/i,
       });
       await expect(heading).toBeVisible();
+      const description = page.getByText(
+        /Discover opportunities that drive business growth and community engagement/i,
+      );
+      await expect(description).toBeVisible();
 
+      // Calendar iframe with attributes
       const iframe = page.locator('iframe');
       await expect(iframe).toBeVisible();
+      await expect(iframe).toHaveAttribute('width', '100%');
+      await expect(iframe).toHaveAttribute('height', '600');
+      await expect(iframe).toHaveClass(/border-0/);
 
-      // Verify iframe maintains 100% width on desktop
-      const width = await iframe.getAttribute('width');
-      expect(width).toBe('100%');
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
 
     test('should maintain iframe aspect ratio across viewports', async ({
       page,
     }) => {
-      const viewports = [
-        { width: 375, height: 667 },
-        { width: 768, height: 1024 },
-        { width: 1920, height: 1080 },
-      ];
+      const viewports = [VIEWPORTS.mobile, VIEWPORTS.tablet, VIEWPORTS.desktop];
 
       for (const viewport of viewports) {
         await page.setViewportSize(viewport);
