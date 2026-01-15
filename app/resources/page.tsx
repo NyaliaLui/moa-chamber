@@ -47,8 +47,8 @@ export default function Resources() {
           className="flex flex-col items-start"
           data-testid={testIds.RESOURCES.HEADING}
         >
-          <div className="mx-auto mb-6 md:mb-9 lg:mb-10">
-            <h2 className="mb-5 text-center text-lg lg:text-3xl font-bold md:mb-6">
+          <div className="mx-auto mb-6 lg:mb-10">
+            <h2 className="mb-5 text-center text-lg lg:text-3xl font-bold lg:mb-6">
               Discover community treasures
             </h2>
             <p className="text-center text-sm lg:text-base max-w-lg">
@@ -62,10 +62,10 @@ export default function Resources() {
           <CulturalLandmarks tabsData={cultureResources} />
         </div>
         <div
-          className="mx-auto mb-6 md:mb-9 lg:mb-10"
+          className="mx-auto mb-6 lg:mb-10"
           data-testid={testIds.RESOURCES.BUSINESSES_HEADING}
         >
-          <h2 className="mb-5 text-center text-lg lg:text-3xl font-bold md:mb-6">
+          <h2 className="mb-5 text-center text-lg lg:text-3xl font-bold lg:mb-6">
             Influencial businesses and organizations
           </h2>
           <p className="text-center text-sm lg:text-base">

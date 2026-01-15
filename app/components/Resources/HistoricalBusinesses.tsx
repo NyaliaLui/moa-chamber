@@ -30,17 +30,17 @@ const HistoricalBusinesses = ({
 
   return (
     <div
-      className="grid auto-cols-fr grid-cols-1 lg:grid-cols-3 gap-6"
+      className="grid auto-cols-fr grid-cols-1 xl:grid-cols-3 gap-6"
       data-testid={testIds.RESOURCES.BUSINESS_BOX}
     >
-      <div className="flex flex-col lg:col-span-1">
+      <div className="flex flex-col xl:col-span-1">
         {businessesData.map((business, index) => (
           <div
             key={index}
             onClick={() => setSelectedBusiness(business)}
-            className="cursor-pointer lg:hover:scale-105"
+            className="cursor-pointer xl:hover:scale-105"
           >
-            <div className="hidden lg:block">
+            <div className="hidden xl:block">
               <BusinessCard
                 name={business.name}
                 description={business.description}
@@ -48,7 +48,7 @@ const HistoricalBusinesses = ({
                 isSelected={selectedBusiness === business}
               />
             </div>
-            <div className="lg:hidden overflow-hidden">
+            <div className="xl:hidden overflow-hidden">
               <div
                 className={`grid transition-all duration-300 ease-in-out ${
                   selectedBusiness === business
@@ -79,7 +79,7 @@ const HistoricalBusinesses = ({
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center lg:col-span-2">
+      <div className="flex items-center justify-center xl:col-span-2">
         <Image
           src={selectedBusiness.image.url}
           className="w-full h-full object-center rounded-lg aspect-video"

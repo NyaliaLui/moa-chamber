@@ -63,7 +63,7 @@ export default function Member({ params }: any) {
       data-testid={testIds.PROJECT_DETAILS_PAGE.CONTAINER}
     >
       <div className="container px-[5%] mx-auto">
-        <div className="mb-12 md:mb-18 lg:mb-20 overflow-hidden rounded-lg">
+        <div className="mb-12 lg:mb-20 overflow-hidden rounded-lg">
           <Image
             src={member.cover.url}
             alt={member.title}
@@ -73,7 +73,7 @@ export default function Member({ params }: any) {
           />
         </div>
         <div className="mx-auto max-w-lg">
-          <h1 className="mb-5 text-3xl font-bold md:mb-6 md:text-6xl text-white text-center">
+          <h1 className="mb-5 text-3xl font-bold lg:mb-6 lg:text-6xl text-white text-center">
             {member.title}
           </h1>
           <div className="prose prose-invert">
@@ -82,7 +82,7 @@ export default function Member({ params }: any) {
             </p>
           </div>
         </div>
-        <div className="py-16 md:py-24 lg:py-28 grid auto-cols-fr gap-x-8 gap-y-12 sm:gap-x-8 md:grid-cols-2 md:gap-y-16 lg:grid-cols-4">
+        <div className="py-16 lg:py-28 grid auto-cols-fr gap-x-8 gap-y-12 lg:grid-cols-4 lg:gap-y-16">
           {contactInfo.map((contact, index) => {
             const Icon = contact.icon;
             return (
@@ -93,7 +93,7 @@ export default function Member({ params }: any) {
                 <div className="mb-5 sm:mb-6">
                   <Icon className="size-12 text-white" />
                 </div>
-                <h3 className="mb-3 text-xl font-bold leading-[1.4] sm:mb-4 md:text-4xl lg:mb-4 text-white">
+                <h3 className="mb-3 text-xl font-bold leading-[1.4] lg:text-4xl lg:mb-4 text-white">
                   {contact.title}
                 </h3>
                 {contact.isLink ? (

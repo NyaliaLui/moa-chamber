@@ -39,25 +39,25 @@ export default function About() {
       >
         <div className="container px-[5%] mx-auto">
           <div className="max-w-lg mx-auto text-center mb-16">
-            <p className="mb-3 text-2xl font-semibold md:mb-4 text-white">
+            <p className="mb-3 text-2xl font-semibold lg:mb-4 text-white">
               Mission
             </p>
-            <p className="text-base md:text-lg leading-[1.4] text-white">
+            <p className="text-base lg:text-lg leading-[1.4] text-white">
               To be a member driven organization that promotes economic growth
               and a progressive community image.
             </p>
           </div>
           <HRTrimmed className="my-8 h-px bg-white" />
           <div className="mt-16">
-            <div className="mx-auto mb-12 text-center md:mb-18 lg:mb-20">
-              <h1 className="rb-5 mb-5 text-3xl font-bold md:mb-6 text-white">
+            <div className="mx-auto mb-12 text-center lg:mb-20">
+              <h1 className="rb-5 mb-5 text-3xl font-bold lg:mb-6 text-white">
                 Staff
               </h1>
-              <p className="text-base md:text-lg text-white">
+              <p className="text-base lg:text-lg text-white">
                 Dedicated professionals driving business growth in our community
               </p>
             </div>
-            <div className="grid grid-cols-1 items-start justify-center gap-x-8 gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16 lg:gap-x-12">
+            <div className="grid grid-cols-1 items-start justify-center gap-x-8 gap-y-12 lg:grid-cols-3 lg:gap-x-12 lg:gap-y-16">
               {team.map((item, index) => (
                 <StaffCard
                   key={index}
@@ -71,18 +71,18 @@ export default function About() {
                 />
               ))}
             </div>
-            <div className="mx-auto mt-14 w-full max-w-md text-center md:mt-20 lg:mt-24" />
+            <div className="mx-auto mt-14 w-full max-w-md text-center lg:mt-24" />
           </div>
           <div>
-            <div className="mb-6 md:mb-9 lg:mb-10">
-              <h2 className="mb-5 text-3xl font-bold md:mb-6 text-white">
+            <div className="mb-6 lg:mb-10">
+              <h2 className="mb-5 text-3xl font-bold lg:mb-6 text-white">
                 Board of Directors
               </h2>
-              <p className="text-base md:text-lg text-white">
+              <p className="text-base lg:text-lg text-white">
                 Community leaders who understand the pulse of our local economy
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-12 lg:grid-cols-4 lg:gap-y-16">
               {boardMembers.map((item, index) => (
                 <BoardMemberCard
                   key={index}
@@ -92,7 +92,7 @@ export default function About() {
                 />
               ))}
             </div>
-            <div className="mt-14 w-full max-w-md md:mt-20 lg:mt-24" />
+            <div className="mt-14 w-full max-w-md lg:mt-24" />
           </div>
         </div>
       </section>

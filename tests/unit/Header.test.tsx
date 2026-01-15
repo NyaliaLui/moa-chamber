@@ -169,7 +169,7 @@ describe('Header', () => {
 
       const desktopNav = screen
         .getAllByRole('navigation')
-        .find((nav) => nav.className.includes('hidden lg:flex'));
+        .find((nav) => nav.className.includes('hidden xl:flex'));
 
       expect(desktopNav).toBeInTheDocument();
     });
@@ -179,9 +179,9 @@ describe('Header', () => {
 
       const mobileNav = screen
         .getAllByRole('navigation')
-        .find((nav) => nav.className.includes('lg:hidden'));
+        .find((nav) => nav.className.includes('xl:hidden'));
 
-      expect(mobileNav).toHaveClass('max-lg:w-0', 'max-lg:opacity-0');
+      expect(mobileNav).toHaveClass('max-xl:w-0', 'max-xl:opacity-0');
     });
 
     it('mobile menu becomes visible when opened', () => {
@@ -192,9 +192,9 @@ describe('Header', () => {
 
       const mobileNav = screen
         .getAllByRole('navigation')
-        .find((nav) => nav.className.includes('lg:hidden'));
+        .find((nav) => nav.className.includes('xl:hidden'));
 
-      expect(mobileNav).toHaveClass('max-lg:w-10/12', 'max-lg:opacity-100');
+      expect(mobileNav).toHaveClass('max-xl:w-10/12', 'max-xl:opacity-100');
     });
   });
 });

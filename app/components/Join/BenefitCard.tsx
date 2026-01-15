@@ -23,10 +23,10 @@ const BenefitCard = ({
 
   return (
     <div className="w-full">
-      <div className="mb-5 flex justify-center md:mb-6">
+      <div className="mb-5 flex justify-center lg:mb-6">
         <IconComponent className="size-12 text-white" />
       </div>
-      <h3 className="mb-3 text-center text-white text-lg font-bold md:mb-4 md:text-xl">
+      <h3 className="mb-3 text-center text-white text-lg font-bold lg:mb-4 lg:text-xl">
         {message}
       </h3>
     </div>

@@ -165,7 +165,7 @@ test.describe('Resources Page', () => {
       const classes = await cultureBox.getAttribute('class');
 
       expect(classes).toContain('grid');
-      expect(classes).toContain('lg:grid-cols-2');
+      expect(classes).toContain('xl:grid-cols-2');
     });
 
     test('should have proper border styling on culture box', async ({
@@ -264,7 +264,7 @@ test.describe('Resources Page', () => {
 
     test('should display business image', async ({ page }) => {
       // Look for the business image in the right column (lg:col-span-2)
-      const imageContainer = page.locator('.lg\\:col-span-2');
+      const imageContainer = page.locator('.xl\\:col-span-2');
       const image = imageContainer.locator('img');
 
       await expect(image).toBeVisible();
@@ -276,7 +276,7 @@ test.describe('Resources Page', () => {
 
       if (count > 1) {
         // Get initial image src
-        const imageContainer = page.locator('.lg\\:col-span-2');
+        const imageContainer = page.locator('.xl\\:col-span-2');
         const image = imageContainer.locator('img');
         const initialSrc = await image.getAttribute('src');
 
@@ -333,7 +333,7 @@ test.describe('Resources Page', () => {
       await expect(grid).toBeVisible();
 
       const classes = await grid.getAttribute('class');
-      expect(classes).toContain('lg:grid-cols-3');
+      expect(classes).toContain('xl:grid-cols-3');
     });
 
     test('should have hover effect on business cards', async ({ page }) => {
@@ -341,7 +341,7 @@ test.describe('Resources Page', () => {
       const firstCard = businessCards.first();
 
       const classes = await firstCard.getAttribute('class');
-      expect(classes).toContain('lg:hover:scale-105');
+      expect(classes).toContain('xl:hover:scale-105');
     });
   });
 
@@ -378,43 +378,222 @@ test.describe('Resources Page', () => {
   });
 
   test.describe('Responsive Design', () => {
-    test('should display correctly on mobile viewport', async ({ page }) => {
+    test('should display all components correctly on mobile viewport', async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: 375, height: 667 });
 
-      const heading = page.getByRole('heading', {
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Main heading and description
+      const mainHeading = page.getByRole('heading', {
         name: /Discover community treasures/i,
       });
-      await expect(heading).toBeVisible();
+      await expect(mainHeading).toBeVisible();
+      const pageDescription = page.getByText(
+        /Explore the hidden gems and landmarks that tell the story/i,
+      );
+      await expect(pageDescription).toBeVisible();
 
+      // Culture tabs
+      const cultureTabs = page.locator('[data-testid^="culture-tab-"]');
+      const tabCount = await cultureTabs.count();
+      expect(tabCount).toBeGreaterThan(0);
+
+      // Culture box with content
       const cultureBox = page.getByTestId(testIds.RESOURCES.CULTURE_BOX);
       await expect(cultureBox).toBeVisible();
+      const cultureHeading = cultureBox.locator('h2');
+      await expect(cultureHeading).toBeVisible();
+      const cultureDescription = cultureBox.locator('p');
+      await expect(cultureDescription).toBeVisible();
+      const cultureImage = cultureBox.locator('img');
+      await expect(cultureImage).toBeVisible();
+      const cultureCtaButton = cultureBox.locator('a[href]');
+      await expect(cultureCtaButton).toBeVisible();
+
+      // Historical businesses heading
+      const businessesHeading = page.getByRole('heading', {
+        name: /Influencial businesses and organizations/i,
+      });
+      await expect(businessesHeading).toBeVisible();
+
+      // At least one business card with required elements (on mobile, only selected card shows content)
+      const businessBox = page.getByTestId(testIds.RESOURCES.BUSINESS_BOX);
+      await expect(businessBox).toBeVisible();
+
+      // On mobile, the selected business card is visible inside the xl:hidden container
+      const visibleBusinessCard = businessBox.locator('.xl\\:hidden').first();
+      await expect(visibleBusinessCard).toBeVisible();
+      const businessName = visibleBusinessCard.locator('h3').first();
+      await expect(businessName).toBeVisible();
+      const businessDescription = visibleBusinessCard.locator('p').first();
+      await expect(businessDescription).toBeVisible();
+      const websiteLink = visibleBusinessCard.locator('a').first();
+      await expect(websiteLink).toBeVisible();
+
+      // Business image
+      const imageContainer = page.locator('.xl\\:col-span-2');
+      const businessImage = imageContainer.locator('img');
+      await expect(businessImage).toBeVisible();
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
 
-    test('should display correctly on tablet viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 768, height: 1024 });
+    test('should display all components correctly on tablet viewport', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1024, height: 768 });
 
-      const heading = page.getByRole('heading', {
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Main heading and description
+      const mainHeading = page.getByRole('heading', {
         name: /Discover community treasures/i,
       });
-      await expect(heading).toBeVisible();
-
-      const businessesHeading = page.getByTestId(
-        testIds.RESOURCES.BUSINESSES_HEADING,
+      await expect(mainHeading).toBeVisible();
+      const pageDescription = page.getByText(
+        /Explore the hidden gems and landmarks that tell the story/i,
       );
+      await expect(pageDescription).toBeVisible();
+
+      // Culture tabs
+      const cultureTabs = page.locator('[data-testid^="culture-tab-"]');
+      const tabCount = await cultureTabs.count();
+      expect(tabCount).toBeGreaterThan(0);
+
+      // Culture box with content
+      const cultureBox = page.getByTestId(testIds.RESOURCES.CULTURE_BOX);
+      await expect(cultureBox).toBeVisible();
+      const cultureHeading = cultureBox.locator('h2');
+      await expect(cultureHeading).toBeVisible();
+      const cultureDescription = cultureBox.locator('p');
+      await expect(cultureDescription).toBeVisible();
+      const cultureImage = cultureBox.locator('img');
+      await expect(cultureImage).toBeVisible();
+      const cultureCtaButton = cultureBox.locator('a[href]');
+      await expect(cultureCtaButton).toBeVisible();
+
+      // Historical businesses heading
+      const businessesHeading = page.getByRole('heading', {
+        name: /Influencial businesses and organizations/i,
+      });
       await expect(businessesHeading).toBeVisible();
+
+      // At least one business card with required elements (on tablet, only selected card shows content)
+      const businessBox = page.getByTestId(testIds.RESOURCES.BUSINESS_BOX);
+      await expect(businessBox).toBeVisible();
+
+      // On tablet (below xl breakpoint), the selected business card is visible inside the xl:hidden container
+      const visibleBusinessCard = businessBox.locator('.xl\\:hidden').first();
+      await expect(visibleBusinessCard).toBeVisible();
+      const businessName = visibleBusinessCard.locator('h3').first();
+      await expect(businessName).toBeVisible();
+      const businessDescription = visibleBusinessCard.locator('p').first();
+      await expect(businessDescription).toBeVisible();
+      const websiteLink = visibleBusinessCard.locator('a').first();
+      await expect(websiteLink).toBeVisible();
+
+      // Business image
+      const imageContainer = page.locator('.xl\\:col-span-2');
+      const businessImage = imageContainer.locator('img');
+      await expect(businessImage).toBeVisible();
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
 
-    test('should display correctly on desktop viewport', async ({ page }) => {
+    test('should display all components correctly on desktop viewport', async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: 1920, height: 1080 });
 
-      const heading = page.getByRole('heading', {
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Main heading and description
+      const mainHeading = page.getByRole('heading', {
         name: /Discover community treasures/i,
       });
-      await expect(heading).toBeVisible();
+      await expect(mainHeading).toBeVisible();
+      const pageDescription = page.getByText(
+        /Explore the hidden gems and landmarks that tell the story/i,
+      );
+      await expect(pageDescription).toBeVisible();
 
-      // Culture box should be in 2-column grid on desktop
+      // Culture tabs
+      const cultureTabs = page.locator('[data-testid^="culture-tab-"]');
+      const tabCount = await cultureTabs.count();
+      expect(tabCount).toBeGreaterThan(0);
+
+      // Culture box with content
       const cultureBox = page.getByTestId(testIds.RESOURCES.CULTURE_BOX);
       await expect(cultureBox).toBeVisible();
+      const cultureHeading = cultureBox.locator('h2');
+      await expect(cultureHeading).toBeVisible();
+      const cultureDescription = cultureBox.locator('p');
+      await expect(cultureDescription).toBeVisible();
+      const cultureImage = cultureBox.locator('img');
+      await expect(cultureImage).toBeVisible();
+      const cultureCtaButton = cultureBox.locator('a[href]');
+      await expect(cultureCtaButton).toBeVisible();
+
+      // Historical businesses heading
+      const businessesHeading = page.getByRole('heading', {
+        name: /Influencial businesses and organizations/i,
+      });
+      await expect(businessesHeading).toBeVisible();
+
+      // At least one business card with required elements
+      const businessCards = page.locator('.cursor-pointer');
+      const businessCount = await businessCards.count();
+      expect(businessCount).toBeGreaterThan(0);
+
+      const firstBusinessCard = businessCards.first();
+      const businessName = firstBusinessCard.locator('h3').first();
+      await expect(businessName).toBeVisible();
+      const businessDescription = firstBusinessCard.locator('p').first();
+      await expect(businessDescription).toBeVisible();
+      const websiteLink = firstBusinessCard.locator('a').first();
+      await expect(websiteLink).toBeVisible();
+
+      // Business image
+      const imageContainer = page.locator('.xl\\:col-span-2');
+      const businessImage = imageContainer.locator('img');
+      await expect(businessImage).toBeVisible();
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
   });
 
@@ -458,7 +637,7 @@ test.describe('Resources Page', () => {
     test('should have descriptive alt text for business image', async ({
       page,
     }) => {
-      const imageContainer = page.locator('.lg\\:col-span-2');
+      const imageContainer = page.locator('.xl\\:col-span-2');
       const image = imageContainer.locator('img');
 
       const alt = await image.getAttribute('alt');

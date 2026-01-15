@@ -200,44 +200,186 @@ test.describe('Directory Page', () => {
 
       // Check for responsive grid classes
       expect(classes).toContain('grid-cols-1'); // Mobile
-      expect(classes).toContain('md:grid-cols-2'); // Tablet
-      expect(classes).toContain('lg:grid-cols-3'); // Desktop
+      expect(classes).toContain('lg:grid-cols-3'); // Tablet and Desktop
     });
   });
 
   test.describe('Responsive Design', () => {
-    test('should display correctly on mobile viewport', async ({ page }) => {
+    test('should display all components correctly on mobile viewport', async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: 375, height: 667 });
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
       const heading = page.getByTestId(testIds.PROJECTS_PAGE.HEADER);
       await expect(heading).toBeVisible();
+      await expect(heading).toHaveText(/Our Members/i);
+      const description = page.getByText(
+        /Discover local businesses that drive our community's economic strength and collaboration/i,
+      );
+      await expect(description).toBeVisible();
 
+      // Member cards list
       const memberList = page.getByTestId(testIds.PROJECTS_PAGE.PROJECT_LIST);
       await expect(memberList).toBeVisible();
-    });
 
-    test('should display correctly on tablet viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 768, height: 1024 });
-
-      const heading = page.getByTestId(testIds.PROJECTS_PAGE.HEADER);
-      await expect(heading).toBeVisible();
-
-      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
-      await expect(applyButton).toBeVisible();
-    });
-
-    test('should display correctly on desktop viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 1920, height: 1080 });
-
-      const heading = page.getByTestId(testIds.PROJECTS_PAGE.HEADER);
-      await expect(heading).toBeVisible();
-
-      // Member cards should be in grid layout on desktop
+      // At least one member card with required elements
       const memberCards = page.getByTestId(
         testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
       );
-      const count = await memberCards.count();
-      expect(count).toBeGreaterThan(0);
+      const cardCount = await memberCards.count();
+      expect(cardCount).toBeGreaterThan(0);
+
+      const firstCard = memberCards.first();
+      const cardImage = firstCard.locator('img');
+      await expect(cardImage).toBeVisible();
+      const cardName = firstCard.locator('h3');
+      await expect(cardName).toBeVisible();
+      const cardAddress = firstCard.locator('.text-sm');
+      await expect(cardAddress).toBeVisible();
+
+      const ctaElements = page.getByTestId(
+        testIds.PROJECTS_PAGE.PROJECT_ITEM_CTA,
+      );
+      await expect(ctaElements.first()).toBeVisible();
+      await expect(ctaElements.first()).toHaveText(/Find out more/i);
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
+    });
+
+    test('should display all components correctly on tablet viewport', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1024, height: 768 });
+
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
+      const heading = page.getByTestId(testIds.PROJECTS_PAGE.HEADER);
+      await expect(heading).toBeVisible();
+      await expect(heading).toHaveText(/Our Members/i);
+      const description = page.getByText(
+        /Discover local businesses that drive our community's economic strength and collaboration/i,
+      );
+      await expect(description).toBeVisible();
+
+      // Member cards list
+      const memberList = page.getByTestId(testIds.PROJECTS_PAGE.PROJECT_LIST);
+      await expect(memberList).toBeVisible();
+
+      // At least one member card with required elements
+      const memberCards = page.getByTestId(
+        testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
+      );
+      const cardCount = await memberCards.count();
+      expect(cardCount).toBeGreaterThan(0);
+
+      const firstCard = memberCards.first();
+      const cardImage = firstCard.locator('img');
+      await expect(cardImage).toBeVisible();
+      const cardName = firstCard.locator('h3');
+      await expect(cardName).toBeVisible();
+      const cardAddress = firstCard.locator('.text-sm');
+      await expect(cardAddress).toBeVisible();
+
+      const ctaElements = page.getByTestId(
+        testIds.PROJECTS_PAGE.PROJECT_ITEM_CTA,
+      );
+      await expect(ctaElements.first()).toBeVisible();
+      await expect(ctaElements.first()).toHaveText(/Find out more/i);
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
+    });
+
+    test('should display all components correctly on desktop viewport', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1920, height: 1080 });
+
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
+      const heading = page.getByTestId(testIds.PROJECTS_PAGE.HEADER);
+      await expect(heading).toBeVisible();
+      await expect(heading).toHaveText(/Our Members/i);
+      const description = page.getByText(
+        /Discover local businesses that drive our community's economic strength and collaboration/i,
+      );
+      await expect(description).toBeVisible();
+
+      // Member cards list
+      const memberList = page.getByTestId(testIds.PROJECTS_PAGE.PROJECT_LIST);
+      await expect(memberList).toBeVisible();
+
+      // At least one member card with required elements
+      const memberCards = page.getByTestId(
+        testIds.PROJECTS_PAGE.PROJECT_ITEM_CONTAINER,
+      );
+      const cardCount = await memberCards.count();
+      expect(cardCount).toBeGreaterThan(0);
+
+      const firstCard = memberCards.first();
+      const cardImage = firstCard.locator('img');
+      await expect(cardImage).toBeVisible();
+      const cardName = firstCard.locator('h3');
+      await expect(cardName).toBeVisible();
+      const cardAddress = firstCard.locator('.text-sm');
+      await expect(cardAddress).toBeVisible();
+
+      const ctaElements = page.getByTestId(
+        testIds.PROJECTS_PAGE.PROJECT_ITEM_CTA,
+      );
+      await expect(ctaElements.first()).toBeVisible();
+      await expect(ctaElements.first()).toHaveText(/Find out more/i);
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const ctaDescription = page.getByText(
+        /Unlock opportunities for your business and connect with local entrepreneurs/i,
+      );
+      await expect(ctaDescription).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
   });
 

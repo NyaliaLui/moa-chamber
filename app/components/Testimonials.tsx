@@ -18,11 +18,11 @@ export interface Testimonial {
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   return (
     <div
-      className="flex w-full flex-col items-start justify-between border border-white/60 rounded-lg p-6 md:p-8"
+      className="flex w-full flex-col items-start justify-between border border-white/60 rounded-lg p-6 lg:p-8"
       data-testid={testIds.TESTIMONIALS.CARD}
     >
-      <div className="rb-5 mb-5 md:mb-6">
-        <div className="mb-5 flex md:mb-6">
+      <div className="rb-5 mb-5 lg:mb-6">
+        <div className="mb-5 flex lg:mb-6">
           {Array.from({ length: DEFAULT_TESTIMONIAL_STARS }, (_, index) => (
             <BiSolidStar key={index} className="mr-1 size-6 text-white" />
           ))}
@@ -31,11 +31,11 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
           {testimonial.quote}
         </blockquote>
       </div>
-      <div className="mt-5 flex w-full flex-col items-start md:mt-6 md:w-fit md:flex-row md:items-center">
+      <div className="mt-5 flex w-full flex-col items-start lg:mt-6 lg:w-fit lg:flex-row lg:items-center">
         <Image
           src={testimonial.image.url}
           alt={`Testimonial ${testimonial.businessName} img`}
-          className="mb-4 size-12 min-h-12 min-w-12 rounded-full object-cover md:mb-0 md:mr-4"
+          className="mb-4 size-12 min-h-12 min-w-12 rounded-full object-cover lg:mb-0 lg:mr-4"
           width={testimonial.image.width}
           height={testimonial.image.height}
         />
@@ -58,10 +58,10 @@ const Testimonials = ({
   return (
     <section className="w-full py-16 bg-[#1a56db]">
       <div className="container px-[5%] mx-auto">
-        <div className="mx-auto mb-6 w-full max-w-lg text-center md:mb-9 lg:mb-10">
+        <div className="mx-auto mb-6 w-full max-w-lg text-center lg:mb-9 xl:mb-10">
           <h1 className="text-2xl font-bold text-white">Member stories</h1>
         </div>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
           {testimonialsData.map((testimonial) => (
             <TestimonialCard key={testimonial.id} testimonial={testimonial} />
           ))}

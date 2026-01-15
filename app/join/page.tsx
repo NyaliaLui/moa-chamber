@@ -34,18 +34,18 @@ export default function Join() {
     <section className="w-full py-16 bg-[#1a56db]">
       <div className="container px-[5%] mx-auto">
         <div className="flex flex-col items-start">
-          <div className="mx-auto mb-6 max-w-lg md:mb-9 lg:mb-10">
+          <div className="mx-auto mb-6 max-w-lg lg:mb-10">
             <div>
-              <h2 className="mb-5 text-center text-xl md:text-3xl font-bold md:mb-6 text-white">
+              <h2 className="mb-5 text-center text-xl lg:text-3xl font-bold lg:mb-6 text-white">
                 Grow your business
               </h2>
-              <p className="text-center text-base md:text-lg text-white">
+              <p className="text-center text-base lg:text-lg text-white">
                 Join the Meriden/Ozawkie Area Chamber of Commerce and unlock
                 powerful opportunities for local business success
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 items-start mx-auto gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-4">
+          <div className="grid grid-cols-1 items-start mx-auto gap-y-12 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-16">
             <BenefitCard
               key="join-benefit-1"
               message="Promote your business through Chamber activities"
@@ -71,11 +71,11 @@ export default function Join() {
       </div>
       <MembershipForm />
       <div>
-        <div className="rb-12 mx-auto mb-12 flex max-w-lg flex-col justify-center text-center md:mb-18 lg:mb-20">
-          <h2 className="rb-5 mb-5 text-lg md:text-3xl font-bold md:mb-6 text-white">
+        <div className="rb-12 mx-auto mb-12 flex max-w-lg flex-col justify-center text-center lg:mb-20">
+          <h2 className="rb-5 mb-5 text-lg lg:text-3xl font-bold lg:mb-6 text-white">
             Questions?
           </h2>
-          <p className="text-base md:text-lg text-white">
+          <p className="text-base lg:text-lg text-white">
             We are here to answer your membership questions
           </p>
         </div>
@@ -90,18 +90,18 @@ export default function Join() {
                 <div className="mb-5 lg:mb-6">
                   <Icon className="size-12 text-white" />
                 </div>
-                <h3 className="mb-3 text-lg font-bold leading-[1.4] md:text-xl lg:mb-4 text-white">
+                <h3 className="mb-3 text-lg font-bold leading-[1.4] lg:text-xl lg:mb-4 text-white">
                   {contact.title}
                 </h3>
                 {contact.isLink ? (
                   <Link
                     href={contact.href!}
-                    className="text-sm md:text-base text-white hover:text-gray-200 transition-colors"
+                    className="text-sm lg:text-base text-white hover:text-gray-200 transition-colors"
                   >
                     {contact.value}
                   </Link>
                 ) : (
-                  <p className="text-sm md:text-base text-white">
+                  <p className="text-sm lg:text-base text-white">
                     {contact.value}
                   </p>
                 )}

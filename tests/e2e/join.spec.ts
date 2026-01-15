@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
-import { waitForLoadingState } from './common';
+import { waitForLoadingState, VIEWPORTS } from './common';
 
 test.describe('Join Page', () => {
   const PATH = '/join';
@@ -79,7 +79,6 @@ test.describe('Join Page', () => {
 
       // Check for responsive grid classes
       const classes = await benefitsGrid.first().getAttribute('class');
-      expect(classes).toContain('md:grid-cols-2');
       expect(classes).toContain('lg:grid-cols-4');
     });
   });
@@ -379,42 +378,243 @@ test.describe('Join Page', () => {
 
   test.describe('Responsive Design', () => {
     test('should display correctly on mobile viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 375, height: 667 });
+      await page.setViewportSize(VIEWPORTS.mobile);
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
       const heading = page.getByRole('heading', {
         name: /Grow your business/i,
       });
       await expect(heading).toBeVisible();
+      const description = page.getByText(
+        /Join the Meriden\/Ozawkie Area Chamber of Commerce and unlock powerful opportunities/i,
+      );
+      await expect(description).toBeVisible();
 
+      // All four benefit cards
+      await expect(
+        page.getByText(/Promote your business through Chamber activities/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Enhance your network of key business contacts/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Develop our community through meaningful service/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Support the creation of strong local businesses/i),
+      ).toBeVisible();
+
+      // Form section
       const formHeading = page.getByRole('heading', { name: /Join us/i });
       await expect(formHeading).toBeVisible();
+      await expect(
+        page.getByText(/Complete your chamber membership application/i),
+      ).toBeVisible();
+
+      // All form fields
+      await expect(page.locator('#business')).toBeVisible();
+      await expect(page.locator('#contact')).toBeVisible();
+      await expect(page.locator('#owner')).toBeVisible();
+      await expect(page.locator('#manager')).toBeVisible();
+      await expect(page.locator('#address')).toBeVisible();
+      await expect(page.locator('#employees')).toBeVisible();
+      await expect(page.locator('#phone')).toBeVisible();
+      await expect(page.locator('#email')).toBeVisible();
+      await expect(page.locator('#website')).toBeVisible();
+      await expect(page.locator('#referral')).toBeVisible();
+      await expect(page.locator('#donation')).toBeVisible();
+      await expect(page.getByRole('button', { name: /Submit/i })).toBeVisible();
+
+      // Questions section
+      await expect(
+        page.getByRole('heading', { name: /Questions\?/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Email$/i }),
+      ).toBeVisible();
+      await expect(
+        page
+          .getByRole('link', {
+            name: /meridenozawkieareachamber@gmail.com/i,
+          })
+          .first(),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Phone$/i }),
+      ).toBeVisible();
+      await expect(page.getByText(/\(785\) 817-5979/i)).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Office$/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('link', { name: /3675 74th St, Meriden, KS 66512/i }),
+      ).toBeVisible();
     });
 
     test('should display correctly on tablet viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 768, height: 1024 });
+      await page.setViewportSize(VIEWPORTS.tablet);
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
       const heading = page.getByRole('heading', {
         name: /Grow your business/i,
       });
       await expect(heading).toBeVisible();
+      const description = page.getByText(
+        /Join the Meriden\/Ozawkie Area Chamber of Commerce and unlock powerful opportunities/i,
+      );
+      await expect(description).toBeVisible();
 
-      const submitButton = page.getByRole('button', { name: /Submit/i });
-      await expect(submitButton).toBeVisible();
+      // All four benefit cards
+      await expect(
+        page.getByText(/Promote your business through Chamber activities/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Enhance your network of key business contacts/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Develop our community through meaningful service/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Support the creation of strong local businesses/i),
+      ).toBeVisible();
+
+      // Form section
+      const formHeading = page.getByRole('heading', { name: /Join us/i });
+      await expect(formHeading).toBeVisible();
+      await expect(
+        page.getByText(/Complete your chamber membership application/i),
+      ).toBeVisible();
+
+      // All form fields
+      await expect(page.locator('#business')).toBeVisible();
+      await expect(page.locator('#contact')).toBeVisible();
+      await expect(page.locator('#owner')).toBeVisible();
+      await expect(page.locator('#manager')).toBeVisible();
+      await expect(page.locator('#address')).toBeVisible();
+      await expect(page.locator('#employees')).toBeVisible();
+      await expect(page.locator('#phone')).toBeVisible();
+      await expect(page.locator('#email')).toBeVisible();
+      await expect(page.locator('#website')).toBeVisible();
+      await expect(page.locator('#referral')).toBeVisible();
+      await expect(page.locator('#donation')).toBeVisible();
+      await expect(page.getByRole('button', { name: /Submit/i })).toBeVisible();
+
+      // Questions section
+      await expect(
+        page.getByRole('heading', { name: /Questions\?/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Email$/i }),
+      ).toBeVisible();
+      await expect(
+        page
+          .getByRole('link', {
+            name: /meridenozawkieareachamber@gmail.com/i,
+          })
+          .first(),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Phone$/i }),
+      ).toBeVisible();
+      await expect(page.getByText(/\(785\) 817-5979/i)).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Office$/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('link', { name: /3675 74th St, Meriden, KS 66512/i }),
+      ).toBeVisible();
     });
 
     test('should display correctly on desktop viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 1920, height: 1080 });
+      await page.setViewportSize(VIEWPORTS.desktop);
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(header).toBeVisible();
+      await expect(footer).toBeVisible();
+
+      // Page heading and description
       const heading = page.getByRole('heading', {
         name: /Grow your business/i,
       });
       await expect(heading).toBeVisible();
-
-      // Benefit cards should be in 4-column grid on desktop
-      const benefit1 = page.getByText(
-        /Promote your business through Chamber activities/i,
+      const description = page.getByText(
+        /Join the Meriden\/Ozawkie Area Chamber of Commerce and unlock powerful opportunities/i,
       );
-      await expect(benefit1).toBeVisible();
+      await expect(description).toBeVisible();
+
+      // All four benefit cards
+      await expect(
+        page.getByText(/Promote your business through Chamber activities/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Enhance your network of key business contacts/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Develop our community through meaningful service/i),
+      ).toBeVisible();
+      await expect(
+        page.getByText(/Support the creation of strong local businesses/i),
+      ).toBeVisible();
+
+      // Form section
+      const formHeading = page.getByRole('heading', { name: /Join us/i });
+      await expect(formHeading).toBeVisible();
+      await expect(
+        page.getByText(/Complete your chamber membership application/i),
+      ).toBeVisible();
+
+      // All form fields
+      await expect(page.locator('#business')).toBeVisible();
+      await expect(page.locator('#contact')).toBeVisible();
+      await expect(page.locator('#owner')).toBeVisible();
+      await expect(page.locator('#manager')).toBeVisible();
+      await expect(page.locator('#address')).toBeVisible();
+      await expect(page.locator('#employees')).toBeVisible();
+      await expect(page.locator('#phone')).toBeVisible();
+      await expect(page.locator('#email')).toBeVisible();
+      await expect(page.locator('#website')).toBeVisible();
+      await expect(page.locator('#referral')).toBeVisible();
+      await expect(page.locator('#donation')).toBeVisible();
+      await expect(page.getByRole('button', { name: /Submit/i })).toBeVisible();
+
+      // Questions section
+      await expect(
+        page.getByRole('heading', { name: /Questions\?/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Email$/i }),
+      ).toBeVisible();
+      await expect(
+        page
+          .getByRole('link', {
+            name: /meridenozawkieareachamber@gmail.com/i,
+          })
+          .first(),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Phone$/i }),
+      ).toBeVisible();
+      await expect(page.getByText(/\(785\) 817-5979/i)).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /^Office$/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('link', { name: /3675 74th St, Meriden, KS 66512/i }),
+      ).toBeVisible();
     });
   });
 

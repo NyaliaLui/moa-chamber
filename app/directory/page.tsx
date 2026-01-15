@@ -38,22 +38,22 @@ export default function Directory() {
     <>
       <section className="w-full py-16 bg-[#1a56db]">
         <div className="container px-[5%] mx-auto">
-          <div className="mb-6 md:mb-9 lg:mb-10">
+          <div className="mb-6 lg:mb-10">
             <div className="mx-auto max-w-lg text-center">
               <h1
-                className="mt-3 text-3xl font-bold md:mt-4 text-white"
+                className="mt-3 text-3xl font-bold lg:mt-4 text-white"
                 data-testid={testIds.PROJECTS_PAGE.HEADER}
               >
                 Our Members
               </h1>
-              <p className="mt-5 text-lg md:mt-6 text-white">
+              <p className="mt-5 text-lg lg:mt-6 text-white">
                 Discover local businesses that drive our community&apos;s
                 economic strength and collaboration.
               </p>
             </div>
           </div>
           <div
-            className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12"
+            className="grid grid-cols-1 gap-x-5 gap-y-12 lg:grid-cols-3 lg:gap-x-12 lg:gap-y-16"
             data-testid={testIds.PROJECTS_PAGE.PROJECT_LIST}
           >
             {displayedMembers.map((item, index) => (

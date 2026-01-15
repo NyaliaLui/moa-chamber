@@ -246,43 +246,211 @@ test.describe('About Page', () => {
   });
 
   test.describe('Responsive Design', () => {
-    test('should display correctly on mobile viewport', async ({ page }) => {
+    test('should display all components correctly on mobile viewport', async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: 375, height: 667 });
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Mission section
       const missionHeading = page.getByText(/Mission/i);
       await expect(missionHeading).toBeVisible();
+      const missionStatement = page.getByText(
+        /To be a member driven organization that promotes economic growth/i,
+      );
+      await expect(missionStatement).toBeVisible();
 
+      // Staff section
       const staffHeading = page.getByRole('heading', { name: /^Staff$/i });
       await expect(staffHeading).toBeVisible();
+      const staffDescription = page.getByText(
+        /Dedicated professionals driving business growth/i,
+      );
+      await expect(staffDescription).toBeVisible();
 
+      // At least one staff card with required elements
+      const staffCards = page.locator('div.flex.flex-col.text-center');
+      const staffCount = await staffCards.count();
+      expect(staffCount).toBeGreaterThan(0);
+
+      const firstStaffCard = staffCards.first();
+      const staffName = firstStaffCard.locator('h5');
+      await expect(staffName).toBeVisible();
+      const staffH6Elements = firstStaffCard.locator('h6');
+      const h6Count = await staffH6Elements.count();
+      expect(h6Count).toBeGreaterThanOrEqual(2); // Role and email
+      const staffBio = firstStaffCard.locator('p').first();
+      await expect(staffBio).toBeVisible();
+      const staffSocialLinks = firstStaffCard.locator('a');
+      const socialLinkCount = await staffSocialLinks.count();
+      expect(socialLinkCount).toBeGreaterThanOrEqual(2);
+
+      // Board of Directors section
       const boardHeading = page.getByRole('heading', {
         name: /Board of Directors/i,
       });
       await expect(boardHeading).toBeVisible();
-    });
+      const boardDescription = page.getByText(
+        /Community leaders who understand the pulse of our local economy/i,
+      );
+      await expect(boardDescription).toBeVisible();
 
-    test('should display correctly on tablet viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 768, height: 1024 });
+      // At least one board member card
+      const boardCards = page.locator('div.flex.flex-col.items-start');
+      const boardCount = await boardCards.count();
+      expect(boardCount).toBeGreaterThan(0);
 
-      const boardHeading = page.getByRole('heading', {
-        name: /Board of Directors/i,
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
       });
-      await expect(boardHeading).toBeVisible();
-
+      await expect(ctaHeading).toBeVisible();
       const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
       await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
 
-    test('should display correctly on desktop viewport', async ({ page }) => {
-      await page.setViewportSize({ width: 1920, height: 1080 });
+    test('should display all components correctly on tablet viewport', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1024, height: 768 });
 
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Mission section
       const missionHeading = page.getByText(/Mission/i);
       await expect(missionHeading).toBeVisible();
+      const missionStatement = page.getByText(
+        /To be a member driven organization that promotes economic growth/i,
+      );
+      await expect(missionStatement).toBeVisible();
 
-      // Staff cards should be in grid layout on desktop
+      // Staff section
+      const staffHeading = page.getByRole('heading', { name: /^Staff$/i });
+      await expect(staffHeading).toBeVisible();
+      const staffDescription = page.getByText(
+        /Dedicated professionals driving business growth/i,
+      );
+      await expect(staffDescription).toBeVisible();
+
+      // At least one staff card with required elements
       const staffCards = page.locator('div.flex.flex-col.text-center');
-      const count = await staffCards.count();
-      expect(count).toBeGreaterThan(0);
+      const staffCount = await staffCards.count();
+      expect(staffCount).toBeGreaterThan(0);
+
+      const firstStaffCard = staffCards.first();
+      const staffName = firstStaffCard.locator('h5');
+      await expect(staffName).toBeVisible();
+      const staffH6Elements = firstStaffCard.locator('h6');
+      const h6Count = await staffH6Elements.count();
+      expect(h6Count).toBeGreaterThanOrEqual(2); // Role and email
+      const staffBio = firstStaffCard.locator('p').first();
+      await expect(staffBio).toBeVisible();
+      const staffSocialLinks = firstStaffCard.locator('a');
+      const socialLinkCount = await staffSocialLinks.count();
+      expect(socialLinkCount).toBeGreaterThanOrEqual(2);
+
+      // Board of Directors section
+      const boardHeading = page.getByRole('heading', {
+        name: /Board of Directors/i,
+      });
+      await expect(boardHeading).toBeVisible();
+      const boardDescription = page.getByText(
+        /Community leaders who understand the pulse of our local economy/i,
+      );
+      await expect(boardDescription).toBeVisible();
+
+      // At least one board member card
+      const boardCards = page.locator('div.flex.flex-col.items-start');
+      const boardCount = await boardCards.count();
+      expect(boardCount).toBeGreaterThan(0);
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
+    });
+
+    test('should display all components correctly on desktop viewport', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1920, height: 1080 });
+
+      // Header and Footer
+      const header = page.getByTestId(testIds.LAYOUT.HEADER);
+      await expect(header).toBeVisible();
+      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
+      await expect(footer).toBeVisible();
+
+      // Mission section
+      const missionHeading = page.getByText(/Mission/i);
+      await expect(missionHeading).toBeVisible();
+      const missionStatement = page.getByText(
+        /To be a member driven organization that promotes economic growth/i,
+      );
+      await expect(missionStatement).toBeVisible();
+
+      // Staff section
+      const staffHeading = page.getByRole('heading', { name: /^Staff$/i });
+      await expect(staffHeading).toBeVisible();
+      const staffDescription = page.getByText(
+        /Dedicated professionals driving business growth/i,
+      );
+      await expect(staffDescription).toBeVisible();
+
+      // At least one staff card with required elements
+      const staffCards = page.locator('div.flex.flex-col.text-center');
+      const staffCount = await staffCards.count();
+      expect(staffCount).toBeGreaterThan(0);
+
+      const firstStaffCard = staffCards.first();
+      const staffName = firstStaffCard.locator('h5');
+      await expect(staffName).toBeVisible();
+      const staffH6Elements = firstStaffCard.locator('h6');
+      const h6Count = await staffH6Elements.count();
+      expect(h6Count).toBeGreaterThanOrEqual(2); // Role and email
+      const staffBio = firstStaffCard.locator('p').first();
+      await expect(staffBio).toBeVisible();
+      const staffSocialLinks = firstStaffCard.locator('a');
+      const socialLinkCount = await staffSocialLinks.count();
+      expect(socialLinkCount).toBeGreaterThanOrEqual(2);
+
+      // Board of Directors section
+      const boardHeading = page.getByRole('heading', {
+        name: /Board of Directors/i,
+      });
+      await expect(boardHeading).toBeVisible();
+      const boardDescription = page.getByText(
+        /Community leaders who understand the pulse of our local economy/i,
+      );
+      await expect(boardDescription).toBeVisible();
+
+      // At least one board member card
+      const boardCards = page.locator('div.flex.flex-col.items-start');
+      const boardCount = await boardCards.count();
+      expect(boardCount).toBeGreaterThan(0);
+
+      // CTA section
+      const ctaHeading = page.getByRole('heading', {
+        name: /Join the Chamber/i,
+      });
+      await expect(ctaHeading).toBeVisible();
+      const applyButton = page.getByTestId(testIds.CTA.APPLY_BTN);
+      await expect(applyButton).toBeVisible();
+      await expect(applyButton).toHaveAttribute('href', '/join');
     });
   });
 

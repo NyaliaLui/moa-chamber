@@ -46,9 +46,9 @@ function Header() {
         </Link>
 
         {/* Desktop Navigation - lg and up */}
-        <nav className="hidden lg:flex items-center gap-6 lg:gap-8 flex-1 justify-between ml-8">
+        <nav className="hidden xl:flex items-center gap-6 xl:gap-8 flex-1 justify-between ml-8">
           {/* Page Links */}
-          <ul className="flex items-center gap-4 lg:gap-6">
+          <ul className="flex items-center gap-4 xl:gap-6">
             {NAVBAR_ITEMS.map(({ href, label }) => (
               <li key={href}>
                 <Link
@@ -89,7 +89,7 @@ function Header() {
 
         {/* Mobile Hamburger Button */}
         <button
-          className="lg:hidden relative z-50 p-3"
+          className="xl:hidden relative z-50 p-3"
           onClick={toggleMenu}
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
@@ -114,9 +114,9 @@ function Header() {
         <nav
           className={`${
             isMenuOpen
-              ? 'max-lg:w-10/12 max-lg:opacity-100'
-              : 'max-lg:w-0 max-lg:opacity-0'
-          } lg:hidden transition-all duration-500 ease-in-out overflow-scroll fixed animate-sideways-once h-screen bg-[#0e2647] pt-24 z-40 top-0 right-0`}
+              ? 'max-xl:w-10/12 max-xl:opacity-100'
+              : 'max-xl:w-0 max-xl:opacity-0'
+          } xl:hidden transition-all duration-500 ease-in-out overflow-scroll fixed animate-sideways-once h-screen bg-[#0e2647] pt-24 z-40 top-0 right-0`}
         >
           <ul className="flex flex-col items-center gap-10">
             {/* Page Links */}
