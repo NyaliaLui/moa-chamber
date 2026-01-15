@@ -27,7 +27,7 @@ export default function Calendar() {
         data-testid={testIds.CALENDAR.CONTAINER}
       >
         <div className="container mx-auto max-w-lg text-center">
-          <h1 className="mb-5 text-2xl font-bold md:mb-6 text-white">
+          <h1 className="mb-5 text-2xl font-bold lg:mb-6 text-white">
             Chamber Calendar
           </h1>
           <p className="text-lg text-white">
