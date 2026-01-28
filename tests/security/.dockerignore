@@ -1,0 +1,10 @@
+.claude
+.flowbite-react
+.github
+.next
+.swc
+.vscode
+node_modules
+playwright-report
+test-results
+NUL
