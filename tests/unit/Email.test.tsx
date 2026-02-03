@@ -56,6 +56,7 @@ describe('submitMembershipForm', () => {
       phone: '(555) 123-4567',
       email: 'john@acme.com',
       website: 'https://acme.com',
+      employees: '5',
     });
 
     await submitMembershipForm(formData);
@@ -80,6 +81,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -99,6 +101,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -118,6 +121,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -139,6 +143,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: 'test@example.com',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -158,6 +163,7 @@ describe('submitMembershipForm', () => {
       phone: '(555) 123-4567',
       email: '',
       website: 'https://example.com',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -177,6 +183,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -193,15 +200,16 @@ describe('submitMembershipForm', () => {
       contact: 'John Doe',
       contactrole: 'owner',
       address: '123 Main St',
-      phone: '(785) 555-1234',
+      phone: '785-555-1234',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
 
     const emailBody = mockSend.mock.calls[0][0].text;
-    expect(emailBody).toContain('Phone Number: (785) 555-1234');
+    expect(emailBody).toContain('Phone Number: 785-555-1234');
   });
 
   it('should include email when provided', async () => {
@@ -215,6 +223,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: 'contact@business.com',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -234,6 +243,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: 'https://mybusiness.com',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -254,6 +264,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -278,6 +289,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     // Should not throw
@@ -297,6 +309,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -315,6 +328,7 @@ describe('submitMembershipForm', () => {
       phone: '555-0000',
       email: 'test@test.com',
       website: 'test.com',
+      employees: '3',
     });
 
     await submitMembershipForm(formData);
@@ -341,6 +355,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -363,6 +378,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);
@@ -385,6 +401,7 @@ describe('submitMembershipForm', () => {
       phone: '',
       email: '',
       website: '',
+      employees: '1',
     });
 
     await submitMembershipForm(formData);

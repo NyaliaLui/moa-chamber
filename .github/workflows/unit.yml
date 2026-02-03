@@ -21,4 +21,4 @@ jobs:
         run: npm ci
 
       - name: Run unit tests
-        run: npm test
+        run: npm test -- $(ls tests/unit/*.test.tsx | xargs -n1 basename | sed 's/\.test\.tsx$//')

@@ -8,7 +8,7 @@ const createJestConfig = nextJest({
 
 // Add any custom config to be passed to Jest
 const config: Config = {
-  rootDir: 'tests/unit',
+  roots: ['tests/unit', 'tests/security'],
   clearMocks: true,
   testEnvironment: 'jsdom',
   globals: {
