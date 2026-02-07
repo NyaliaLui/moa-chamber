@@ -5,9 +5,6 @@ const nextConfig = {
   env: {},
   reactStrictMode: true,
   experimental: {},
-  eslint: {
-    dirs: ['app'],
-  },
   images: {
     remotePatterns: [
       {

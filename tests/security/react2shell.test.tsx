@@ -57,7 +57,7 @@ describe('react2shell vulnerability test', () => {
     logs = await container.logs();
     logs.on('data', (chunk: Buffer) => {
       let chunkS = chunk.toString();
-      console.debug(chunkS);
+      // console.debug(chunkS);
       logsOutput += chunkS;
     });
   };
