@@ -14,7 +14,7 @@
     "gen:snapshots": "npx playwright test --update-snapshots"
   },
   "dependencies": {
-    "@wix/data": "^1.0.383",
+    "@wix/data": "^1.0.387",
     "@wix/sdk": "^1.21.2",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.12.16",
@@ -26,19 +26,19 @@
     "resend": "^6.9.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.1",
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.10.9",
-    "@types/react": "^19.2.10",
+    "@types/node": "^24.10.11",
+    "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.24",
     "eslint": "^9.39.2",
-    "eslint-config-next": "^15.5.11",
+    "eslint-config-next": "^15.5.12",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "form-data": "^4.0.5",
