@@ -47,7 +47,7 @@ describe('HistoricalBusinesses', () => {
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute(
       'src',
-      '/_next/image?url=%2Fimages%2Fplaceholder.jpg&w=16&q=75',
+      '/_next/image?url=%2Fimages%2Fplaceholder.jpg&w=32&q=75',
     );
   });
 
