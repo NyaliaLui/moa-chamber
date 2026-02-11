@@ -166,7 +166,7 @@ describe('validateRequired', () => {
       ValidationError,
     );
     expect(() => validateRequired('', 'business name')).toThrow(
-      'Invalid input data: business name is required',
+      'business name is required',
     );
   });
 
@@ -175,13 +175,13 @@ describe('validateRequired', () => {
       ValidationError,
     );
     expect(() => validateRequired('   ', 'contact name')).toThrow(
-      'Invalid input data: contact name is required',
+      'contact name is required',
     );
   });
 
   it('includes field name in error message', () => {
     expect(() => validateRequired('', 'address')).toThrow(
-      'Invalid input data: address is required',
+      'address is required',
     );
   });
 
@@ -221,7 +221,7 @@ describe('validateEmail', () => {
     it('rejects email without @ symbol', () => {
       expect(() => validateEmail('userexample.com')).toThrow(ValidationError);
       expect(() => validateEmail('userexample.com')).toThrow(
-        'Invalid input data: email format is invalid',
+        'email format is invalid',
       );
     });
 
@@ -282,7 +282,7 @@ describe('validatePhone', () => {
     it('rejects phone with letters', () => {
       expect(() => validatePhone('555-ABC-1234')).toThrow(ValidationError);
       expect(() => validatePhone('555-ABC-1234')).toThrow(
-        'Invalid input data: phone format is invalid',
+        'phone format is invalid',
       );
     });
 
@@ -325,7 +325,7 @@ describe('validateNumeric', () => {
         ValidationError,
       );
       expect(() => validateNumeric('abc', 'employees')).toThrow(
-        'Invalid input data: employees must be an integer or dollar amount',
+        'employees must be an integer or dollar amount',
       );
     });
 
@@ -359,7 +359,7 @@ describe('validateNumeric', () => {
 
     it('includes field name in error message', () => {
       expect(() => validateNumeric('abc', 'donation amount')).toThrow(
-        'Invalid input data: donation amount must be an integer or dollar amount',
+        'donation amount must be an integer or dollar amount',
       );
     });
   });

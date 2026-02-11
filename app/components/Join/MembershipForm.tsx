@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { Button, Radio, Label, TextInput } from 'flowbite-react';
 import { submitMembershipForm } from '@app/components/Join/actions';
+import { ValidationError } from '@app/components/Join/validation';
 
 export default function MembershipForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,15 +21,19 @@ export default function MembershipForm() {
       setIsSubmitted(true);
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(
-        'There was an error submitting your application. Please try again.',
-      );
+      setErrorMsg(`Error submitting your application ${error}`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  if (errorMsg) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    throw new ValidationError(errorMsg);
+  }
+
   if (isSubmitted) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <div className="mx-auto max-w-lg py-20 text-center">
         <div className="mb-8">
