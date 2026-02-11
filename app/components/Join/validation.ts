@@ -1,3 +1,5 @@
+import { sanitize } from 'isomorphic-dompurify';
+
 export class ValidationError extends Error {
   status: number;
   constructor(message: string) {
@@ -11,10 +13,8 @@ export function sanitizeString(value: unknown): string {
   if (value === null || value === undefined) {
     return '';
   }
-  return String(value)
-    .trim()
-    .replace(/<[^>]*>/g, '') // Remove HTML tags
-    .replace(/[<>'"`;(){}]/g, ''); // Remove potentially dangerous characters
+
+  return sanitize(String(value));
 }
 
 export function validateRequired(value: string, fieldName: string): void {
@@ -36,9 +36,9 @@ export function validatePhone(value: string): void {
 }
 
 export function validateNumeric(value: string, fieldName: string): void {
-  if (value && !/^\d+$/.test(value)) {
+  if (value && !/^\d+(\.\d{1,2})?$/.test(value)) {
     throw new ValidationError(
-      `Invalid input data: ${fieldName} must be a number`,
+      `Invalid input data: ${fieldName} must be an integer or dollar amount`,
     );
   }
 }
