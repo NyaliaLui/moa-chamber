@@ -382,32 +382,6 @@ describe('MembershipForm', () => {
       });
     });
 
-    it('displays confirmation email message in success state', async () => {
-      (submitMembershipForm as jest.Mock).mockResolvedValue(undefined);
-
-      render(<MembershipForm />);
-
-      await userEvent.type(
-        screen.getByLabelText(/business name/i),
-        'Test Business',
-      );
-      await userEvent.type(screen.getByLabelText(/contact name/i), 'John Doe');
-      await userEvent.type(
-        screen.getByLabelText(/business address/i),
-        '123 Main',
-      );
-      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
-
-      const submitButton = screen.getByRole('button', { name: /submit/i });
-      await userEvent.click(submitButton);
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(/you should receive a confirmation email/i),
-        ).toBeInTheDocument();
-      });
-    });
-
     it('displays success checkmark icon', async () => {
       (submitMembershipForm as jest.Mock).mockResolvedValue(undefined);
 

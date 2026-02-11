@@ -51,11 +51,8 @@ export default function MembershipForm() {
         </h2>
         <p className="text-base lg:text-lg text-white mb-6">
           Thank you for your interest in joining the Meriden/Ozawkie Area
-          Chamber of Commerce. We have received your membership application and
-          will be in touch with you shortly.
-        </p>
-        <p className="text-sm text-white">
-          You should receive a confirmation email at the address you provided.
+          Chamber of Commerce. We received your membership application and will
+          get in touch with you soon.
         </p>
       </div>
     );
