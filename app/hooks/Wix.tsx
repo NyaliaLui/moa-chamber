@@ -181,9 +181,7 @@ export function makeProject(item: items.WixDataItem): Project {
     ),
     email: sanitizeText(item.email || DEFAULTS.project.email),
     website: sanitizeUrl(item.website || DEFAULTS.project.website),
-    phoneNumber: sanitizeText(
-      item.phoneNumber || DEFAULTS.project.phoneNumber,
-    ),
+    phoneNumber: sanitizeText(item.phoneNumber || DEFAULTS.project.phoneNumber),
     address: sanitizeText(item.address || DEFAULTS.project.address),
     cover: item.cover ? makeWixImage(item.cover) : DEFAULTS.project.cover,
   };
@@ -207,9 +205,7 @@ export function makeBoardMemberCard(
   return {
     name: sanitizeText(item.name || DEFAULTS.team.boardMember.name),
     role: sanitizeText(item.boardRole || DEFAULTS.team.boardMember.role),
-    employer: sanitizeText(
-      item.employer || DEFAULTS.team.boardMember.employer,
-    ),
+    employer: sanitizeText(item.employer || DEFAULTS.team.boardMember.employer),
   };
 }
 
