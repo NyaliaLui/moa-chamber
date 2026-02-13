@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Button, Radio, Label, TextInput } from 'flowbite-react';
 import { submitMembershipForm } from '@app/components/Join/actions';
-import { ValidationError } from '@app/components/Join/validation';
 
 export default function MembershipForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -29,7 +28,7 @@ export default function MembershipForm() {
 
   if (errorMsg) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    throw new ValidationError(errorMsg);
+    throw new Error(errorMsg);
   }
 
   if (isSubmitted) {

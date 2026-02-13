@@ -1,16 +1,36 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { DEFAULT_TARGET_EMAIL } from '@app/constants';
+import { formSubmissionLimiter, getClientIp } from '@app/rate-limit';
 import {
   sanitizeString,
   validateRequired,
   validateEmail,
   validatePhone,
   validateNumeric,
-} from './validation';
+} from '@app/components/Join/validation';
+
+class TooManyRequests extends Error {
+  status: number;
+  constructor(message: string) {
+    super(message);
+    this.name = 'TooManyRequests';
+    this.status = 429;
+  }
+}
 
 export async function submitMembershipForm(formData: FormData): Promise<void> {
+  const headersList = await headers();
+  const ip = getClientIp(headersList);
+
+  try {
+    await formSubmissionLimiter.consume(ip);
+  } catch {
+    throw new TooManyRequests('Too many submissions. Please try again later.');
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   // Sanitize all form inputs
