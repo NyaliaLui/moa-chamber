@@ -76,10 +76,24 @@ const config = defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: process.env.REMOTE_PROVIDER
     ? undefined
-    : {
-        command: 'npm run start',
-        url: 'http://127.0.0.1:3000',
-      },
+    : [
+        {
+          command: 'npm run start',
+          url: 'http://127.0.0.1:3000',
+          env: {
+            RATE_LIMIT_GLOBAL_POINTS: '10000',
+            RATE_LIMIT_FORM_POINTS: '10000',
+          },
+        },
+        {
+          command: 'npx next start -p 3001',
+          url: 'http://127.0.0.1:3001',
+          env: {
+            RATE_LIMIT_GLOBAL_POINTS: '3',
+            RATE_LIMIT_FORM_POINTS: '3',
+          },
+        },
+      ],
 });
 
 export default config;

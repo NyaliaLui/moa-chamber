@@ -1,6 +1,17 @@
 import { submitMembershipForm } from '@app/components/Join/actions';
 import { Resend } from 'resend';
 
+// Mock next/headers so submitMembershipForm can call headers() outside a request
+jest.mock('next/headers', () => ({
+  headers: jest.fn().mockResolvedValue(new Headers()),
+}));
+
+// Mock rate limiter so email tests are not affected by rate limiting
+jest.mock('../../app/rate-limit', () => ({
+  formSubmissionLimiter: { consume: jest.fn().mockResolvedValue({}) },
+  getClientIp: jest.fn().mockReturnValue('127.0.0.1'),
+}));
+
 // Mock the Resend module
 jest.mock('resend');
 

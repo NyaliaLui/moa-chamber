@@ -1,14 +1,20 @@
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 
-// Global rate limiter: 100 requests per minute per IP
+const globalPoints = parseInt(
+  process.env.RATE_LIMIT_GLOBAL_POINTS || '100',
+  10,
+);
+const formPoints = parseInt(process.env.RATE_LIMIT_FORM_POINTS || '5', 10);
+
+// Global rate limiter: requests per minute per IP
 export const globalLimiter = new RateLimiterMemory({
-  points: 100,
+  points: globalPoints,
   duration: 60,
 });
 
-// Form submission rate limiter: 5 submissions per 15 minutes per IP
+// Form submission rate limiter: submissions per 15 minutes per IP
 export const formSubmissionLimiter = new RateLimiterMemory({
-  points: 5,
+  points: formPoints,
   duration: 15 * 60,
 });
 
