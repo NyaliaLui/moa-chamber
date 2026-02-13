@@ -166,7 +166,7 @@ describe('validateRequired', () => {
       ValidationError,
     );
     expect(() => validateRequired('', 'business name')).toThrow(
-      'Invalid input data: business name is required',
+      'business name is required',
     );
   });
 
@@ -175,13 +175,13 @@ describe('validateRequired', () => {
       ValidationError,
     );
     expect(() => validateRequired('   ', 'contact name')).toThrow(
-      'Invalid input data: contact name is required',
+      'contact name is required',
     );
   });
 
   it('includes field name in error message', () => {
     expect(() => validateRequired('', 'address')).toThrow(
-      'Invalid input data: address is required',
+      'address is required',
     );
   });
 
@@ -221,7 +221,7 @@ describe('validateEmail', () => {
     it('rejects email without @ symbol', () => {
       expect(() => validateEmail('userexample.com')).toThrow(ValidationError);
       expect(() => validateEmail('userexample.com')).toThrow(
-        'Invalid input data: email format is invalid',
+        'email format is invalid',
       );
     });
 
@@ -282,7 +282,7 @@ describe('validatePhone', () => {
     it('rejects phone with letters', () => {
       expect(() => validatePhone('555-ABC-1234')).toThrow(ValidationError);
       expect(() => validatePhone('555-ABC-1234')).toThrow(
-        'Invalid input data: phone format is invalid',
+        'phone format is invalid',
       );
     });
 
@@ -325,7 +325,7 @@ describe('validateNumeric', () => {
         ValidationError,
       );
       expect(() => validateNumeric('abc', 'employees')).toThrow(
-        'Invalid input data: employees must be a number',
+        'employees must be an integer or dollar amount',
       );
     });
 
@@ -333,8 +333,16 @@ describe('validateNumeric', () => {
       expect(() => validateNumeric('12a', 'donation')).toThrow(ValidationError);
     });
 
-    it('rejects decimal numbers', () => {
-      expect(() => validateNumeric('12.5', 'amount')).toThrow(ValidationError);
+    it('accepts dollar amounts with up to 2 decimal places', () => {
+      expect(() => validateNumeric('12.5', 'amount')).not.toThrow();
+      expect(() => validateNumeric('12.50', 'amount')).not.toThrow();
+      expect(() => validateNumeric('0.99', 'amount')).not.toThrow();
+    });
+
+    it('rejects more than 2 decimal places', () => {
+      expect(() => validateNumeric('12.555', 'amount')).toThrow(
+        ValidationError,
+      );
     });
 
     it('rejects negative numbers', () => {
@@ -351,7 +359,7 @@ describe('validateNumeric', () => {
 
     it('includes field name in error message', () => {
       expect(() => validateNumeric('abc', 'donation amount')).toThrow(
-        'Invalid input data: donation amount must be a number',
+        'donation amount must be an integer or dollar amount',
       );
     });
   });

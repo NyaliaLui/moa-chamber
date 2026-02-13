@@ -11,6 +11,14 @@ import {
 
 import { items } from '@wix/data';
 import { DEFAULT_WIX_IMAGE, DEFAULTS, WixImage } from '@app/constants';
+import {
+  sanitizeText,
+  sanitizeUrl,
+  validateEmail,
+  validateHandle,
+  validatePhone,
+  validateSlug,
+} from '@app/sanitize';
 import type { TabContent } from '@app/components/Resources/CulturalLandmarks';
 import type { Business } from '@app/components/Resources/HistoricalBusinesses';
 import type { Benefit } from '@app/components/Benefits';
@@ -74,10 +82,14 @@ export function makeWixImage(src: string): WixImage {
 export function makeTabContent(item: items.WixDataItem): TabContent {
   return {
     id: item._id,
-    heading: item.heading || DEFAULTS.resources.culture.heading,
-    description: item.description || DEFAULTS.resources.culture.description,
-    ctaLink: item.ctaLink || DEFAULTS.resources.culture.ctaLink,
-    ctaLabel: item.ctaLabel || DEFAULTS.resources.culture.ctaLabel,
+    heading: sanitizeText(item.heading || DEFAULTS.resources.culture.heading),
+    description: sanitizeText(
+      item.description || DEFAULTS.resources.culture.description,
+    ),
+    ctaLink: sanitizeUrl(item.ctaLink || DEFAULTS.resources.culture.ctaLink),
+    ctaLabel: sanitizeText(
+      item.ctaLabel || DEFAULTS.resources.culture.ctaLabel,
+    ),
     image: item.image
       ? makeWixImage(item.image)
       : DEFAULTS.resources.culture.image,
@@ -86,9 +98,11 @@ export function makeTabContent(item: items.WixDataItem): TabContent {
 
 export function makeBusiness(item: items.WixDataItem): Business {
   return {
-    name: item.name || DEFAULTS.resources.business.name,
-    description: item.description || DEFAULTS.resources.business.description,
-    website: item.website || DEFAULTS.resources.business.website,
+    name: sanitizeText(item.name || DEFAULTS.resources.business.name),
+    description: sanitizeText(
+      item.description || DEFAULTS.resources.business.description,
+    ),
+    website: sanitizeUrl(item.website || DEFAULTS.resources.business.website),
     image: item.image
       ? makeWixImage(item.image)
       : DEFAULTS.resources.business.image,
@@ -98,9 +112,11 @@ export function makeBusiness(item: items.WixDataItem): Business {
 export function makeBenefit(item: items.WixDataItem): Benefit {
   return {
     id: item._id,
-    heading: item.heading || DEFAULTS.home.benefit.heading,
-    description: item.description || DEFAULTS.home.benefit.description,
-    label: item.label || DEFAULTS.home.benefit.label,
+    heading: sanitizeText(item.heading || DEFAULTS.home.benefit.heading),
+    description: sanitizeText(
+      item.description || DEFAULTS.home.benefit.description,
+    ),
+    label: sanitizeText(item.label || DEFAULTS.home.benefit.label),
     image: item.image ? makeWixImage(item.image) : DEFAULTS.home.benefit.image,
   };
 }
@@ -108,10 +124,14 @@ export function makeBenefit(item: items.WixDataItem): Benefit {
 export function makeTestimonial(item: items.WixDataItem): Testimonial {
   return {
     id: item._id,
-    quote: item.quote || DEFAULTS.home.testimonial.quote,
-    name: item.name || DEFAULTS.home.testimonial.name,
-    businessName: item.businessName || DEFAULTS.home.testimonial.businessName,
-    businessRole: item.businessRole || DEFAULTS.home.testimonial.businessRole,
+    quote: sanitizeText(item.quote || DEFAULTS.home.testimonial.quote),
+    name: sanitizeText(item.name || DEFAULTS.home.testimonial.name),
+    businessName: sanitizeText(
+      item.businessName || DEFAULTS.home.testimonial.businessName,
+    ),
+    businessRole: sanitizeText(
+      item.businessRole || DEFAULTS.home.testimonial.businessRole,
+    ),
     image: item.image
       ? makeWixImage(item.image)
       : DEFAULTS.home.testimonial.image,
@@ -123,13 +143,20 @@ export function makeHighlight(item: items.WixDataItem): Highlight {
     image: item.highlightImage
       ? makeWixImage(item.highlightImage)
       : DEFAULTS.home.highlight.image,
-    heading: item.highlightHeading || DEFAULTS.home.highlight.heading,
-    description:
+    heading: sanitizeText(
+      item.highlightHeading || DEFAULTS.home.highlight.heading,
+    ),
+    description: sanitizeText(
       item.highlightDescription || DEFAULTS.home.highlight.description,
-    website: item.highlightWebsite || DEFAULTS.home.highlight.website,
-    socialMediaHandles:
+    ),
+    website: sanitizeUrl(
+      item.highlightWebsite || DEFAULTS.home.highlight.website || '',
+    ),
+    socialMediaHandles: (
       item.highlightSocialMediaHandles ||
-      DEFAULTS.home.highlight.socialMediaHandles,
+      DEFAULTS.home.highlight.socialMediaHandles ||
+      []
+    ).map(sanitizeUrl),
   };
 }
 
@@ -145,35 +172,37 @@ export function makeHome(item: items.WixDataItem): Home {
 export function makeMemberCard(item: items.WixDataItem): MemberCardProps {
   return {
     media: item.cover ? makeWixImage(item.cover) : DEFAULTS.project.cover,
-    name: item.title || DEFAULTS.project.title,
-    address: item.address || DEFAULTS.project.address,
-    slug: item.slug || DEFAULTS.project.slug,
+    name: sanitizeText(item.title || DEFAULTS.project.title),
+    address: sanitizeText(item.address || DEFAULTS.project.address),
+    slug: validateSlug(item.slug, DEFAULTS.project.slug),
   };
 }
 
 export function makeProject(item: items.WixDataItem): Project {
   return {
     _id: item._id || DEFAULTS.project._id,
-    slug: item.slug || DEFAULTS.project.slug,
-    title: item.title || DEFAULTS.project.title,
-    longDescription: item.longDescription || DEFAULTS.project.longDescription,
-    email: item.email || DEFAULTS.project.email,
-    website: item.website || DEFAULTS.project.website,
-    phoneNumber: item.phoneNumber || DEFAULTS.project.phoneNumber,
-    address: item.address || DEFAULTS.project.address,
+    slug: validateSlug(item.slug, DEFAULTS.project.slug),
+    title: sanitizeText(item.title || DEFAULTS.project.title),
+    longDescription: sanitizeText(
+      item.longDescription || DEFAULTS.project.longDescription,
+    ),
+    email: validateEmail(item.email, DEFAULTS.project.email),
+    website: sanitizeUrl(item.website || DEFAULTS.project.website),
+    phoneNumber: validatePhone(item.phoneNumber, DEFAULTS.project.phoneNumber),
+    address: sanitizeText(item.address || DEFAULTS.project.address),
     cover: item.cover ? makeWixImage(item.cover) : DEFAULTS.project.cover,
   };
 }
 
 export function makeStaffCard(item: items.WixDataItem): StaffCardProps {
   return {
-    name: item.name || DEFAULTS.team.staff.name,
+    name: sanitizeText(item.name || DEFAULTS.team.staff.name),
     image: item.image ? makeWixImage(item.image) : DEFAULTS.team.staff.image,
-    role: item.role || DEFAULTS.team.staff.role,
-    email: item.email || DEFAULTS.team.staff.email,
-    bio: item.about || DEFAULTS.team.staff.bio,
-    linkedIn: item.linkedIn || DEFAULTS.team.staff.linkedIn,
-    twitter: item.twitter || DEFAULTS.team.staff.twitter,
+    role: sanitizeText(item.role || DEFAULTS.team.staff.role),
+    email: validateEmail(item.email, DEFAULTS.team.staff.email),
+    bio: sanitizeText(item.about || DEFAULTS.team.staff.bio),
+    linkedIn: validateHandle(item.linkedIn, DEFAULTS.team.staff.linkedIn),
+    twitter: validateHandle(item.twitter, DEFAULTS.team.staff.twitter),
   };
 }
 
@@ -181,9 +210,9 @@ export function makeBoardMemberCard(
   item: items.WixDataItem,
 ): BoardMemberCardProps {
   return {
-    name: item.name || DEFAULTS.team.boardMember.name,
-    role: item.boardRole || DEFAULTS.team.boardMember.role,
-    employer: item.employer || DEFAULTS.team.boardMember.employer,
+    name: sanitizeText(item.name || DEFAULTS.team.boardMember.name),
+    role: sanitizeText(item.boardRole || DEFAULTS.team.boardMember.role),
+    employer: sanitizeText(item.employer || DEFAULTS.team.boardMember.employer),
   };
 }
 
@@ -449,7 +478,11 @@ export function useWixCalendar() {
     process.env.NEXT_PUBLIC_WIX_COLLECTION_CALENDAR!,
     DEFAULTS.calendar,
     (rawData) =>
-      rawData.calendarSrc ? rawData.calendarSrc : DEFAULTS.calendar.calendarSrc,
+      sanitizeUrl(
+        rawData.calendarSrc
+          ? rawData.calendarSrc
+          : DEFAULTS.calendar.calendarSrc,
+      ),
     'calendar',
   );
 }

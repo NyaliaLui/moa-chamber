@@ -1,7 +1,24 @@
+import React from 'react';
 import MembershipForm from '@app/components/Join/MembershipForm';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
+
+class TestErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { error: Error | null }
+> {
+  state: { error: Error | null } = { error: null };
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  render() {
+    if (this.state.error) {
+      return <div data-testid="error-boundary">{this.state.error.message}</div>;
+    }
+    return this.props.children;
+  }
+}
 
 // Mock the submitMembershipForm action
 jest.mock('../../app/components/Join/actions', () => ({
@@ -10,13 +27,10 @@ jest.mock('../../app/components/Join/actions', () => ({
 
 import { submitMembershipForm } from '../../app/components/Join/actions';
 
-// Mock window.alert
-const mockAlert = jest.fn();
-global.alert = mockAlert;
-
 describe('MembershipForm', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    window.scrollTo = jest.fn();
   });
 
   describe('Initial Render', () => {
@@ -281,12 +295,17 @@ describe('MembershipForm', () => {
       ).toBeDisabled();
     });
 
-    it('re-enables fields after submission completes', async () => {
+    it('throws ValidationError after submission fails', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
       (submitMembershipForm as jest.Mock).mockRejectedValue(
         new Error('Test error'),
       );
 
-      render(<MembershipForm />);
+      render(
+        <TestErrorBoundary>
+          <MembershipForm />
+        </TestErrorBoundary>,
+      );
 
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
@@ -297,8 +316,10 @@ describe('MembershipForm', () => {
       await userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByLabelText(/business name/i)).not.toBeDisabled();
+        expect(screen.getByTestId('error-boundary')).toBeInTheDocument();
       });
+
+      consoleErrorSpy.mockRestore();
     });
   });
 
@@ -382,32 +403,6 @@ describe('MembershipForm', () => {
       });
     });
 
-    it('displays confirmation email message in success state', async () => {
-      (submitMembershipForm as jest.Mock).mockResolvedValue(undefined);
-
-      render(<MembershipForm />);
-
-      await userEvent.type(
-        screen.getByLabelText(/business name/i),
-        'Test Business',
-      );
-      await userEvent.type(screen.getByLabelText(/contact name/i), 'John Doe');
-      await userEvent.type(
-        screen.getByLabelText(/business address/i),
-        '123 Main',
-      );
-      await userEvent.type(screen.getByLabelText(/number of employees/i), '1');
-
-      const submitButton = screen.getByRole('button', { name: /submit/i });
-      await userEvent.click(submitButton);
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(/you should receive a confirmation email/i),
-        ).toBeInTheDocument();
-      });
-    });
-
     it('displays success checkmark icon', async () => {
       (submitMembershipForm as jest.Mock).mockResolvedValue(undefined);
 
@@ -435,12 +430,17 @@ describe('MembershipForm', () => {
   });
 
   describe('Error Handling', () => {
-    it('shows alert when submission fails', async () => {
+    it('throws ValidationError with error message when submission fails', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
       (submitMembershipForm as jest.Mock).mockRejectedValue(
         new Error('Network error'),
       );
 
-      render(<MembershipForm />);
+      render(
+        <TestErrorBoundary>
+          <MembershipForm />
+        </TestErrorBoundary>,
+      );
 
       await userEvent.type(
         screen.getByLabelText(/business name/i),
@@ -457,18 +457,25 @@ describe('MembershipForm', () => {
       await userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(mockAlert).toHaveBeenCalledWith(
-          'There was an error submitting your application. Please try again.',
+        expect(screen.getByTestId('error-boundary')).toHaveTextContent(
+          'Error submitting your application',
         );
       });
+
+      consoleErrorSpy.mockRestore();
     });
 
     it('does not show success message when submission fails', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
       (submitMembershipForm as jest.Mock).mockRejectedValue(
         new Error('Network error'),
       );
 
-      render(<MembershipForm />);
+      render(
+        <TestErrorBoundary>
+          <MembershipForm />
+        </TestErrorBoundary>,
+      );
 
       await userEvent.type(
         screen.getByLabelText(/business name/i),
@@ -485,20 +492,27 @@ describe('MembershipForm', () => {
       await userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(mockAlert).toHaveBeenCalled();
+        expect(screen.getByTestId('error-boundary')).toBeInTheDocument();
       });
 
       expect(
         screen.queryByText('Application Submitted Successfully!'),
       ).not.toBeInTheDocument();
+
+      consoleErrorSpy.mockRestore();
     });
 
-    it('keeps form visible after error', async () => {
+    it('replaces form with error boundary on error', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
       (submitMembershipForm as jest.Mock).mockRejectedValue(
         new Error('Network error'),
       );
 
-      render(<MembershipForm />);
+      render(
+        <TestErrorBoundary>
+          <MembershipForm />
+        </TestErrorBoundary>,
+      );
 
       await userEvent.type(
         screen.getByLabelText(/business name/i),
@@ -515,11 +529,13 @@ describe('MembershipForm', () => {
       await userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(mockAlert).toHaveBeenCalled();
+        expect(screen.getByTestId('error-boundary')).toBeInTheDocument();
       });
 
-      expect(screen.getByLabelText(/business name/i)).toBeInTheDocument();
-      expect(screen.getByText('Join us')).toBeInTheDocument();
+      expect(screen.queryByLabelText(/business name/i)).not.toBeInTheDocument();
+      expect(screen.queryByText('Join us')).not.toBeInTheDocument();
+
+      consoleErrorSpy.mockRestore();
     });
 
     it('logs error to console when submission fails', async () => {
@@ -527,7 +543,11 @@ describe('MembershipForm', () => {
       const testError = new Error('Test error');
       (submitMembershipForm as jest.Mock).mockRejectedValue(testError);
 
-      render(<MembershipForm />);
+      render(
+        <TestErrorBoundary>
+          <MembershipForm />
+        </TestErrorBoundary>,
+      );
 
       await userEvent.type(screen.getByLabelText(/business name/i), 'Test');
       await userEvent.type(screen.getByLabelText(/contact name/i), 'Test');
