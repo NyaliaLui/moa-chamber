@@ -14,6 +14,7 @@
     "gen:snapshots": "npx playwright test --update-snapshots"
   },
   "dependencies": {
+    "@vercel/functions": "^3.4.2",
     "@wix/data": "^1.0.376",
     "@wix/sdk": "^1.21.2",
     "flowbite": "^3.1.2",
