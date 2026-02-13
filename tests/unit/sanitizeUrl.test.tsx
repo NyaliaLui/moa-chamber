@@ -1,4 +1,11 @@
-import { sanitizeText, sanitizeUrl } from '@app/sanitize';
+import {
+  sanitizeText,
+  sanitizeUrl,
+  validateEmail,
+  validateHandle,
+  validatePhone,
+  validateSlug,
+} from '@app/sanitize';
 
 describe('sanitizeUrl', () => {
   describe('allows safe URLs', () => {
@@ -208,5 +215,156 @@ describe('sanitizeText', () => {
     it('returns empty string for non-string types', () => {
       expect(sanitizeText(123 as unknown as string)).toBe('');
     });
+  });
+});
+
+describe('validateEmail', () => {
+  const FALLBACK = 'default@example.com';
+
+  it('accepts valid email', () => {
+    expect(validateEmail('user@example.com', FALLBACK)).toBe(
+      'user@example.com',
+    );
+  });
+
+  it('accepts email with subdomain', () => {
+    expect(validateEmail('user@mail.example.com', FALLBACK)).toBe(
+      'user@mail.example.com',
+    );
+  });
+
+  it('returns fallback for missing @', () => {
+    expect(validateEmail('userexample.com', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for empty string', () => {
+    expect(validateEmail('', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for null', () => {
+    expect(validateEmail(null as unknown as string, FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('strips HTML tags before validating', () => {
+    // <b> tags stripped, remaining text is a valid email
+    expect(validateEmail('<b>user</b>@example.com', FALLBACK)).toBe(
+      'user@example.com',
+    );
+  });
+
+  it('returns fallback for entirely invalid email after stripping', () => {
+    expect(validateEmail('<script>not-an-email</script>', FALLBACK)).toBe(
+      FALLBACK,
+    );
+  });
+});
+
+describe('validatePhone', () => {
+  const FALLBACK = '(555) 000-0000';
+
+  it('accepts digits only', () => {
+    expect(validatePhone('5551234567', FALLBACK)).toBe('5551234567');
+  });
+
+  it('accepts formatted phone', () => {
+    expect(validatePhone('(555) 123-4567', FALLBACK)).toBe('(555) 123-4567');
+  });
+
+  it('accepts international format', () => {
+    expect(validatePhone('+1-555-123-4567', FALLBACK)).toBe('+1-555-123-4567');
+  });
+
+  it('returns fallback for letters', () => {
+    expect(validatePhone('555-ABC-1234', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for script injection', () => {
+    expect(validatePhone('<script>alert(1)</script>', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for empty string', () => {
+    expect(validatePhone('', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for null', () => {
+    expect(validatePhone(null as unknown as string, FALLBACK)).toBe(FALLBACK);
+  });
+});
+
+describe('validateSlug', () => {
+  const FALLBACK = 'default-slug';
+
+  it('accepts alphanumeric slug', () => {
+    expect(validateSlug('my-business-123', FALLBACK)).toBe('my-business-123');
+  });
+
+  it('accepts underscores', () => {
+    expect(validateSlug('my_business', FALLBACK)).toBe('my_business');
+  });
+
+  it('returns fallback for spaces', () => {
+    expect(validateSlug('my business', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for special characters', () => {
+    expect(validateSlug('my/business', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for HTML injection', () => {
+    expect(validateSlug('<script>alert(1)</script>', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for path traversal', () => {
+    expect(validateSlug('../etc/passwd', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for empty string', () => {
+    expect(validateSlug('', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for null', () => {
+    expect(validateSlug(null as unknown as string, FALLBACK)).toBe(FALLBACK);
+  });
+});
+
+describe('validateHandle', () => {
+  const FALLBACK = 'default-handle';
+
+  it('accepts alphanumeric handle', () => {
+    expect(validateHandle('john-doe', FALLBACK)).toBe('john-doe');
+  });
+
+  it('accepts handle with periods', () => {
+    expect(validateHandle('john.doe', FALLBACK)).toBe('john.doe');
+  });
+
+  it('accepts handle with underscores', () => {
+    expect(validateHandle('john_doe', FALLBACK)).toBe('john_doe');
+  });
+
+  it('returns fallback for spaces', () => {
+    expect(validateHandle('john doe', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for slashes', () => {
+    expect(validateHandle('john/doe', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for HTML injection', () => {
+    expect(validateHandle('<script>alert(1)</script>', FALLBACK)).toBe(
+      FALLBACK,
+    );
+  });
+
+  it('returns fallback for path traversal attempt', () => {
+    expect(validateHandle('../../etc', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for empty string', () => {
+    expect(validateHandle('', FALLBACK)).toBe(FALLBACK);
+  });
+
+  it('returns fallback for null', () => {
+    expect(validateHandle(null as unknown as string, FALLBACK)).toBe(FALLBACK);
   });
 });

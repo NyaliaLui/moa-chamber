@@ -11,7 +11,14 @@ import {
 
 import { items } from '@wix/data';
 import { DEFAULT_WIX_IMAGE, DEFAULTS, WixImage } from '@app/constants';
-import { sanitizeText, sanitizeUrl } from '@app/sanitize';
+import {
+  sanitizeText,
+  sanitizeUrl,
+  validateEmail,
+  validateHandle,
+  validatePhone,
+  validateSlug,
+} from '@app/sanitize';
 import type { TabContent } from '@app/components/Resources/CulturalLandmarks';
 import type { Business } from '@app/components/Resources/HistoricalBusinesses';
 import type { Benefit } from '@app/components/Benefits';
@@ -167,21 +174,21 @@ export function makeMemberCard(item: items.WixDataItem): MemberCardProps {
     media: item.cover ? makeWixImage(item.cover) : DEFAULTS.project.cover,
     name: sanitizeText(item.title || DEFAULTS.project.title),
     address: sanitizeText(item.address || DEFAULTS.project.address),
-    slug: sanitizeText(item.slug || DEFAULTS.project.slug),
+    slug: validateSlug(item.slug, DEFAULTS.project.slug),
   };
 }
 
 export function makeProject(item: items.WixDataItem): Project {
   return {
     _id: item._id || DEFAULTS.project._id,
-    slug: sanitizeText(item.slug || DEFAULTS.project.slug),
+    slug: validateSlug(item.slug, DEFAULTS.project.slug),
     title: sanitizeText(item.title || DEFAULTS.project.title),
     longDescription: sanitizeText(
       item.longDescription || DEFAULTS.project.longDescription,
     ),
-    email: sanitizeText(item.email || DEFAULTS.project.email),
+    email: validateEmail(item.email, DEFAULTS.project.email),
     website: sanitizeUrl(item.website || DEFAULTS.project.website),
-    phoneNumber: sanitizeText(item.phoneNumber || DEFAULTS.project.phoneNumber),
+    phoneNumber: validatePhone(item.phoneNumber, DEFAULTS.project.phoneNumber),
     address: sanitizeText(item.address || DEFAULTS.project.address),
     cover: item.cover ? makeWixImage(item.cover) : DEFAULTS.project.cover,
   };
@@ -192,10 +199,10 @@ export function makeStaffCard(item: items.WixDataItem): StaffCardProps {
     name: sanitizeText(item.name || DEFAULTS.team.staff.name),
     image: item.image ? makeWixImage(item.image) : DEFAULTS.team.staff.image,
     role: sanitizeText(item.role || DEFAULTS.team.staff.role),
-    email: sanitizeText(item.email || DEFAULTS.team.staff.email),
+    email: validateEmail(item.email, DEFAULTS.team.staff.email),
     bio: sanitizeText(item.about || DEFAULTS.team.staff.bio),
-    linkedIn: sanitizeText(item.linkedIn || DEFAULTS.team.staff.linkedIn),
-    twitter: sanitizeText(item.twitter || DEFAULTS.team.staff.twitter),
+    linkedIn: validateHandle(item.linkedIn, DEFAULTS.team.staff.linkedIn),
+    twitter: validateHandle(item.twitter, DEFAULTS.team.staff.twitter),
   };
 }
 
