@@ -14,12 +14,14 @@
     "gen:snapshots": "npx playwright test --update-snapshots"
   },
   "dependencies": {
+    "@vercel/functions": "^3.4.2",
     "@wix/data": "^1.0.387",
     "@wix/sdk": "^1.21.2",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.12.16",
     "isomorphic-dompurify": "^3.0.0-rc.2",
     "next": "^16.1.6",
+    "rate-limiter-flexible": "^9.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-icons": "^5.5.0",
