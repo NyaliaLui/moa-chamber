@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
-import { waitForLoadingState } from './common';
+import { waitForLoadingState, testPageLoadAndStructure } from './common';
 
 test.describe('Resources Page', () => {
   const PATH = '/resources';
@@ -10,28 +10,11 @@ test.describe('Resources Page', () => {
     await waitForLoadingState(page);
   });
 
-  test.describe('Page Load and Structure', () => {
-    test('should load the resources page successfully', async ({ page }) => {
-      await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(
-        /Promoting economic growth and a progressive community/i,
-      );
-    });
-
-    test('should display the header', async ({ page }) => {
-      const header = page.getByTestId(testIds.LAYOUT.HEADER);
-      await expect(header).toBeVisible();
-    });
-
-    test('should display the footer', async ({ page }) => {
-      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
-      await expect(footer).toBeVisible();
-    });
-
-    test('should display the resources container', async ({ page }) => {
-      const container = page.getByTestId(testIds.RESOURCES.CONTAINER);
-      await expect(container).toBeVisible();
-    });
+  testPageLoadAndStructure({
+    pageName: 'resources',
+    route: PATH,
+    containerTestId: testIds.RESOURCES.CONTAINER,
+    containerLabel: 'resources container',
   });
 
   test.describe('Page Header Section', () => {

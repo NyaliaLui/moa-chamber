@@ -17,10 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Promoting economic growth and a progressive community</title>
+        <title>Chamber of Commerce - Meriden/Ozawkie Area</title>
         <meta
           name="description"
-          content="Promoting economic growth and a progressive community"
+          content="Chamber of Commerce - Meriden/Ozawkie Area"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href={ICO_IMAGE.outline.light} />

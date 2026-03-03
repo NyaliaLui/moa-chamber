@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
-import { waitForLoadingState, VIEWPORTS } from './common';
+import {
+  waitForLoadingState,
+  testPageLoadAndStructure,
+  VIEWPORTS,
+} from './common';
 
 test.describe('Directory Member Detail Page', () => {
   let memberSlug: string;
@@ -23,32 +27,11 @@ test.describe('Directory Member Detail Page', () => {
     }
   });
 
-  test.describe('Page Load and Structure', () => {
-    test('should load the member detail page successfully', async ({
-      page,
-    }) => {
-      await expect(page).toHaveURL(/\/directory\/.+/);
-      await expect(page).toHaveTitle(
-        /Promoting economic growth and a progressive community/i,
-      );
-    });
-
-    test('should display the header', async ({ page }) => {
-      const header = page.getByTestId(testIds.LAYOUT.HEADER);
-      await expect(header).toBeVisible();
-    });
-
-    test('should display the footer', async ({ page }) => {
-      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
-      await expect(footer).toBeVisible();
-    });
-
-    test('should display the project details container', async ({ page }) => {
-      const container = page.getByTestId(
-        testIds.PROJECT_DETAILS_PAGE.CONTAINER,
-      );
-      await expect(container).toBeVisible();
-    });
+  testPageLoadAndStructure({
+    pageName: 'member detail',
+    route: /\/directory\/.+/,
+    containerTestId: testIds.PROJECT_DETAILS_PAGE.CONTAINER,
+    containerLabel: 'project details container',
   });
 
   test.describe('Member Information', () => {
