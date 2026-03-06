@@ -16,32 +16,20 @@ export interface WixImage {
 
 export const LOGO_IMAGE = {
   outline: {
-    light: '/images/MOA-Logo-Light-Outline.png',
-    dark: '/images/MOA-Logo-Dark-Outline.png',
+    light: '/images/MOA-Logo.svg',
+    dark: '/images/MOA-Logo.svg',
   },
-  width: 96,
-  height: 96,
+  width: 240,
+  height: 135,
 };
 
 export const ICO_IMAGE = {
   outline: {
-    light: '/images/MOA-Logo-Light-Outline.ico',
-    dark: '/images/MOA-Logo-Dark-Outline.ico',
+    light: '/images/MOA-Logo.ico',
+    dark: '/images/MOA-Logo.ico',
   },
   width: 32,
   height: 32,
-};
-
-export const SVG_ICONS = {
-  megaphone: { id: '1', url: '/images/megaphone.svg', width: 16, height: 16 },
-  personPlus: {
-    id: '2',
-    url: '/images/person-plus.svg',
-    width: 16,
-    height: 16,
-  },
-  heart: { id: '3', url: '/images/balloon-heart.svg', width: 16, height: 16 },
-  cash: { id: '4', url: '/images/cash-stack.svg', width: 16, height: 16 },
 };
 
 export const SOCIAL_MEDIA_URLS = {

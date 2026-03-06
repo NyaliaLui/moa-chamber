@@ -25,7 +25,7 @@ describe('Logo', () => {
     const logo = screen.getByAltText('MOA Chamber Logo');
     expect(logo).toHaveAttribute(
       'src',
-      expect.stringContaining(LOGO_IMAGE.outline.light.replaceAll('/', '%2F')),
+      expect.stringContaining(LOGO_IMAGE.outline.light),
     );
   });
 
