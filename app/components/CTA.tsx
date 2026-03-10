@@ -1,27 +1,9 @@
-'use client';
-
-import React from 'react';
 import { Button } from 'flowbite-react';
-
-import { useWixCta } from '@app/hooks/Wix';
+import { fetchCtaImage } from '@app/hooks/WixServer';
 import testIds from '@app/test-ids';
 
-import LoadingState from '@app/components/LoadingState';
-
-export default function CTA() {
-  const { data: ctaImage, isLoading, error } = useWixCta();
-
-  if (isLoading) {
-    return <LoadingState />;
-  }
-
-  if (error) {
-    throw error;
-  }
-
-  if (!ctaImage) {
-    throw new Error('CTA image is undefined');
-  }
+export default async function CTA() {
+  const ctaImage = await fetchCtaImage();
 
   return (
     <section
