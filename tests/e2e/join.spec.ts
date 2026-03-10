@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
-import { waitForLoadingState, VIEWPORTS } from './common';
+import {
+  waitForLoadingState,
+  testPageLoadAndStructure,
+  VIEWPORTS,
+} from './common';
 
 test.describe('Join Page', () => {
   const PATH = '/join';
@@ -10,23 +14,9 @@ test.describe('Join Page', () => {
     await waitForLoadingState(page);
   });
 
-  test.describe('Page Load and Structure', () => {
-    test('should load the join page successfully', async ({ page }) => {
-      await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(
-        /Promoting economic growth and a progressive community/i,
-      );
-    });
-
-    test('should display the header', async ({ page }) => {
-      const header = page.getByTestId(testIds.LAYOUT.HEADER);
-      await expect(header).toBeVisible();
-    });
-
-    test('should display the footer', async ({ page }) => {
-      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
-      await expect(footer).toBeVisible();
-    });
+  testPageLoadAndStructure({
+    pageName: 'join',
+    route: PATH,
   });
 
   test.describe('Page Header Section', () => {

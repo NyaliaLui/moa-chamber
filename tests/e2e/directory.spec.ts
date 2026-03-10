@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import testIds from '@app/test-ids';
-import { waitForLoadingState } from './common';
+import { waitForLoadingState, testPageLoadAndStructure } from './common';
 
 test.describe('Directory Page', () => {
   const PATH = '/directory';
@@ -10,23 +10,9 @@ test.describe('Directory Page', () => {
     await waitForLoadingState(page);
   });
 
-  test.describe('Page Load and Structure', () => {
-    test('should load the directory page successfully', async ({ page }) => {
-      await expect(page).toHaveURL(PATH);
-      await expect(page).toHaveTitle(
-        /Promoting economic growth and a progressive community/i,
-      );
-    });
-
-    test('should display the header', async ({ page }) => {
-      const header = page.getByTestId(testIds.LAYOUT.HEADER);
-      await expect(header).toBeVisible();
-    });
-
-    test('should display the footer', async ({ page }) => {
-      const footer = page.getByTestId(testIds.LAYOUT.FOOTER);
-      await expect(footer).toBeVisible();
-    });
+  testPageLoadAndStructure({
+    pageName: 'directory',
+    route: PATH,
   });
 
   test.describe('Directory Header Section', () => {
