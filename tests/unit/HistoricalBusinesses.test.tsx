@@ -1,6 +1,6 @@
-import HistoricalBusinesses, {
+import InfluentialBusinesses, {
   Business,
-} from '@app/components/Resources/HistoricalBusinesses';
+} from '@app/components/Resources/InfluentialBusinesses';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -28,9 +28,9 @@ const mockBusinessesData: Business[] = [
   },
 ];
 
-describe('HistoricalBusinesses', () => {
+describe('InfluentialBusinesses', () => {
   it('renders all business cards', () => {
-    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
+    render(<InfluentialBusinesses businessResources={mockBusinessesData} />);
     mockBusinessesData.forEach((business: Business) => {
       const cards = screen.getAllByTestId(business.name);
       expect(cards).toHaveLength(2);
@@ -41,7 +41,7 @@ describe('HistoricalBusinesses', () => {
   });
 
   it('displays first business image by default', () => {
-    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
+    render(<InfluentialBusinesses businessResources={mockBusinessesData} />);
 
     const image = screen.getByAltText(mockBusinessesData[0].name);
     expect(image).toBeInTheDocument();
@@ -52,7 +52,7 @@ describe('HistoricalBusinesses', () => {
   });
 
   it('renders business descriptions', () => {
-    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
+    render(<InfluentialBusinesses businessResources={mockBusinessesData} />);
 
     mockBusinessesData.forEach((business: Business) => {
       const cards = screen.getAllByText(business.description);
@@ -64,7 +64,7 @@ describe('HistoricalBusinesses', () => {
   });
 
   it('renders business website links', () => {
-    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
+    render(<InfluentialBusinesses businessResources={mockBusinessesData} />);
 
     mockBusinessesData.forEach((business: Business) => {
       const cards = screen.getAllByTestId(business.name);
@@ -77,7 +77,7 @@ describe('HistoricalBusinesses', () => {
   });
 
   it('image has correct attributes', () => {
-    render(<HistoricalBusinesses businessesData={mockBusinessesData} />);
+    render(<InfluentialBusinesses businessResources={mockBusinessesData} />);
 
     const image = screen.getByAltText(mockBusinessesData[0].name);
     expect(image).toHaveAttribute(
@@ -93,8 +93,10 @@ describe('HistoricalBusinesses', () => {
     );
   });
 
-  it('returns null when businessesData is empty', () => {
-    const { container } = render(<HistoricalBusinesses businessesData={[]} />);
+  it('returns null when businessResources is empty', () => {
+    const { container } = render(
+      <InfluentialBusinesses businessResources={[]} />,
+    );
 
     expect(container.firstChild).toBeNull();
   });

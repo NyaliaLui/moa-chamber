@@ -19,8 +19,8 @@ import {
   validatePhone,
   validateSlug,
 } from '@app/sanitize';
-import type { TabContent } from '@app/components/Resources/CulturalLandmarks';
-import type { Business } from '@app/components/Resources/HistoricalBusinesses';
+import type { TabContent } from '@app/components/Resources/CommunityTreasures';
+import type { Business } from '@app/components/Resources/InfluentialBusinesses';
 import type { Benefit } from '@app/components/Benefits';
 import type { Testimonial } from '@app/components/Testimonials';
 import type { MemberCardProps } from '@app/components/Directory/MemberCard';

@@ -1,6 +1,6 @@
-import CulturalLandmarks, {
+import CommunityTreasures, {
   TabContent,
-} from '@app/components/Resources/CulturalLandmarks';
+} from '@app/components/Resources/CommunityTreasures';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -33,9 +33,9 @@ const mockTabsData: TabContent[] = [
   },
 ];
 
-describe('CulturalLandmarks', () => {
-  it('renders the CulturalLandmarks component', () => {
-    render(<CulturalLandmarks tabsData={mockTabsData} />);
+describe('CommunityTreasures', () => {
+  it('renders the CommunityTreasures component', () => {
+    render(<CommunityTreasures cultureResources={mockTabsData} />);
 
     // Headings appear in both tab buttons and CultureBox, so use getAllByText
     expect(screen.getAllByText('Culture Heading 1').length).toBeGreaterThan(0);
@@ -44,7 +44,7 @@ describe('CulturalLandmarks', () => {
   });
 
   it('renders all tab buttons', () => {
-    render(<CulturalLandmarks tabsData={mockTabsData} />);
+    render(<CommunityTreasures cultureResources={mockTabsData} />);
 
     const tab1 = screen.getByTestId('culture-tab-culture-1');
     const tab2 = screen.getByTestId('culture-tab-culture-2');
@@ -56,7 +56,7 @@ describe('CulturalLandmarks', () => {
   });
 
   it('renders CultureBox component with correct props', () => {
-    render(<CulturalLandmarks tabsData={mockTabsData} />);
+    render(<CommunityTreasures cultureResources={mockTabsData} />);
 
     const cultureBox = screen.getByTestId('culture-box');
     expect(cultureBox).toBeInTheDocument();
@@ -69,8 +69,8 @@ describe('CulturalLandmarks', () => {
     expect(screen.getByText('Learn More 1')).toBeInTheDocument();
   });
 
-  it('returns null when tabsData is empty', () => {
-    const { container } = render(<CulturalLandmarks tabsData={[]} />);
+  it('returns null when cultureResources is empty', () => {
+    const { container } = render(<CommunityTreasures cultureResources={[]} />);
 
     expect(container.firstChild).toBeNull();
   });
