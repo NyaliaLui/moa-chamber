@@ -1,38 +1,10 @@
-'use client';
-
-import { useState } from 'react';
-import { Button } from 'flowbite-react';
-
-import testIds from '@app/test-ids';
 import CTA from '@app/components/CTA';
-import MemberCard from '@app/components/Directory/MemberCard';
-import { useWixMemberCards } from '@app/hooks/Wix';
-import LoadingState from '@app/components/LoadingState';
+import { fetchMemberCards } from '@app/hooks/WixServer';
+import testIds from '@app/test-ids';
+import DirectoryList from '@app/components/Directory/DirectoryList';
 
-const MEMBERS_PER_PAGE = 6;
-
-export default function Directory() {
-  const { data: memberCards, isLoading, error } = useWixMemberCards();
-  const [displayCount, setDisplayCount] = useState(MEMBERS_PER_PAGE);
-
-  if (isLoading) {
-    return <LoadingState />;
-  }
-
-  if (error) {
-    throw error;
-  }
-
-  if (!memberCards) {
-    throw new Error('member cards are undefined');
-  }
-
-  const displayedMembers = memberCards.slice(0, displayCount);
-  const hasMore = displayCount < memberCards.length;
-
-  const handleLoadMore = () => {
-    setDisplayCount((prev) => prev + MEMBERS_PER_PAGE);
-  };
+export default async function Directory() {
+  const memberCards = await fetchMemberCards();
 
   return (
     <>
@@ -52,33 +24,7 @@ export default function Directory() {
               </p>
             </div>
           </div>
-          <div
-            className="grid grid-cols-1 gap-x-5 gap-y-12 lg:grid-cols-3 lg:gap-x-12 lg:gap-y-16"
-            data-testid={testIds.PROJECTS_PAGE.PROJECT_LIST}
-          >
-            {displayedMembers.map((item, index) => (
-              <MemberCard
-                key={index}
-                media={item.media}
-                name={item.name}
-                address={item.address}
-                slug={item.slug}
-              />
-            ))}
-          </div>
-          {hasMore && (
-            <div className="mt-16 flex justify-center">
-              <Button
-                color="dark"
-                size="lg"
-                outline
-                onClick={handleLoadMore}
-                className="text-white! hover:text-black! border-white! hover:border-white! hover:bg-white shadow-none!"
-              >
-                Load more
-              </Button>
-            </div>
-          )}
+          <DirectoryList memberCards={memberCards} />
         </div>
       </section>
       <CTA />
