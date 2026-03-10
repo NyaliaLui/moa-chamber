@@ -2,7 +2,7 @@ import { createClient, OAuthStrategy } from '@wix/sdk';
 import { items } from '@wix/data';
 import { DEFAULTS } from '@app/constants';
 import { sanitizeUrl } from '@app/sanitize';
-import type { WixClientWithItems } from './Wix';
+import type { WixClientWithItems } from '@app/hooks/Wix';
 import {
   makeBenefit,
   makeBoardMemberCard,
@@ -14,9 +14,9 @@ import {
   makeTabContent,
   makeTestimonial,
   makeWixImage,
-} from './Wix';
+} from '@app/hooks/Wix';
 
-export type { Highlight, Home, Project } from './Wix';
+export type { Highlight, Home, Project } from '@app/hooks/Wix';
 
 async function getWixClient(): Promise<WixClientWithItems> {
   const client: WixClientWithItems = createClient({
