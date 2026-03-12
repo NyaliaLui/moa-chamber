@@ -1,13 +1,8 @@
+import { Suspense } from 'react';
 import './globals.css';
 import Footer from '@app/components/Layout/Footer';
 import Header from '@app/components/Layout/Header';
 import { ICO_IMAGE } from '@app/constants';
-
-/**
- * Using force dynamic so changes in business assets (e.g. services) are immediately reflected.
- * If you prefer having it reflected only after redeploy (not recommended) please remove it
- * **/
-export const revalidate = 0;
 
 export default function RootLayout({
   children,
@@ -26,9 +21,13 @@ export default function RootLayout({
         <link rel="icon" href={ICO_IMAGE.outline.light} />
       </head>
       <body>
+        {/* Header is in a Suspense boundary because it accesses
+            dynamic/uncached data like the pathname. */}
         {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
           <>
-            <Header />
+            <Suspense>
+              <Header />
+            </Suspense>
             <main className="min-h-150">{children}</main>
             <Footer />
           </>

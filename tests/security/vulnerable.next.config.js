@@ -22,7 +22,6 @@ const nextConfig = {
   env: {},
   reactStrictMode: true,
   experimental: {},
-  cacheComponents: true,
   images: {
     remotePatterns: [
       {

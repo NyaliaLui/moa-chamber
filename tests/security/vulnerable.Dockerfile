@@ -7,6 +7,8 @@ COPY . .
 
 COPY ./tests/security/package.vulnerable.json ./package.json
 
+COPY ./tests/security/vulnerable.next.config.js ./next.config.js
+
 # Install node modules
 # Note: We also install dev deps as TypeScript may be needed
 RUN npm install
