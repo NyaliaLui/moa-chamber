@@ -7,6 +7,12 @@ export default function Error({
   error: Error & { digest?: string; statusCode?: number };
   reset: () => void;
 }) {
+  console.error(
+    'Error boundary caught:',
+    error.message,
+    error.digest,
+    error.statusCode,
+  );
   return (
     <section className="w-full h-dvh flex items-center justify-center bg-[#1a56db]">
       <div className="container mx-auto text-center">

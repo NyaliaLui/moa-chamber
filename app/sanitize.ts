@@ -32,7 +32,8 @@ export function sanitizeUrl(url: string): string {
       return '';
     }
     return trimmed;
-  } catch {
+  } catch (error) {
+    console.warn('URL parsing failed for:', trimmed, error);
     // Allow relative URLs (e.g. "/path/to/page") — they're same-origin and safe
     if (trimmed.startsWith('/')) {
       return trimmed;
