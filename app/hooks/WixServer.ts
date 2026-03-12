@@ -18,12 +18,15 @@ import {
 
 export type { Highlight, Home, Project } from '@app/hooks/Wix';
 
-async function getWixClient(): Promise<WixClientWithItems> {
+async function getWixClient(): Promise<WixClientWithItems | null> {
+  const clientId = process.env.NEXT_PUBLIC_WIX_CLIENT_ID;
+  if (!clientId) {
+    console.warn('NEXT_PUBLIC_WIX_CLIENT_ID is not set, using default data');
+    return null;
+  }
   const client: WixClientWithItems = createClient({
     modules: { items },
-    auth: OAuthStrategy({
-      clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
-    }),
+    auth: OAuthStrategy({ clientId }),
   });
   const tokens = await client.auth.generateVisitorTokens();
   client.auth.setTokens(tokens);
@@ -36,6 +39,7 @@ async function fetchWixCollection<T>(
   orderByOrderNumber = false,
 ): Promise<T[]> {
   const client = await getWixClient();
+  if (!client) return [];
   let query = client.items.query(collectionId);
   if (orderByOrderNumber) {
     query = query.ascending('orderNumber');
@@ -50,6 +54,7 @@ async function fetchWixSingleItem<T>(
   mapper: (rawData: items.WixDataItem) => T,
 ): Promise<T> {
   const client = await getWixClient();
+  if (!client) return mapper(defaultValue);
   const { items: fetchedItems } = await client.items
     .query(collectionId)
     .limit(1)

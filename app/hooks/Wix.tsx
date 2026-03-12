@@ -52,7 +52,7 @@ export type WixClientWithItems = WixClient<
 >;
 
 export function makeWixImage(src: string): WixImage {
-  if (src.startsWith('wix:image')) {
+  if (typeof src === 'string' && src.startsWith('wix:image')) {
     return wixMedia.getImageUrl(src);
   } else {
     return DEFAULT_WIX_IMAGE;
