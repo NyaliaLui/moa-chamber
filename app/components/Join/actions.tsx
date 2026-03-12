@@ -27,7 +27,8 @@ export async function submitMembershipForm(formData: FormData): Promise<void> {
 
   try {
     await formSubmissionLimiter.consume(ip);
-  } catch {
+  } catch (error) {
+    console.warn('Form submission rate limit exceeded for IP:', ip, error);
     throw new TooManyRequests('Too many submissions. Please try again later.');
   }
 

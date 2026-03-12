@@ -8,7 +8,8 @@ export async function proxy(request: NextRequest) {
   try {
     await globalLimiter.consume(ip);
     return NextResponse.next();
-  } catch {
+  } catch (error) {
+    console.warn('Rate limit exceeded for IP:', ip, error);
     return new NextResponse('Too Many Requests', {
       status: 429,
       headers: {
