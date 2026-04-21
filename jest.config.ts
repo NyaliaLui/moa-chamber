@@ -1,12 +1,5 @@
 import type { Config } from 'jest';
-import nextJest from 'next/jest.js';
 
-const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: './',
-});
-
-// Add any custom config to be passed to Jest
 const config: Config = {
   roots: ['tests/unit', 'tests/security'],
   clearMocks: true,
@@ -14,11 +7,31 @@ const config: Config = {
   globals: {
     IS_REACT_ACT_ENVIRONMENT: true,
   },
+  transform: {
+    '^.+\\.(ts|tsx|js|jsx|cjs|mjs)$': [
+      'ts-jest',
+      {
+        tsconfig: {
+          moduleResolution: 'node',
+          jsx: 'react-jsx',
+          allowJs: true,
+        },
+      },
+    ],
+  },
   moduleNameMapper: {
+    '^@app/(.*)$': '<rootDir>/app/$1',
+    '^@tests/(.*)$': '<rootDir>/tests/$1',
+    '^@api/(.*)$': '<rootDir>/src/pages/api/$1',
+    '^@statics/(.*)$': '<rootDir>/public/$1',
     '^isomorphic-dompurify$':
       '<rootDir>/tests/__mocks__/isomorphic-dompurify.ts',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(resend|react-player|@wix|flowbite|flowbite-react|react-icons|debounce)/)',
+  ],
+  setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
 };
 
-// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-export default createJestConfig(config);
+export default config;
