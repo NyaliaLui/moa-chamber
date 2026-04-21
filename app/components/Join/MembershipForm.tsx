@@ -2,10 +2,8 @@
 
 import { useState } from 'react';
 import { Button, Radio, Label, TextInput } from 'flowbite-react';
-import { submitMembershipForm } from '@app/components/Join/actions';
-
 export default function MembershipForm() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>();
 
@@ -13,11 +11,11 @@ export default function MembershipForm() {
     event.preventDefault();
     setIsSubmitting(true);
 
-    const formData = new FormData(event.currentTarget);
-
     try {
-      await submitMembershipForm(formData);
-      setIsSubmitted(true);
+      // TODO: membership form submission is disabled until Vercel email sending is fixed
+      throw new Error(
+        'Membership form submission is temporarily unavailable. Please contact us directly.',
+      );
     } catch (error) {
       console.error('Error submitting form:', error);
       setErrorMsg(`Error submitting your application ${error}`);
