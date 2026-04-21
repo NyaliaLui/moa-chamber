@@ -9,6 +9,7 @@ import {
   validateRequired,
   validateEmail,
   validatePhone,
+  validateWebsite,
   validateNumeric,
 } from '@app/components/Join/validation';
 
@@ -56,6 +57,7 @@ export async function submitMembershipForm(formData: FormData): Promise<void> {
   // Validate field formats
   validateEmail(email);
   validatePhone(phone);
+  validateWebsite(website);
   validateNumeric(employees, 'number of employees');
   if (donation) {
     validateNumeric(donation, 'donation amount');

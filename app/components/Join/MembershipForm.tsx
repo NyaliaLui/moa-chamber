@@ -91,7 +91,6 @@ export default function MembershipForm() {
             required
             disabled={isSubmitting}
             className="text-base xl:text-lg"
-            pattern="^[\w\s\-\.\,\&\'\#]+$"
             title="Enter a valid business name (letters, numbers, spaces, and common punctuation)"
           />
         </div>
@@ -109,7 +108,6 @@ export default function MembershipForm() {
             required
             disabled={isSubmitting}
             className="text-base xl:text-lg"
-            pattern="^[a-zA-Z\s\-\'\.]+$"
             title="Enter a valid name (letters, spaces, hyphens, and apostrophes)"
           />
         </div>
@@ -167,7 +165,6 @@ export default function MembershipForm() {
             required
             disabled={isSubmitting}
             className="text-base xl:text-lg"
-            pattern="^[\w\s\-\.\,\#\/]+$"
             title="Enter a valid address (letters, numbers, spaces, and common punctuation)"
           />
         </div>
@@ -217,7 +214,6 @@ export default function MembershipForm() {
             id="website"
             name="website"
             placeholder="sample.com"
-            pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$"
             title="Enter a valid website URL (e.g., sample.com or https://sample.com)"
             disabled={isSubmitting}
             className="text-base xl:text-lg"
@@ -288,7 +284,6 @@ export default function MembershipForm() {
             placeholder="Jane Doe"
             disabled={isSubmitting}
             className="text-base xl:text-lg"
-            pattern="^[a-zA-Z\s\-\'\.]*$"
             title="Enter a valid name (letters, spaces, hyphens, and apostrophes)"
           />
         </div>
