@@ -2,13 +2,25 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@statics/*": ["public/*"],
-      "@app/*": ["app/*"],
-      "@tests/*": ["tests/*"],
-      "@api/*": ["src/pages/api/*"]
+      "@statics/*": [
+        "public/*"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@tests/*": [
+        "tests/*"
+      ],
+      "@api/*": [
+        "src/pages/api/*"
+      ]
     },
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,7 +28,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -34,5 +46,7 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
