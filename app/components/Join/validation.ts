@@ -35,6 +35,12 @@ export function validatePhone(value: string): void {
   }
 }
 
+export function validateWebsite(value: string): void {
+  if (value && !/^(https?:\/\/)?[\w-]+(\.[\w-]+)+([/?#].*)?$/.test(value)) {
+    throw new ValidationError('website format is invalid');
+  }
+}
+
 export function validateNumeric(value: string, fieldName: string): void {
   if (value && !/^\d+(\.\d{1,2})?$/.test(value)) {
     throw new ValidationError(
