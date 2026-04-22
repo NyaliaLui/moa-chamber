@@ -1,9 +1,8 @@
-import { ipAddress } from '@vercel/functions';
 import { NextResponse, type NextRequest } from 'next/server';
 import { globalLimiter, getClientIp } from '@app/rate-limit';
 
 export async function proxy(request: NextRequest) {
-  const ip = ipAddress(request) || getClientIp(request.headers);
+  const ip = getClientIp(request.headers);
 
   try {
     await globalLimiter.consume(ip);

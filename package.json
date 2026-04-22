@@ -14,7 +14,6 @@
     "gen:snapshots": "npx playwright test --update-snapshots"
   },
   "dependencies": {
-    "@vercel/functions": "^3.4.3",
     "@wix/data": "^1.0.445",
     "@wix/sdk": "^1.21.6",
     "flowbite": "^3.1.2",
@@ -53,6 +52,7 @@
     "tailwindcss": "^4.1.14",
     "testcontainers": "^11.14.0",
     "ts-jest": "^29.4.9",
+    "@netlify/plugin-nextjs": "^5.10.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
