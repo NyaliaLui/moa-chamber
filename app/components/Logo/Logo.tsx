@@ -16,6 +16,7 @@ export function Logo({ enableLightOutline }: LogoProps) {
       alt="MOA Chamber Logo"
       width={LOGO_IMAGE.width}
       height={LOGO_IMAGE.height}
+      loading="eager"
     />
   );
 }
