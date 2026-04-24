@@ -1,5 +1,3 @@
-import { sanitize } from 'isomorphic-dompurify';
-
 export class ValidationError extends Error {
   status: number;
   constructor(message: string) {
@@ -14,7 +12,10 @@ export function sanitizeString(value: unknown): string {
     return '';
   }
 
-  return sanitize(String(value));
+  return String(value)
+    .replace(/<[^>]*>/g, '')
+    .replace(/[<>"'`;(){}]/g, '')
+    .trim();
 }
 
 export function validateRequired(value: string, fieldName: string): void {

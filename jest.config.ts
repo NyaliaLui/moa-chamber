@@ -24,8 +24,6 @@ const config: Config = {
     '^@tests/(.*)$': '<rootDir>/tests/$1',
     '^@api/(.*)$': '<rootDir>/src/pages/api/$1',
     '^@statics/(.*)$': '<rootDir>/public/$1',
-    '^isomorphic-dompurify$':
-      '<rootDir>/tests/__mocks__/isomorphic-dompurify.ts',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
   transformIgnorePatterns: [
