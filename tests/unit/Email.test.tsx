@@ -19,6 +19,7 @@ describe('submitMembershipForm', () => {
   let mockSend: jest.Mock;
   let consoleErrorSpy: jest.SpyInstance;
   let consoleLogSpy: jest.SpyInstance;
+  let consoleWarnSpy: jest.SpyInstance;
 
   beforeEach(() => {
     // Clear all mocks before each test
@@ -37,6 +38,7 @@ describe('submitMembershipForm', () => {
     // Spy on console methods
     consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
     consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+    consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
 
     // Set environment variable
     process.env.RESEND_API_KEY = 'test-api-key';
@@ -46,6 +48,7 @@ describe('submitMembershipForm', () => {
     // Restore console methods
     consoleErrorSpy.mockRestore();
     consoleLogSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
   });
 
   const createFormData = (data: Record<string, string>) => {
@@ -281,8 +284,8 @@ describe('submitMembershipForm', () => {
     await submitMembershipForm(formData);
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      'Failed to send email:',
-      mockError,
+      '[join] email send failed:',
+      JSON.stringify(mockError),
     );
   });
 
@@ -421,6 +424,53 @@ describe('submitMembershipForm', () => {
       expect.objectContaining({
         subject: 'New Membership Application - Amazing Company LLC',
       }),
+    );
+  });
+
+  it('should warn when RESEND_API_KEY is not set', async () => {
+    delete process.env.RESEND_API_KEY;
+    mockSend.mockResolvedValue({ data: { id: 'email-123' }, error: null });
+
+    const formData = createFormData({
+      business: 'Test Business',
+      contact: 'John Doe',
+      contactrole: 'owner',
+      address: '123 Main St',
+      phone: '',
+      email: '',
+      website: '',
+      employees: '1',
+    });
+
+    await submitMembershipForm(formData);
+
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      '[join] RESEND_API_KEY is not set',
+    );
+  });
+
+  it('should log and rethrow unexpected errors', async () => {
+    const unexpectedError = new Error('Network failure');
+    mockSend.mockRejectedValue(unexpectedError);
+
+    const formData = createFormData({
+      business: 'Test Business',
+      contact: 'John Doe',
+      contactrole: 'owner',
+      address: '123 Main St',
+      phone: '',
+      email: '',
+      website: '',
+      employees: '1',
+    });
+
+    await expect(submitMembershipForm(formData)).rejects.toThrow(
+      'Network failure',
+    );
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      '[join] unexpected error:',
+      unexpectedError.stack,
     );
   });
 });
